@@ -1,0 +1,10 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appID": "TON_TEAM_ID.com.tonnom.dicea",
+        "paths": [ "/g/*" ]
+      }
+    ]
+  }
+}
