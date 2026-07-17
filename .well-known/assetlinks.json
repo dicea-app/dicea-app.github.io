@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.tonnom.dicea",
+      "sha256_cert_fingerprints": [
+        "TA_CLE_SHA256_VIENDRA_ICI_PLUS_TARD"
+      ]
+    }
+  }
+]
