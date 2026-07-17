@@ -2,7 +2,7 @@
   "applinks": {
     "details": [
       {
-        "appID": "TON_TEAM_ID.com.tonnom.dicea",
+        "appID": 4B3S5RUZ6H.com.dicea.app,
         "paths": [ "/g/*" ]
       }
     ]
