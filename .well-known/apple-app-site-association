@@ -1,9 +1,10 @@
 {
   "applinks": {
+    "apps": [],
     "details": [
       {
         "appID": "4B3S5RUZ6H.com.dicea.app",
-        "paths": [ "/g/*" ]
+        "paths": [ "/g", "/g/*" ]
       }
     ]
   }
