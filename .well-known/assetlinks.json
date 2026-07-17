@@ -3,9 +3,10 @@
     "relation": ["delegate_permission/common.handle_all_urls"],
     "target": {
       "namespace": "android_app",
-      "package_name": "com.tonnom.dicea",
+      "package_name": "com.dicea.app",
       "sha256_cert_fingerprints": [
-        "TA_CLE_SHA256_VIENDRA_ICI_PLUS_TARD"
+        "0F:CE:11:01:07:93:02:CB:61:8B:8E:A4:5E:BB:48:EA:2B:51:B1:D3:79:6A:48:22:4A:13:49:82:38:07:4A:8D",
+        "0A:72:FD:52:5F:38:96:77:E4:96:11:4C:1F:4E:B7:0C:60:06:20:99:74:E8:57:51:5C:86:9E:A4:F1:DB:33:EC"
       ]
     }
   }
