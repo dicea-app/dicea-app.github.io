@@ -8,9 +8,24 @@
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; text-align: center; padding: 2rem; background: #f8f9fa; }
         .container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 400px; margin: 0 auto; }
         
-        /* Style pour l'image du logo */
-        .branding { margin-bottom: 1.5rem; }
-        .branding img { max-width: 180px; height: auto; } /* Tu peux ajuster la taille '180px' selon le rendu de ton logo */
+        /* Conteneur Flexbox pour aligner logo et wordmark côte à côte */
+        .branding { 
+            display: flex; 
+            align-items: center; /* Centre verticalement les deux éléments */
+            justify-content: center; /* Centre l'ensemble horizontalement */
+            gap: 12px; /* L'espace entre le logo et le wordmark */
+            margin-bottom: 1.5rem; 
+        }
+        
+        /* Tailles spécifiques pour différencier logo et wordmark */
+        .branding .logo { 
+            width: 50px; /* On force le logo à être un peu plus petit */
+            height: auto; 
+        }
+        .branding .wordmark { 
+            height: 28px; /* On gère le wordmark par sa hauteur pour qu'il s'aligne bien avec le logo */
+            width: auto; 
+        }
         
         h2 { margin-top: 0; color: #333; }
         p { color: #555; line-height: 1.5; }
@@ -24,9 +39,11 @@
 </head>
 <body>
     <div class="container">
-        <!-- Remplacement de l'emoji par le logo -->
+        
+        <!-- Le logo et le wordmark côte à côte -->
         <div class="branding">
-            <img src="logo.png" alt="Dicea Logo">
+            <img src="logo.png" alt="Logo Dicea" class="logo">
+            <img src="wordmark.png" alt="Dicea" class="wordmark">
         </div>
         
         <h2>Partie partagée</h2>
