@@ -8,51 +8,61 @@
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; text-align: center; padding: 2rem; background: #f8f9fa; }
         .container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 400px; margin: 0 auto; }
         
-        /* Conteneur Flexbox pour aligner logo et wordmark côte à côte */
+        /* Conteneur Flexbox pour logo et wordmark */
         .branding { 
             display: flex; 
-            align-items: center; /* Centre verticalement les deux éléments */
-            justify-content: center; /* Centre l'ensemble horizontalement */
-            gap: 12px; /* L'espace entre le logo et le wordmark */
+            align-items: center; 
+            justify-content: center; 
+            gap: 12px; 
             margin-bottom: 1.5rem; 
         }
-        
-        /* Tailles spécifiques pour différencier logo et wordmark */
-        .branding .logo { 
-            width: 50px; /* On force le logo à être un peu plus petit */
-            height: auto; 
-        }
-        .branding .wordmark { 
-            height: 28px; /* On gère le wordmark par sa hauteur pour qu'il s'aligne bien avec le logo */
-            width: auto; 
-        }
+        .branding .logo { width: 50px; height: auto; }
+        .branding .wordmark { height: 28px; width: auto; }
         
         h2 { margin-top: 0; color: #333; }
-        p { color: #555; line-height: 1.5; }
+        p { color: #555; line-height: 1.5; margin-bottom: 1.5rem; }
         
-        /* Styles des boutons */
-        .btn { display: block; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; margin-top: 1rem; font-weight: bold; transition: opacity 0.2s; }
-        .btn:hover { opacity: 0.9; }
-        .btn-apple { background: #000000; }
-        .btn-google { background: #01875f; }
+        /* Conteneur pour les badges officiels */
+        .store-badges {
+            display: flex;
+            flex-direction: column; /* Les empiler l'un sur l'autre */
+            align-items: center;
+            gap: 14px; /* Espace entre les deux badges */
+        }
+        .store-badges a {
+            transition: opacity 0.2s; /* Petit effet au clic */
+            display: inline-block;
+        }
+        .store-badges a:hover {
+            opacity: 0.8;
+        }
+        .store-badges img {
+            height: 48px; /* On force une hauteur identique pour que les deux boutons fassent la même taille */
+            width: auto;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         
-        <!-- Le logo et le wordmark côte à côte -->
+        <!-- Le logo et le wordmark -->
         <div class="branding">
             <img src="logo.png" alt="Logo Dicea" class="logo">
             <img src="wordmark.png" alt="Dicea" class="wordmark">
         </div>
         
         <h2>Partie partagée</h2>
-        <p>Un joueur souhaite partager les résultats d'une partie avec vous.</p>
-        <p>Pour l'importer dans vos statistiques, téléchargez l'application <strong>Dicea</strong>.</p>
+        <p>Un joueur souhaite partager les résultats d'une partie avec vous.<br>Pour l'importer, téléchargez l'application <strong>Dicea</strong>.</p>
         
-        <!-- Les vrais liens -->
-        <a href="https://testflight.apple.com/join/PpfPaDyx" class="btn btn-apple">Obtenir via TestFlight (iOS)</a>
-        <a href="https://play.google.com/store/apps/details?id=com.dicea.app" class="btn btn-google">Télécharger sur Google Play</a>
+        <!-- Les badges officiels -->
+        <div class="store-badges">
+            <a href="https://testflight.apple.com/join/PpfPaDyx">
+                <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Télécharger dans l'App Store">
+            </a>
+            <a href="https://play.google.com/store/apps/details?id=com.dicea.app">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Disponible sur Google Play">
+            </a>
+        </div>
     </div>
 </body>
 </html>
