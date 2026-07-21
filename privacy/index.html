@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="fr" id="html-doc">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Politique de Confidentialité - Dicea</title>
+    <!-- Script léger pour transformer ton Markdown en beau HTML automatiquement -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; padding: 2rem 1rem; background: #f8f9fa; color: #333; line-height: 1.6; }
+        
+        /* Conteneur principal (plus large que le QR code car c'est un document légal) */
+        .container { position: relative; background: white; padding: 3rem 2.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 800px; margin: 0 auto; text-align: left; }
+        
+        /* Bouton de langue (le même que sur ta page QR Code) */
+        .lang-btn { position: absolute; top: 16px; right: 16px; background: white; border: 1px solid #ccc; border-radius: 20px; padding: 6px 14px; font-size: 0.9rem; color: #555; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .lang-btn:hover { background: #f0f0f0; border-color: #aaa; }
+        
+        /* Mise en forme du document généré (Tableaux, citations, etc.) */
+        .markdown-content h1 { margin-top: 0; color: #111; font-size: 2rem; border-bottom: 2px solid #eee; padding-bottom: 0.5rem; }
+        .markdown-content h2 { margin-top: 2rem; color: #222; border-bottom: 1px solid #eee; padding-bottom: 0.3rem; }
+        .markdown-content h3 { margin-top: 1.5rem; color: #444; }
+        .markdown-content table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: 0.95rem; }
+        .markdown-content th, .markdown-content td { border: 1px solid #ddd; padding: 10px 12px; text-align: left; }
+        .markdown-content th { background-color: #f4f6f8; color: #333; }
+        .markdown-content blockquote { border-left: 4px solid #01875f; margin: 1.5rem 0; padding: 10px 15px; color: #555; background: #eefaf6; border-radius: 0 6px 6px 0; }
+        .markdown-content a { color: #007aff; text-decoration: none; }
+        .markdown-content a:hover { text-decoration: underline; }
+        .markdown-content code { background: #f4f4f4; padding: 2px 6px; border-radius: 4px; font-family: monospace; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Bouton pour changer de langue -->
+        <button id="lang-btn" class="lang-btn">🇬🇧 English</button>
+
+        <!-- C'est ici que le texte apparaîtra -->
+        <div id="content" class="markdown-content"></div>
+    </div>
+
+    <script>
+        // --- VOS DOCUMENTS OFFICIELS MARKDOWN ---
+        const policies = {
+            fr: `
+# Politique de Confidentialité — Dicea
+
+| Métadonnées | Valeur |
+| :--- | :--- |
+| **Application** | Dicea |
+| **Dernière mise à jour** | 20 juin 2026 |
+
+---
+
+## 1. Présentation
+
+**Dicea** est une application mobile gratuite destinée aux joueurs de jeux de société. Elle a été conçue pour respecter la vie privée de ses utilisateurs et fonctionne principalement hors ligne.
+
+* **Stockage local exclusif :** Vos données personnelles restent sur votre appareil. Votre collection de jeux, vos parties et vos scores, vos profils de joueurs (noms et photos) ainsi que vos préférences sont enregistrés localement, dans la mémoire de votre téléphone. Aucun serveur ne conserve de copie de ces informations.
+* **Sans compte ni publicité :** L'utilisation de l'application ne nécessite ni création de compte, ni adresse e-mail. L'application ne contient aucune publicité, aucun traceur publicitaire et ne procède à aucune revente de données.
+* **Flux réseau minimaux :** Les informations qui quittent votre appareil sont les requêtes techniques adressées à BoardGameGeek pour afficher les fiches de jeux, le téléchargement des images de jeux depuis le réseau de diffusion d'images de BoardGameGeek, et le texte des descriptions de jeux transmis à un service de traduction lorsque vous utilisez l'application en français. 
+
+🔒 **Nuance importante (Contenu vs Métadonnées) :** Le contenu de ces requêtes ne comporte aucune des données que vous avez saisies dans l'application : ni votre nom, ni vos profils de joueurs, ni vos statistiques. Cependant, comme toute connexion à Internet, ces requêtes transmettent obligatoirement des données techniques de connexion, telles que votre **adresse IP**, qui peuvent constituer une donnée personnelle au sens du RGPD. Elles sont utilisées uniquement pour acheminer la requête par les infrastructures intermédiaires et ne servent ni à vous identifier personnellement ni à établir un profil.
+
+---
+
+## 2. Responsable du traitement
+
+L'éditeur de l'application Dicea est responsable du traitement de vos données au sens du Règlement général sur la protection des données (RGPD).
+
+> 📋 **Informations sur l'éditeur :**
+> * **Éditeur :** GODINEAU Savinien
+> * **Statut :** Développeur individuel
+> * **Numéro d'identification :** Non applicable
+> * **Adresse de contact :** Ludiq.support@gmail.com
+
+Pour toute question relative à la présente politique ou à la gestion de vos données, vous pouvez nous écrire directement à l'adresse e-mail indiquée ci-dessus.
+
+---
+
+## 3. Données concernées
+
+Dicea agit comme un compagnon de jeu de table. Pour fonctionner, l'application traite des catégories de données bien précises, dont la très grande majorité ne quitte jamais votre terminal.
+
+### 3.1. Données stockées localement sur votre appareil
+Les données suivantes sont enregistrées exclusivement dans l'espace de stockage privé et cloisonné de l'application. Elles ne sont ni transmises à l'éditeur, ni accessibles par ce dernier ou par un tiers :
+* **Votre collection de jeux :** Jeux possédés, autres jeux, liste d'envies, extensions et favoris.
+* **Vos parties :** Sessions de jeu enregistrées, dates, durées, formats et joueurs présents.
+* **Vos scores et statistiques :** Résultats détaillés par joueur, historique et bilans graphiques.
+* **Profils de joueurs :** Les noms ou pseudonymes que vous saisissez manuellement et les photos ou avatars locaux que vous choisissez pour vos profils.
+* **Vos préférences :** Langue de l'interface, réglages d'affichage, filtres et mémoire de l'onglet Explorer.
+
+✏️ **Contrôle utilisateur :** Vous conservez le contrôle total de ces données. Vous pouvez les modifier ou les supprimer à tout moment directement dans l'application, ou les exporter vous-même au format **JSON**. La désinstallation de l'application efface définitivement et irréversible de toutes ces données de votre appareil.
+
+### 3.2. Données échangées avec des services tiers
+Certaines fonctionnalités connectées nécessitent une communication avec des services en ligne. Le détail rigoureux de ces échanges figure à l'**Article 5**.
+
+---
+
+## 4. Permissions de l'appareil
+
+L'application peut vous demander l'accès à certaines fonctions de votre système. Cet accès est systématiquement déclenché par une action explicite de votre part et reste strictement cantonné à sa finalité.
+
+| Permission | Usage dans Dicea | Transmission des données |
+| :--- | :--- | :--- |
+| **Photos & Appareil photo** | Permet de choisir un avatar pour un joueur ou pour votre profil. | L'image sélectionnée est copiée localement dans l'application. **Aucune photo n'est transmise à un serveur.** |
+| **Enregistrement Galerie** | Permet de sauvegarder dans votre stockage une image de bilan partageable que vous générez vous-même. | L'image est créée localement sur le téléphone et enregistrée uniquement à votre demande expresse. |
+| **Accès aux fichiers** | Permet d'exporter ou d'importer votre sauvegarde au format JSON via la fonction de partage native. | Vous choisissez vous-même le fichier concerné. L'application n'explore pas le reste de vos documents. |
+
+*Vous pouvez refuser ou révoquer ces permissions à tout moment dans les réglages de votre système d'exploitation. Le cas échéant, les fonctionnalités correspondantes seront simplement indisponibles.*
+
+---
+
+## 5. Services tiers et destinataires des données
+
+L'application s'appuie sur un nombre limité d'infrastructures pour fonctionner. Ce tableau détaille, pour chacune d'elles, la nature des flux, leur destinataire et leur finalité.
+
+| Service / Prestataire | Données transmises | Finalité des flux | Prestataire & Politique |
+| :--- | :--- | :--- | :--- |
+| **BoardGameGeek (API)** | Termes de recherche et identifiants des jeux consultés. *(Zéro donnée utilisateur)*. Requête via proxy Cloudflare. | Récupérer en temps réel les fiches techniques des jeux (nom, note, description, classements). | BoardGameGeek<br>🔗 [Politique de confidentialité](https://boardgamegeek.com/privacy) |
+| **Réseau d'images BGG** | Requête HTTP directe vers le domaine \`geekdo-images.com\`. Expose votre **adresse IP** et les visuels consultés. | Télécharger en direct sur votre écran les couvertures et vignettes des jeux de société. | Geekdo, LLC (États-Unis)<br>*(Flux direct sans passer par le proxy de l'éditeur)* |
+| **Catalogue de jeux** | Requêtes de lecture seule sur les classements publics (top 10000 BGG). *(Zéro donnée utilisateur)*. | Alimenter la fonctionnalité de découverte et de suggestions au sein de l'onglet **Explorer**. | Opéré par l'éditeur<br>*(Base hébergée chez Supabase, requêtes via Cloudflare)* |
+| **Service de traduction** | Texte brut de la description du jeu (en anglais). *(Zéro donnée utilisateur. Flux inactif si l'app est en anglais)*. | Traduction automatique instantanée des descriptions de fiches de jeux en français. | DeepL API<br>🔗 [Politique de confidentialité](https://www.deepl.com/privacy) |
+| **Hébergement technique** | Métadonnées de connexion standard (adresse IP notamment) nécessaires à l'acheminement du trafic. | Routage sécurisé (HTTPS) des requêtes de l'application et mise en cache de performance des données publiques. | Cloudflare Workers<br>🔗 [Politique de confidentialité](https://www.cloudflare.com/privacypolicy/) |
+
+### 🔒 Garantie d'absence de pistage
+Pour être parfaitement complet, l'application Dicea n'utilise aucun outil de mesure d'audience, aucun outil de pistage comportemental, aucun outil tiers de rapport de plantage (comme Firebase Crashlytics), aucun service de la suite Google Firebase, et aucune publicité.
+
+### 5.5. Protection assurée par les tiers
+Nous ne faisons appel qu'à des prestataires présentant des garanties appropriées en matière de protection des données. Lorsque des informations techniques ou des métadonnées de connexion transitent vers l'un de ces tiers, celui-ci est tenu de leur assurer un niveau de protection équivalent à celui décrit dans la présente politique et conforme aux obligations légales applicables.
+
+---
+
+## 6. Bases légales des traitements
+
+Conformément à l'**Article 6 du RGPD**, les traitements mis en œuvre reposent sur les bases légales suivantes :
+1. **Exécution du service / Contrat :** Le stockage local de votre collection, de vos parties, de vos profils de joueurs et de vos préférences est nécessaire pour vous fournir le service et les fonctionnalités que vous activez.
+2. **Intérêt légitime :** L'affichage des informations de jeux (incluant le téléchargement direct des images), l'interrogation du catalogue Explorer et la traduction automatisée répondent à notre intérêt légitime à vous offrir un confort de lecture et une expérience fluide, enrichie et localisée.
+3. **Consentement :** L'accès aux fonctionnalités matérielles de l'appareil (photos, appareil photo, galerie) repose exclusivement sur votre consentement, donné via la demande de permission native du système lors de l'action que vous initiez.
+
+---
+
+## 7. Transferts hors de l'Union européenne
+
+Selon les prestataires d'infrastructure utilisés, certaines des données de connexion techniques décrites à l'Article 5 (notamment l'adresse IP et les requêtes techniques de routage) sont traitées en dehors de l'Espace économique européen, en particulier aux États-Unis par les sociétés **Cloudflare, Inc.** et **Geekdo, LLC**.
+
+Ces transferts portent exclusivement sur ces métadonnées techniques indispensables à l'acheminement des flux, à l'exclusion stricte de toute donnée saisie par l'utilisateur. Ils sont rigoureusement encadrés par des garanties appropriées au sens du RGPD, notamment les **Clauses Contractuelles Types (CCT)** adoptées par la Commission européenne ainsi que les mécanismes de conformité propres à ces prestataires.
+
+---
+
+## 8. Durée de conservation
+
+* **Données locales :** Les données décrites à l'Article 3.1 restent stockées sur votre appareil tant que vous ne les supprimez pas manuellement et que l'application reste installée. Elles sont définitivement effacées lors de la désinstallation de Dicea.
+* **Requêtes réseau :** Les requêtes techniques adressées à BoardGameGeek, au réseau d'images, au catalogue, au service de traduction et aux proxies intermédiaires sont éphémères et ne sont rattachées à aucun profil utilisateur. Les caches de données publiques relatives aux jeux sont temporaires.
+
+---
+
+## 9. Vos droits
+
+Conformément au RGPD, vous disposez d'un droit d'accès, de rectification, d'effacement, de limitation, d'opposition et de portabilité concernant vos données.
+
+En raison de l'architecture décentralisée ("local-first") de Dicea, **vous pouvez exercer l'immense majorité de ces droits de manière totalement autonome**, sans notre intervention :
+* **Accès & Portabilité :** Vous pouvez consulter toutes vos données directement dans les écrans de l'application et les exporter au format JSON à tout moment.
+* **Rectification :** Vous pouvez modifier manuellement vos jeux, vos sessions de parties, vos scores et vos profils de joueurs directement dans les réglages.
+* **Effacement :** Vous pouvez supprimer un élément un par un, réinitialiser la mémoire locale de l'onglet Explorer, ou désinstaller l'application pour purger instantanément l'intégralité des enregistrements de votre terminal.
+
+Vous pouvez à tout moment **retirer un consentement** que vous avez précédemment accordé, par exemple en révoquant une permission dans les réglages système de votre appareil, ce qui rendra simplement les fonctionnalités associées indisponibles. Pour toute demande d'exercice de droit nécessitant une action de notre part, vous pouvez nous contacter à l'adresse **Ludiq.support@gmail.com**. Nous vous répondrons dans le délai légal d'un mois.
+
+Vous disposez également du droit d'introduire une réclamation auprès de l'autorité de contrôle compétente. En France, il s'agit de la **CNIL** (Commission nationale de l'informatique et des libertés) via son site [www.cnil.fr](https://www.cnil.fr).
+
+---
+
+## 10. Sécurité
+
+Vos données locales bénéficient des mécanismes de sécurité natifs du système d'exploitation de votre appareil, notamment le cloisonnement des applications (sandbox) et, si vous l'avez activé, le chiffrement matériel de l'appareil. Les échanges réseau décrits à l'Article 5 s'effectuent exclusivement au moyen de connexions chiffrées de bout en bout (**HTTPS**).
+
+*Conseil : Aucun système n'étant infaillible, nous vous recommandons vivement de sécuriser l'accès à votre téléphone (code de verrouillage, schéma ou authentification biométrique) et d'effectuer des exports JSON réguliers si vos statistiques vous sont précieuses.*
+
+---
+
+## 11. Protection des mineurs
+
+Dicea est une application tout public. Elle n'est pas destinée spécifiquement aux enfants et ne collectera jamais sciemment de données personnelles les concernant. Si vous estimez qu'un enfant nous a communiqué des données par e-mail, nous vous invitons à nous contacter pour que nous procédions à leur suppression.
+
+Les noms et avatars de joueurs que vous saisissez peuvent concerner des tiers (famille, amis, y compris des enfants). Ces informations **demeurent uniquement sur votre appareil**. En les saisissant, vous vous engagez à n'enregistrer que des informations que vous êtes légalement en droit de renseigner localement.
+
+---
+
+## 12. Modifications de la politique
+
+La présente politique de confidentialité peut être mise à jour afin de refléter une évolution de l'application ou des réglementations applicables. Toute évolution de cette nature fera l'objet d'une révision du présent document en amont de son entrée en vigueur. En cas de modification importante, nous l'indiquerons au sein de l'application ou sur la page d'hébergement web du document. La date de dernière mise à jour figurant en tête fait foi.
+
+---
+
+## 13. Contact
+
+Pour toute question relative à la présente politique ou à vos données :
+
+* **Adresse e-mail :** Ludiq.support@gmail.com
+* **Éditeur :** GODINEAU Savinien
+* **URL du document :** https://dicea-app.github.io/privacy/
+`,
+            en: `
+# Privacy Policy — Dicea
+
+| Metadata | Value |
+| :--- | :--- |
+| **Application** | Dicea |
+| **Last update** | June 20, 2026 |
+
+---
+
+## 1. Overview
+
+**Dicea** is a free mobile application for board game players. It has been designed to respect the privacy of its users and operates primarily offline.
+
+* **Exclusive local storage:** Your personal data remains on your device. Your game collection, plays and scores, player profiles (names and photos) and preferences are stored locally in your phone's memory. No server keeps a copy of this information.
+* **No account, no ads:** Using the application does not require an account creation or an email address. The app contains no advertising, no ad trackers, and does not sell any data.
+* **Minimal network flows:** The information that leaves your device consists of technical requests sent to BoardGameGeek to display game details, downloading game images from BoardGameGeek's image delivery network, and the text of game descriptions sent to a translation service when you use the application in French.
+
+🔒 **Important Nuance (Content vs Metadata):** The content of these requests does not include any of the data you entered in the application: neither your name, nor your player profiles, nor your statistics. However, like any connection to the Internet, these requests necessarily transmit technical connection data, such as your **IP address**, which may constitute personal data under the GDPR. They are used solely to route the request through intermediate infrastructures and are not used to personally identify you or to establish a profile.
+
+---
+
+## 2. Data Controller
+
+The publisher of the Dicea application is responsible for processing your data within the meaning of the General Data Protection Regulation (GDPR).
+
+> 📋 **Publisher Information:**
+> * **Publisher:** GODINEAU Savinien
+> * **Status:** Individual developer
+> * **Contact address:** Ludiq.support@gmail.com
+
+For any questions regarding this policy or the management of your data, you can write to us directly at the email address provided above.
+
+---
+
+## 3. Data Concerned
+
+Dicea acts as a tabletop companion. To operate, the app processes very specific categories of data, the vast majority of which never leaves your device.
+
+### 3.1. Data stored locally on your device
+The following data is recorded exclusively in the private and sandboxed storage space of the application. They are neither transmitted to the publisher, nor accessible by the latter or by a third party:
+* **Your game collection:** Owned games, other games, wishlist, expansions, and favorites.
+* **Your plays:** Logged game sessions, dates, durations, formats, and present players.
+* **Your scores and statistics:** Detailed results per player, history, and graphic summaries.
+* **Player profiles:** The names or pseudonyms you enter manually and the local photos or avatars you choose for your profiles.
+* **Your preferences:** Interface language, display settings, filters, and Explore tab memory.
+
+✏️ **User Control:** You retain full control over this data. You can modify or delete it at any time directly in the application, or export it yourself in **JSON** format. Uninstalling the application permanently and irreversibly erases all this data from your device.
+
+### 3.2. Data exchanged with third-party services
+Certain connected features require communication with online services. The rigorous detail of these exchanges is set out in **Article 5**.
+
+---
+
+## 4. Device Permissions
+
+The application may request access to certain functions of your system. This access is systematically triggered by an explicit action on your part and remains strictly confined to its purpose.
+
+| Permission | Usage in Dicea | Data Transmission |
+| :--- | :--- | :--- |
+| **Photos & Camera** | Allows you to choose an avatar for a player or for your profile. | The selected image is copied locally into the app. **No photo is transmitted to a server.** |
+| **Save to Gallery** | Allows you to save a shareable summary image that you generate yourself to your storage. | The image is created locally on the phone and saved only upon your express request. |
+| **File Access** | Allows you to export or import your backup in JSON format via the native sharing function. | You choose the file concerned yourself. The application does not explore the rest of your documents. |
+
+*You can refuse or revoke these permissions at any time in your operating system settings. If so, the corresponding features will simply be unavailable.*
+
+---
+
+## 5. Third-Party Services and Data Recipients
+
+The application relies on a limited number of infrastructures to function. This table details, for each of them, the nature of the flows, their recipient, and their purpose.
+
+| Service / Provider | Transmitted Data | Purpose of flows | Provider & Policy |
+| :--- | :--- | :--- | :--- |
+| **BoardGameGeek (API)** | Search terms and IDs of viewed games. *(Zero user data)*. Request via Cloudflare proxy. | Retrieve technical game sheets in real-time (name, rating, description, rankings). | BoardGameGeek<br>🔗 [Privacy Policy](https://boardgamegeek.com/privacy) |
+| **BGG Image Network** | Direct HTTP request to the domain \`geekdo-images.com\`. Exposes your **IP address** and viewed visuals. | Download board game covers and thumbnails directly to your screen. | Geekdo, LLC (USA)<br>*(Direct flow without going through the publisher's proxy)* |
+| **Game Catalog** | Read-only requests on public rankings (BGG top 10000). *(Zero user data)*. | Power the discovery and suggestions feature within the **Explore** tab. | Operated by the publisher<br>*(Database hosted at Supabase, requests via Cloudflare)* |
+| **Translation Service** | Raw text of the game description (in English). *(Zero user data. Flow inactive if app is in English)*. | Instant automatic translation of game sheet descriptions into French. | DeepL API<br>🔗 [Privacy Policy](https://www.deepl.com/privacy) |
+| **Technical Hosting** | Standard connection metadata (IP address in particular) required for traffic routing. | Secure routing (HTTPS) of app requests and performance caching of public data. | Cloudflare Workers<br>🔗 [Privacy Policy](https://www.cloudflare.com/privacypolicy/) |
+
+### 🔒 Guarantee of no tracking
+To be perfectly complete, the Dicea application does not use any audience measurement tools, any behavioral tracking tools, any third-party crash reporting tools (like Firebase Crashlytics), any services from the Google Firebase suite, and no advertising.
+
+### 5.5. Protection provided by third parties
+We only use providers that offer appropriate guarantees regarding data protection. When technical information or connection metadata transits to one of these third parties, they are required to ensure a level of protection equivalent to that described in this policy and in compliance with applicable legal obligations.
+
+---
+
+## 6. Legal Bases for Processing
+
+In accordance with **Article 6 of the GDPR**, the processing implemented is based on the following legal bases:
+1. **Performance of the service / Contract:** The local storage of your collection, your plays, your player profiles, and your preferences is necessary to provide you with the service and features you activate.
+2. **Legitimate interest:** Displaying game information (including direct download of images), querying the Explore catalog, and automated translation respond to our legitimate interest in offering you reading comfort and a smooth, enriched, and localized experience.
+3. **Consent:** Access to device hardware features (photos, camera, gallery) relies exclusively on your consent, given via the native system permission request during the action you initiate.
+
+---
+
+## 7. Transfers outside the European Union
+
+Depending on the infrastructure providers used, some of the technical connection data described in Article 5 (notably the IP address and technical routing requests) are processed outside the European Economic Area, in particular in the United States by **Cloudflare, Inc.** and **Geekdo, LLC**.
+
+These transfers relate exclusively to these technical metadata essential for routing flows, strictly excluding any data entered by the user. They are rigorously governed by appropriate safeguards within the meaning of the GDPR, notably the **Standard Contractual Clauses (SCCs)** adopted by the European Commission as well as the compliance mechanisms specific to these providers.
+
+---
+
+## 8. Retention Period
+
+* **Local data:** The data described in Article 3.1 remains stored on your device as long as you do not delete it manually and the app remains installed. It is permanently erased when uninstalling Dicea.
+* **Network requests:** Technical requests sent to BoardGameGeek, the image network, the catalog, the translation service, and intermediate proxies are ephemeral and are not attached to any user profile. Caches of public data related to games are temporary.
+
+---
+
+## 9. Your Rights
+
+In accordance with the GDPR, you have a right of access, rectification, erasure, limitation, opposition, and portability regarding your data.
+
+Due to the decentralized ("local-first") architecture of Dicea, **you can exercise the vast majority of these rights completely autonomously**, without our intervention:
+* **Access & Portability:** You can view all your data directly in the app screens and export them in JSON format at any time.
+* **Rectification:** You can manually modify your games, your play sessions, your scores, and your player profiles directly in the settings.
+* **Erasure:** You can delete an item one by one, reset the local memory of the Explore tab, or uninstall the app to instantly purge all records from your terminal.
+
+You can at any time **withdraw consent** that you have previously granted, for example by revoking a permission in your device's system settings, which will simply make the associated features unavailable. For any request to exercise a right requiring action on our part, you can contact us at the address **Ludiq.support@gmail.com**. We will respond to you within the legal period of one month.
+
+You also have the right to lodge a complaint with the competent supervisory authority. In France, this is the **CNIL** (Commission nationale de l'informatique et des libertés) via its website [www.cnil.fr](https://www.cnil.fr).
+
+---
+
+## 10. Security
+
+Your local data benefits from the native security mechanisms of your device's operating system, including application sandboxing and, if you have activated it, hardware encryption of the device. The network exchanges described in Article 5 are carried out exclusively using end-to-end encrypted connections (**HTTPS**).
+
+*Tip: Since no system is infallible, we strongly recommend that you secure access to your phone (lock code, pattern, or biometric authentication) and perform regular JSON exports if your statistics are precious to you.*
+
+---
+
+## 11. Protection of Minors
+
+Dicea is an application for all audiences. It is not specifically aimed at children and will never knowingly collect personal data concerning them. If you believe a child has communicated data to us by email, we invite you to contact us so that we can proceed with its deletion.
+
+The player names and avatars you enter may concern third parties (family, friends, including children). This information **remains solely on your device**. By entering them, you commit to only recording information that you are legally entitled to fill in locally.
+
+---
+
+## 12. Changes to the Policy
+
+This privacy policy may be updated to reflect a change in the application or applicable regulations. Any evolution of this nature will be subject to a revision of this document prior to its entry into force. In the event of a significant change, we will indicate it within the application or on the document's web hosting page. The date of last update appearing at the top is authentic.
+
+---
+
+## 13. Contact
+
+For any questions regarding this policy or your data:
+
+* **Email address:** Ludiq.support@gmail.com
+* **Publisher:** GODINEAU Savinien
+* **Document URL:** https://dicea-app.github.io/privacy/
+`
+        };
+
+        let currentLang = 'en';
+
+        function renderPolicy(lang) {
+            currentLang = lang;
+            
+            // On utilise la librairie "marked" pour transformer le markdown en HTML 
+            document.getElementById('content').innerHTML = marked.parse(policies[lang]);
+            
+            // Mise à jour de l'interface et du bouton selon la langue
+            if(lang === 'fr') {
+                document.title = "Politique de Confidentialité - Dicea";
+                document.getElementById('html-doc').lang = "fr";
+                document.getElementById('lang-btn').innerHTML = "🇬🇧 English";
+            } else {
+                document.title = "Privacy Policy - Dicea";
+                document.getElementById('html-doc').lang = "en";
+                document.getElementById('lang-btn').innerHTML = "🇫🇷 Français";
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            // Détection automatique de la langue au premier chargement
+            const userLang = navigator.language || navigator.userLanguage; 
+            renderPolicy(userLang.toLowerCase().startsWith('fr') ? 'fr' : 'en');
+
+            // Action du bouton
+            document.getElementById("lang-btn").addEventListener("click", () => {
+                renderPolicy(currentLang === 'en' ? 'fr' : 'en');
+            });
+        });
+    </script>
+</body>
+</html>
