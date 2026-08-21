@@ -183,11 +183,10 @@ p{margin:0 0 1em}
 .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.75rem;font-weight:750;
   letter-spacing:.11em;text-transform:uppercase;color:var(--brand);margin:0 0 9px}
 /* Deux filets, un de chaque côté : sur un titre centré, un seul filet à gauche
-   déséquilibre le bloc. Ils disparaissent en dessous de 700 px, où un sur-titre
-   un peu long passe sur deux lignes et laisse un filet pendre au milieu. */
+   déséquilibre le bloc. Ils restent visibles sur téléphone : le sur-titre y
+   conserve ainsi la même signature visuelle que sur ordinateur. */
 .eyebrow::before,.eyebrow::after{content:"";width:20px;height:2px;border-radius:2px;
   background:currentColor;flex:0 0 auto}
-@media (max-width:700px){.eyebrow::before,.eyebrow::after{display:none}}
 
 /* --- En-tête : marque bien visible, barre translucide au défilement -------
    Seul bloc du site à ne pas être centré, et volontairement : la marque tient
@@ -544,6 +543,20 @@ main{padding-bottom:72px;scroll-margin-top:calc(var(--head-h) + 20px)}
 .grid--decades{grid-template-columns:1fr;gap:20px}
 @media (min-width:560px){.grid--decades{grid-template-columns:repeat(2,1fr)}}
 @media (min-width:900px){.grid--decades{grid-template-columns:repeat(3,1fr)}}
+/* Le téléphone suit un étalon de deux jeux par rangée. La largeur est
+   calculée après l'espacement : trois cartes font donc 2 + 1 centrée grâce au
+   conteneur flex. Les décennies ne figurent volontairement pas ici, leurs
+   grandes tuiles illustrées restent seules sur leur rangée. */
+@media (max-width:559px){
+  .grid--bento{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .grid--games,.grid--games-lg{gap:12px}
+  .grid--games > li,.grid--games-lg > li{
+    flex:0 1 calc(50% - 6px);max-width:calc(50% - 6px)}
+  .tile{gap:8px;padding:16px 10px}
+  .tile .logo{width:44px;height:44px}
+  .awardblock{padding:16px 12px}
+  #history{display:none}
+}
 
 /* --- Tuile d'un prix ----------------------------------------------------- */
 .tile{position:relative;display:flex;flex-direction:column;align-items:center;
@@ -1198,7 +1211,7 @@ document.documentElement.classList.add("anim")}catch(e){}
 </script>
 <script type="application/json" id="ui-i18n">{"close":"Fermer l'image"}</script>
 <script type="speculationrules">{"prefetch":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/assets/*"}}]},"eagerness":"moderate"}]}</script>
-<script type="application/ld+json">[{"@context":"https://schema.org","@type":"ItemList","name":"Les jeux primés des années 2000","numberOfItems":76,"itemListOrder":"https://schema.org/ItemListOrderDescending","itemListElement":[{"@type":"ListItem","position":1,"url":"https://dicea-app.com/fr/jeu/dominion/","name":"Dominion"},{"@type":"ListItem","position":2,"url":"https://dicea-app.com/fr/jeu/the-magic-labyrinth/","name":"Le Labyrinthe magique"},{"@type":"ListItem","position":3,"url":"https://dicea-app.com/fr/jeu/dixit/","name":"Dixit"},{"@type":"ListItem","position":4,"url":"https://dicea-app.com/fr/jeu/chateau-roquefort/","name":"Château Roquefort"},{"@type":"ListItem","position":5,"url":"https://dicea-app.com/fr/jeu/dominion/","name":"Dominion"},{"@type":"ListItem","position":6,"url":"https://dicea-app.com/fr/jeu/le-havre/","name":"Le Havre"},{"@type":"ListItem","position":7,"url":"https://dicea-app.com/fr/jeu/pandemic/","name":"Pandémie"},{"@type":"ListItem","position":8,"url":"https://dicea-app.com/fr/jeu/mirror-mansion/","name":"Victor et le Château aux 1000 Miroirs"},{"@type":"ListItem","position":9,"url":"https://dicea-app.com/fr/jeu/dominion/","name":"Dominion"},{"@type":"ListItem","position":10,"url":"https://dicea-app.com/fr/jeu/keltis/","name":"Keltis"},{"@type":"ListItem","position":11,"url":"https://dicea-app.com/fr/jeu/wer-war-s/","name":"Wer War's?"},{"@type":"ListItem","position":12,"url":"https://dicea-app.com/fr/jeu/marrakech/","name":"Marrakech"},{"@type":"ListItem","position":13,"url":"https://dicea-app.com/fr/jeu/castle-knights/","name":"Chevaliers de la tour"},{"@type":"ListItem","position":14,"url":"https://dicea-app.com/fr/jeu/agricola/","name":"Agricola"},{"@type":"ListItem","position":15,"url":"https://dicea-app.com/fr/jeu/stone-age/","name":"L'Âge de Pierre"},{"@type":"ListItem","position":16,"url":"https://dicea-app.com/fr/jeu/cuba/","name":"Cuba"},{"@type":"ListItem","position":17,"url":"https://dicea-app.com/fr/jeu/wer-war-s/","name":"Wer War's?"},{"@type":"ListItem","position":18,"url":"https://dicea-app.com/fr/jeu/agricola/","name":"Agricola"},{"@type":"ListItem","position":19,"url":"https://dicea-app.com/fr/jeu/zooloretto/","name":"Zooloretto"},{"@type":"ListItem","position":20,"url":"https://dicea-app.com/fr/jeu/beppo-der-bock/","name":"Beppo le bouc"},{"@type":"ListItem","position":21,"url":"https://dicea-app.com/fr/jeu/wicked-witches-way/","name":"Du balai !"},{"@type":"ListItem","position":22,"url":"https://dicea-app.com/fr/jeu/nacht-der-magier/","name":"La Nuit des Magiciens"},{"@type":"ListItem","position":23,"url":"https://dicea-app.com/fr/jeu/the-pillars-of-the-earth/","name":"Les Piliers de la Terre"},{"@type":"ListItem","position":24,"url":"https://dicea-app.com/fr/jeu/notre-dame/","name":"Notre Dame"},{"@type":"ListItem","position":25,"url":"https://dicea-app.com/fr/jeu/vikings/","name":"Vikings"},{"@type":"ListItem","position":26,"url":"https://dicea-app.com/fr/jeu/chateau-roquefort/","name":"Château Roquefort"},{"@type":"ListItem","position":27,"url":"https://dicea-app.com/fr/jeu/shogun/","name":"Shogun"},{"@type":"ListItem","position":28,"url":"https://dicea-app.com/fr/jeu/thurn-and-taxis/","name":"Thurn et Taxis : L'Aventure postale"},{"@type":"ListItem","position":29,"url":"https://dicea-app.com/fr/jeu/der-schwarze-pirat/","name":"À l'abordage"},{"@type":"ListItem","position":30,"url":"https://dicea-app.com/fr/jeu/time-s-up/","name":"Time's Up!"},{"@type":"ListItem","position":31,"url":"https://dicea-app.com/fr/jeu/splash-attack/","name":"Splash Attack"},{"@type":"ListItem","position":32,"url":"https://dicea-app.com/fr/jeu/caylus/","name":"Caylus"},{"@type":"ListItem","position":33,"url":"https://dicea-app.com/fr/jeu/thurn-and-taxis/","name":"Thurn et Taxis : L'Aventure postale"},{"@type":"ListItem","position":34,"url":"https://dicea-app.com/fr/jeu/antike/","name":"Antike"},{"@type":"ListItem","position":35,"url":"https://dicea-app.com/fr/jeu/nacht-der-magier/","name":"La Nuit des Magiciens"},{"@type":"ListItem","position":36,"url":"https://dicea-app.com/fr/jeu/caylus/","name":"Caylus"},{"@type":"ListItem","position":37,"url":"https://dicea-app.com/fr/jeu/niagara/","name":"Niagara"},{"@type":"ListItem","position":38,"url":"https://dicea-app.com/fr/jeu/das-kleine-gespenst/","name":"Das Kleine Gespenst"},{"@type":"ListItem","position":39,"url":"https://dicea-app.com/fr/jeu/ticket-to-ride/","name":"Les Aventuriers du Rail"},{"@type":"ListItem","position":40,"url":"https://dicea-app.com/fr/jeu/louis-xiv/","name":"Louis XIV"},{"@type":"ListItem","position":41,"url":"https://dicea-app.com/fr/jeu/niagara/","name":"Niagara"},{"@type":"ListItem","position":42,"url":"https://dicea-app.com/fr/jeu/manila/","name":"Manila"},{"@type":"ListItem","position":43,"url":"https://dicea-app.com/fr/jeu/akaba/","name":"Akaba"},{"@type":"ListItem","position":44,"url":"https://dicea-app.com/fr/jeu/ticket-to-ride/","name":"Les Aventuriers du Rail"},{"@type":"ListItem","position":45,"url":"https://dicea-app.com/fr/jeu/spooky-stairs/","name":"L'Escalier hanté"},{"@type":"ListItem","position":46,"url":"https://dicea-app.com/fr/jeu/saint-petersburg/","name":"Saint Petersburg"},{"@type":"ListItem","position":47,"url":"https://dicea-app.com/fr/jeu/san-juan/","name":"San Juan"},{"@type":"ListItem","position":48,"url":"https://dicea-app.com/fr/jeu/goa/","name":"Goa"},{"@type":"ListItem","position":49,"url":"https://dicea-app.com/fr/jeu/dawn-under/","name":"La Danse des vampires"},{"@type":"ListItem","position":50,"url":"https://dicea-app.com/fr/jeu/alhambra/","name":"Alhambra"},{"@type":"ListItem","position":51,"url":"https://dicea-app.com/fr/jeu/viva-mouse/","name":"Viva Topo!"},{"@type":"ListItem","position":52,"url":"https://dicea-app.com/fr/jeu/alhambra/","name":"Alhambra"},{"@type":"ListItem","position":53,"url":"https://dicea-app.com/fr/jeu/amun-re/","name":"Amun-Re"},{"@type":"ListItem","position":54,"url":"https://dicea-app.com/fr/jeu/alhambra/","name":"Alhambra"},{"@type":"ListItem","position":55,"url":"https://dicea-app.com/fr/jeu/clans/","name":"Clans"},{"@type":"ListItem","position":56,"url":"https://dicea-app.com/fr/jeu/schloss-schlotterstein/","name":"À l'école des fantômes"},{"@type":"ListItem","position":57,"url":"https://dicea-app.com/fr/jeu/villa-paletti/","name":"Villa Paletti"},{"@type":"ListItem","position":58,"url":"https://dicea-app.com/fr/jeu/the-ladybug-s-costume-party/","name":"Le Bal masqué des coccinelles"},{"@type":"ListItem","position":59,"url":"https://dicea-app.com/fr/jeu/bakari/","name":"Bakari"},{"@type":"ListItem","position":60,"url":"https://dicea-app.com/fr/jeu/puerto-rico/","name":"Puerto Rico"},{"@type":"ListItem","position":61,"url":"https://dicea-app.com/fr/jeu/transamerica/","name":"TransAmerica"},{"@type":"ListItem","position":62,"url":"https://dicea-app.com/fr/jeu/dschunke/","name":"Dschunke"},{"@type":"ListItem","position":63,"url":"https://dicea-app.com/fr/jeu/highly-suspect/","name":"Le Détective Malin"},{"@type":"ListItem","position":64,"url":"https://dicea-app.com/fr/jeu/carcassonne/","name":"Carcassonne"},{"@type":"ListItem","position":65,"url":"https://dicea-app.com/fr/jeu/klondike/","name":"Klondike"},{"@type":"ListItem","position":66,"url":"https://dicea-app.com/fr/jeu/blokus/","name":"Blokus"},{"@type":"ListItem","position":67,"url":"https://dicea-app.com/fr/jeu/carcassonne/","name":"Carcassonne"},{"@type":"ListItem","position":68,"url":"https://dicea-app.com/fr/jeu/medina/","name":"Medina"},{"@type":"ListItem","position":69,"url":"https://dicea-app.com/fr/jeu/genoa/","name":"Genoa"},{"@type":"ListItem","position":70,"url":"https://dicea-app.com/fr/jeu/zapp-zerapp/","name":"Tic Tac Troll"},{"@type":"ListItem","position":71,"url":"https://dicea-app.com/fr/jeu/torres/","name":"Torres"},{"@type":"ListItem","position":72,"url":"https://dicea-app.com/fr/jeu/kahuna/","name":"Kahuna"},{"@type":"ListItem","position":73,"url":"https://dicea-app.com/fr/jeu/taj-mahal/","name":"Taj Mahal"},{"@type":"ListItem","position":74,"url":"https://dicea-app.com/fr/jeu/torres/","name":"Torres"},{"@type":"ListItem","position":75,"url":"https://dicea-app.com/fr/jeu/the-princes-of-florence/","name":"Les Princes de Florence"},{"@type":"ListItem","position":76,"url":"https://dicea-app.com/fr/jeu/pete-the-pirate/","name":"Pat le Pirate"}]},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Accueil","item":"https://dicea-app.com/fr/"},{"@type":"ListItem","position":2,"name":"Par année"},{"@type":"ListItem","position":3,"name":"Années 2000"}]}]</script>
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"ItemList","name":"Les jeux primés des années 2000","numberOfItems":76,"itemListOrder":"https://schema.org/ItemListOrderDescending","itemListElement":[{"@type":"ListItem","position":1,"url":"https://dicea-app.com/fr/jeu/dixit/","name":"Dixit"},{"@type":"ListItem","position":2,"url":"https://dicea-app.com/fr/jeu/chateau-roquefort/","name":"Château Roquefort"},{"@type":"ListItem","position":3,"url":"https://dicea-app.com/fr/jeu/dominion/","name":"Dominion"},{"@type":"ListItem","position":4,"url":"https://dicea-app.com/fr/jeu/the-magic-labyrinth/","name":"Le Labyrinthe magique"},{"@type":"ListItem","position":5,"url":"https://dicea-app.com/fr/jeu/dominion/","name":"Dominion"},{"@type":"ListItem","position":6,"url":"https://dicea-app.com/fr/jeu/le-havre/","name":"Le Havre"},{"@type":"ListItem","position":7,"url":"https://dicea-app.com/fr/jeu/pandemic/","name":"Pandémie"},{"@type":"ListItem","position":8,"url":"https://dicea-app.com/fr/jeu/mirror-mansion/","name":"Victor et le Château aux 1000 Miroirs"},{"@type":"ListItem","position":9,"url":"https://dicea-app.com/fr/jeu/dominion/","name":"Dominion"},{"@type":"ListItem","position":10,"url":"https://dicea-app.com/fr/jeu/marrakech/","name":"Marrakech"},{"@type":"ListItem","position":11,"url":"https://dicea-app.com/fr/jeu/castle-knights/","name":"Chevaliers de la tour"},{"@type":"ListItem","position":12,"url":"https://dicea-app.com/fr/jeu/keltis/","name":"Keltis"},{"@type":"ListItem","position":13,"url":"https://dicea-app.com/fr/jeu/wer-war-s/","name":"Wer War's?"},{"@type":"ListItem","position":14,"url":"https://dicea-app.com/fr/jeu/agricola/","name":"Agricola"},{"@type":"ListItem","position":15,"url":"https://dicea-app.com/fr/jeu/stone-age/","name":"L'Âge de Pierre"},{"@type":"ListItem","position":16,"url":"https://dicea-app.com/fr/jeu/cuba/","name":"Cuba"},{"@type":"ListItem","position":17,"url":"https://dicea-app.com/fr/jeu/wer-war-s/","name":"Wer War's?"},{"@type":"ListItem","position":18,"url":"https://dicea-app.com/fr/jeu/agricola/","name":"Agricola"},{"@type":"ListItem","position":19,"url":"https://dicea-app.com/fr/jeu/wicked-witches-way/","name":"Du balai !"},{"@type":"ListItem","position":20,"url":"https://dicea-app.com/fr/jeu/nacht-der-magier/","name":"La Nuit des Magiciens"},{"@type":"ListItem","position":21,"url":"https://dicea-app.com/fr/jeu/zooloretto/","name":"Zooloretto"},{"@type":"ListItem","position":22,"url":"https://dicea-app.com/fr/jeu/beppo-der-bock/","name":"Beppo le bouc"},{"@type":"ListItem","position":23,"url":"https://dicea-app.com/fr/jeu/the-pillars-of-the-earth/","name":"Les Piliers de la Terre"},{"@type":"ListItem","position":24,"url":"https://dicea-app.com/fr/jeu/notre-dame/","name":"Notre Dame"},{"@type":"ListItem","position":25,"url":"https://dicea-app.com/fr/jeu/vikings/","name":"Vikings"},{"@type":"ListItem","position":26,"url":"https://dicea-app.com/fr/jeu/chateau-roquefort/","name":"Château Roquefort"},{"@type":"ListItem","position":27,"url":"https://dicea-app.com/fr/jeu/shogun/","name":"Shogun"},{"@type":"ListItem","position":28,"url":"https://dicea-app.com/fr/jeu/time-s-up/","name":"Time's Up!"},{"@type":"ListItem","position":29,"url":"https://dicea-app.com/fr/jeu/splash-attack/","name":"Splash Attack"},{"@type":"ListItem","position":30,"url":"https://dicea-app.com/fr/jeu/thurn-and-taxis/","name":"Thurn et Taxis : L'Aventure postale"},{"@type":"ListItem","position":31,"url":"https://dicea-app.com/fr/jeu/der-schwarze-pirat/","name":"À l'abordage"},{"@type":"ListItem","position":32,"url":"https://dicea-app.com/fr/jeu/caylus/","name":"Caylus"},{"@type":"ListItem","position":33,"url":"https://dicea-app.com/fr/jeu/thurn-and-taxis/","name":"Thurn et Taxis : L'Aventure postale"},{"@type":"ListItem","position":34,"url":"https://dicea-app.com/fr/jeu/antike/","name":"Antike"},{"@type":"ListItem","position":35,"url":"https://dicea-app.com/fr/jeu/nacht-der-magier/","name":"La Nuit des Magiciens"},{"@type":"ListItem","position":36,"url":"https://dicea-app.com/fr/jeu/caylus/","name":"Caylus"},{"@type":"ListItem","position":37,"url":"https://dicea-app.com/fr/jeu/ticket-to-ride/","name":"Les Aventuriers du Rail"},{"@type":"ListItem","position":38,"url":"https://dicea-app.com/fr/jeu/niagara/","name":"Niagara"},{"@type":"ListItem","position":39,"url":"https://dicea-app.com/fr/jeu/das-kleine-gespenst/","name":"Das Kleine Gespenst"},{"@type":"ListItem","position":40,"url":"https://dicea-app.com/fr/jeu/louis-xiv/","name":"Louis XIV"},{"@type":"ListItem","position":41,"url":"https://dicea-app.com/fr/jeu/niagara/","name":"Niagara"},{"@type":"ListItem","position":42,"url":"https://dicea-app.com/fr/jeu/manila/","name":"Manila"},{"@type":"ListItem","position":43,"url":"https://dicea-app.com/fr/jeu/akaba/","name":"Akaba"},{"@type":"ListItem","position":44,"url":"https://dicea-app.com/fr/jeu/ticket-to-ride/","name":"Les Aventuriers du Rail"},{"@type":"ListItem","position":45,"url":"https://dicea-app.com/fr/jeu/spooky-stairs/","name":"L'Escalier hanté"},{"@type":"ListItem","position":46,"url":"https://dicea-app.com/fr/jeu/saint-petersburg/","name":"Saint Petersburg"},{"@type":"ListItem","position":47,"url":"https://dicea-app.com/fr/jeu/san-juan/","name":"San Juan"},{"@type":"ListItem","position":48,"url":"https://dicea-app.com/fr/jeu/goa/","name":"Goa"},{"@type":"ListItem","position":49,"url":"https://dicea-app.com/fr/jeu/dawn-under/","name":"La Danse des vampires"},{"@type":"ListItem","position":50,"url":"https://dicea-app.com/fr/jeu/alhambra/","name":"Alhambra"},{"@type":"ListItem","position":51,"url":"https://dicea-app.com/fr/jeu/alhambra/","name":"Alhambra"},{"@type":"ListItem","position":52,"url":"https://dicea-app.com/fr/jeu/viva-mouse/","name":"Viva Topo!"},{"@type":"ListItem","position":53,"url":"https://dicea-app.com/fr/jeu/amun-re/","name":"Amun-Re"},{"@type":"ListItem","position":54,"url":"https://dicea-app.com/fr/jeu/alhambra/","name":"Alhambra"},{"@type":"ListItem","position":55,"url":"https://dicea-app.com/fr/jeu/clans/","name":"Clans"},{"@type":"ListItem","position":56,"url":"https://dicea-app.com/fr/jeu/schloss-schlotterstein/","name":"À l'école des fantômes"},{"@type":"ListItem","position":57,"url":"https://dicea-app.com/fr/jeu/bakari/","name":"Bakari"},{"@type":"ListItem","position":58,"url":"https://dicea-app.com/fr/jeu/villa-paletti/","name":"Villa Paletti"},{"@type":"ListItem","position":59,"url":"https://dicea-app.com/fr/jeu/the-ladybug-s-costume-party/","name":"Le Bal masqué des coccinelles"},{"@type":"ListItem","position":60,"url":"https://dicea-app.com/fr/jeu/puerto-rico/","name":"Puerto Rico"},{"@type":"ListItem","position":61,"url":"https://dicea-app.com/fr/jeu/transamerica/","name":"TransAmerica"},{"@type":"ListItem","position":62,"url":"https://dicea-app.com/fr/jeu/dschunke/","name":"Dschunke"},{"@type":"ListItem","position":63,"url":"https://dicea-app.com/fr/jeu/highly-suspect/","name":"Le Détective Malin"},{"@type":"ListItem","position":64,"url":"https://dicea-app.com/fr/jeu/blokus/","name":"Blokus"},{"@type":"ListItem","position":65,"url":"https://dicea-app.com/fr/jeu/carcassonne/","name":"Carcassonne"},{"@type":"ListItem","position":66,"url":"https://dicea-app.com/fr/jeu/klondike/","name":"Klondike"},{"@type":"ListItem","position":67,"url":"https://dicea-app.com/fr/jeu/carcassonne/","name":"Carcassonne"},{"@type":"ListItem","position":68,"url":"https://dicea-app.com/fr/jeu/medina/","name":"Medina"},{"@type":"ListItem","position":69,"url":"https://dicea-app.com/fr/jeu/genoa/","name":"Genoa"},{"@type":"ListItem","position":70,"url":"https://dicea-app.com/fr/jeu/zapp-zerapp/","name":"Tic Tac Troll"},{"@type":"ListItem","position":71,"url":"https://dicea-app.com/fr/jeu/kahuna/","name":"Kahuna"},{"@type":"ListItem","position":72,"url":"https://dicea-app.com/fr/jeu/torres/","name":"Torres"},{"@type":"ListItem","position":73,"url":"https://dicea-app.com/fr/jeu/taj-mahal/","name":"Taj Mahal"},{"@type":"ListItem","position":74,"url":"https://dicea-app.com/fr/jeu/torres/","name":"Torres"},{"@type":"ListItem","position":75,"url":"https://dicea-app.com/fr/jeu/the-princes-of-florence/","name":"Les Princes de Florence"},{"@type":"ListItem","position":76,"url":"https://dicea-app.com/fr/jeu/pete-the-pirate/","name":"Pat le Pirate"}]},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Accueil","item":"https://dicea-app.com/fr/"},{"@type":"ListItem","position":2,"name":"Par année"},{"@type":"ListItem","position":3,"name":"Années 2000"}]}]</script>
 </head>
 <body>
 <a class="skip" href="#main">Aller au contenu</a>
@@ -1228,8 +1241,8 @@ document.documentElement.classList.add("anim")}catch(e){}
 <div class="wrap">
 <ul>
 <li><a href="/fr/">Accueil</a></li>
-<li><a href="/fr/prix/spiel-des-jahres/">Spiel des Jahres</a></li>
 <li><a href="/fr/prix/as-dor/">As d&#39;Or</a></li>
+<li><a href="/fr/prix/spiel-des-jahres/">Spiel des Jahres</a></li>
 <li><a href="/fr/prix/deutscher-spiele-preis/">Deutscher Spiele Preis</a></li>
 <li><a href="/fr/prix/golden-geek/">Golden Geek Awards</a></li>
 <li><a href="/fr/meilleurs-jeux/">Meilleurs jeux</a></li>
@@ -1254,42 +1267,13 @@ document.documentElement.classList.add("anim")}catch(e){}
 <span class="y"><a href="/fr/annee/2009/">2009</a></span>
 <span class="sub">9 récompenses</span>
 </div>
-<div class="rows" data-n="4"><div class="tl-cat" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">
-<p class="tl-cat-name"><a href="/fr/prix/spiel-des-jahres/2009/">Spiel des Jahres</a></p>
-<ul class="podium">
-<li>
-<a href="/fr/jeu/dominion/">
-<span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/j6iQpZ4XkemZP07HNCODBA__small/img/B2u2ghwlmI_qsUtCwuvcbnBcIqU=/fit-in/200x150/filters:strip_icc()/pic394356.jpg" alt="" aria-hidden="true" width="66" height="66" fetchpriority="high" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/j6iQpZ4XkemZP07HNCODBA__small/img/B2u2ghwlmI_qsUtCwuvcbnBcIqU=/fit-in/200x150/filters:strip_icc()/pic394356.jpg" alt="Jaquette du jeu Dominion" width="66" height="66" fetchpriority="high" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
-<span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
-</span>
-<span class="body">
-<span class="name">Dominion</span>
-<span class="meta"><span>2008</span><span>Donald X. Vaccarino</span><span>★ 7.6</span></span>
-</span>
-</a>
-</li>
-<li>
-<a href="/fr/jeu/the-magic-labyrinth/">
-<span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/XdRFJ8oqpUnDSN4AnIO5KA__small/img/Aop_DugN6rEE_v0PKOsm0fxEC6w=/fit-in/200x150/filters:strip_icc()/pic6961974.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/XdRFJ8oqpUnDSN4AnIO5KA__small/img/Aop_DugN6rEE_v0PKOsm0fxEC6w=/fit-in/200x150/filters:strip_icc()/pic6961974.jpg" alt="Jaquette du jeu Le Labyrinthe magique" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
-<span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
-</span>
-<span class="body">
-<span class="name">Le Labyrinthe magique</span>
-<span class="meta"><span>2009</span><span>Dirk Baumann</span><span>★ 6.8</span></span>
-</span>
-</a>
-</li>
-</ul>
-</div>
-<div class="tl-cat" style="--accent:var(--as-dor);--accent-bg:var(--as-dor-bg);--accent-ink:var(--as-dor-ink)">
+<div class="rows" data-n="4"><div class="tl-cat" style="--accent:var(--as-dor);--accent-bg:var(--as-dor-bg);--accent-ink:var(--as-dor-ink)">
 <p class="tl-cat-name"><a href="/fr/prix/as-dor/2009/">As d&#39;Or</a></p>
 <ul class="podium">
 <li>
 <a href="/fr/jeu/dixit/">
 <span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/J0PlHArkZDJ57H-brXW2Fw__small/img/QVwPXskFikQwBQlrdLJBAiRGgdg=/fit-in/200x150/filters:strip_icc()/pic6738336.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/J0PlHArkZDJ57H-brXW2Fw__small/img/QVwPXskFikQwBQlrdLJBAiRGgdg=/fit-in/200x150/filters:strip_icc()/pic6738336.jpg" alt="Jaquette du jeu Dixit" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/J0PlHArkZDJ57H-brXW2Fw__small/img/QVwPXskFikQwBQlrdLJBAiRGgdg=/fit-in/200x150/filters:strip_icc()/pic6738336.jpg" alt="" aria-hidden="true" width="66" height="66" fetchpriority="high" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/J0PlHArkZDJ57H-brXW2Fw__small/img/QVwPXskFikQwBQlrdLJBAiRGgdg=/fit-in/200x150/filters:strip_icc()/pic6738336.jpg" alt="Jaquette du jeu Dixit" width="66" height="66" fetchpriority="high" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
 <span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
 </span>
 <span class="body">
@@ -1307,6 +1291,35 @@ document.documentElement.classList.add("anim")}catch(e){}
 <span class="body">
 <span class="name">Château Roquefort</span>
 <span class="meta"><span>2007</span><span>Jens-Peter Schliemann</span><span>★ 6.9</span></span>
+</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="tl-cat" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">
+<p class="tl-cat-name"><a href="/fr/prix/spiel-des-jahres/2009/">Spiel des Jahres</a></p>
+<ul class="podium">
+<li>
+<a href="/fr/jeu/dominion/">
+<span class="shot">
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/j6iQpZ4XkemZP07HNCODBA__small/img/B2u2ghwlmI_qsUtCwuvcbnBcIqU=/fit-in/200x150/filters:strip_icc()/pic394356.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/j6iQpZ4XkemZP07HNCODBA__small/img/B2u2ghwlmI_qsUtCwuvcbnBcIqU=/fit-in/200x150/filters:strip_icc()/pic394356.jpg" alt="Jaquette du jeu Dominion" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
+</span>
+<span class="body">
+<span class="name">Dominion</span>
+<span class="meta"><span>2008</span><span>Donald X. Vaccarino</span><span>★ 7.6</span></span>
+</span>
+</a>
+</li>
+<li>
+<a href="/fr/jeu/the-magic-labyrinth/">
+<span class="shot">
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/XdRFJ8oqpUnDSN4AnIO5KA__small/img/Aop_DugN6rEE_v0PKOsm0fxEC6w=/fit-in/200x150/filters:strip_icc()/pic6961974.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/XdRFJ8oqpUnDSN4AnIO5KA__small/img/Aop_DugN6rEE_v0PKOsm0fxEC6w=/fit-in/200x150/filters:strip_icc()/pic6961974.jpg" alt="Jaquette du jeu Le Labyrinthe magique" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
+</span>
+<span class="body">
+<span class="name">Le Labyrinthe magique</span>
+<span class="meta"><span>2009</span><span>Dirk Baumann</span><span>★ 6.8</span></span>
 </span>
 </a>
 </li>
@@ -1365,36 +1378,7 @@ document.documentElement.classList.add("anim")}catch(e){}
 <span class="y"><a href="/fr/annee/2008/">2008</a></span>
 <span class="sub">9 récompenses</span>
 </div>
-<div class="rows" data-n="4"><div class="tl-cat" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">
-<p class="tl-cat-name"><a href="/fr/prix/spiel-des-jahres/2008/">Spiel des Jahres</a></p>
-<ul class="podium">
-<li>
-<a href="/fr/jeu/keltis/">
-<span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/GnKS0zE-EkuYfCrEUIlfzA__small/img/7qofFSLH0zgMMtQFcqxfiwDM-xg=/fit-in/200x150/filters:strip_icc()/pic382457.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/GnKS0zE-EkuYfCrEUIlfzA__small/img/7qofFSLH0zgMMtQFcqxfiwDM-xg=/fit-in/200x150/filters:strip_icc()/pic382457.jpg" alt="Jaquette du jeu Keltis" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
-<span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
-</span>
-<span class="body">
-<span class="name">Keltis</span>
-<span class="meta"><span>2008</span><span>Reiner Knizia</span><span>★ 6.4</span></span>
-</span>
-</a>
-</li>
-<li>
-<a href="/fr/jeu/wer-war-s/">
-<span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/riYUqmmTh0upd6GvCrpH8A__small/img/goUEIpNu2VcH6eOCqZo-kZTsLXI=/fit-in/200x150/filters:strip_icc()/pic1051067.png" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/riYUqmmTh0upd6GvCrpH8A__small/img/goUEIpNu2VcH6eOCqZo-kZTsLXI=/fit-in/200x150/filters:strip_icc()/pic1051067.png" alt="Jaquette du jeu Wer War&#39;s?" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
-<span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
-</span>
-<span class="body">
-<span class="name">Wer War&#39;s?</span>
-<span class="meta"><span>2006</span><span>(Uncredited)</span><span>★ 6.1</span></span>
-</span>
-</a>
-</li>
-</ul>
-</div>
-<div class="tl-cat" style="--accent:var(--as-dor);--accent-bg:var(--as-dor-bg);--accent-ink:var(--as-dor-ink)">
+<div class="rows" data-n="4"><div class="tl-cat" style="--accent:var(--as-dor);--accent-bg:var(--as-dor-bg);--accent-ink:var(--as-dor-ink)">
 <p class="tl-cat-name"><a href="/fr/prix/as-dor/2008/">As d&#39;Or</a></p>
 <ul class="podium">
 <li>
@@ -1418,6 +1402,35 @@ document.documentElement.classList.add("anim")}catch(e){}
 <span class="body">
 <span class="name">Chevaliers de la tour</span>
 <span class="meta"><span>2007</span><span>Christian Tiggemann</span><span>★ 6.5</span></span>
+</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="tl-cat" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">
+<p class="tl-cat-name"><a href="/fr/prix/spiel-des-jahres/2008/">Spiel des Jahres</a></p>
+<ul class="podium">
+<li>
+<a href="/fr/jeu/keltis/">
+<span class="shot">
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/GnKS0zE-EkuYfCrEUIlfzA__small/img/7qofFSLH0zgMMtQFcqxfiwDM-xg=/fit-in/200x150/filters:strip_icc()/pic382457.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/GnKS0zE-EkuYfCrEUIlfzA__small/img/7qofFSLH0zgMMtQFcqxfiwDM-xg=/fit-in/200x150/filters:strip_icc()/pic382457.jpg" alt="Jaquette du jeu Keltis" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
+</span>
+<span class="body">
+<span class="name">Keltis</span>
+<span class="meta"><span>2008</span><span>Reiner Knizia</span><span>★ 6.4</span></span>
+</span>
+</a>
+</li>
+<li>
+<a href="/fr/jeu/wer-war-s/">
+<span class="shot">
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/riYUqmmTh0upd6GvCrpH8A__small/img/goUEIpNu2VcH6eOCqZo-kZTsLXI=/fit-in/200x150/filters:strip_icc()/pic1051067.png" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/riYUqmmTh0upd6GvCrpH8A__small/img/goUEIpNu2VcH6eOCqZo-kZTsLXI=/fit-in/200x150/filters:strip_icc()/pic1051067.png" alt="Jaquette du jeu Wer War&#39;s?" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
+</span>
+<span class="body">
+<span class="name">Wer War&#39;s?</span>
+<span class="meta"><span>2006</span><span>(Uncredited)</span><span>★ 6.1</span></span>
 </span>
 </a>
 </li>
@@ -1476,36 +1489,7 @@ document.documentElement.classList.add("anim")}catch(e){}
 <span class="y"><a href="/fr/annee/2007/">2007</a></span>
 <span class="sub">9 récompenses</span>
 </div>
-<div class="rows" data-n="4"><div class="tl-cat" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">
-<p class="tl-cat-name"><a href="/fr/prix/spiel-des-jahres/2007/">Spiel des Jahres</a></p>
-<ul class="podium">
-<li>
-<a href="/fr/jeu/zooloretto/">
-<span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/WiO4FLeGBs-_88UQdpHrcA__small/img/Vb6YHpZ06cB_iYWigESl3ZCyNeY=/fit-in/200x150/filters:strip_icc()/pic7758113.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/WiO4FLeGBs-_88UQdpHrcA__small/img/Vb6YHpZ06cB_iYWigESl3ZCyNeY=/fit-in/200x150/filters:strip_icc()/pic7758113.jpg" alt="Jaquette du jeu Zooloretto" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
-<span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
-</span>
-<span class="body">
-<span class="name">Zooloretto</span>
-<span class="meta"><span>2007</span><span>Michael Schacht</span><span>★ 6.8</span></span>
-</span>
-</a>
-</li>
-<li>
-<a href="/fr/jeu/beppo-der-bock/">
-<span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/UtT2NJSpBzhNg0gSBm2R1Q__small/img/Uy0TnIXKkkCDVZ16lHTKof4aOls=/fit-in/200x150/filters:strip_icc()/pic7068372.png" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/UtT2NJSpBzhNg0gSBm2R1Q__small/img/Uy0TnIXKkkCDVZ16lHTKof4aOls=/fit-in/200x150/filters:strip_icc()/pic7068372.png" alt="Jaquette du jeu Beppo le bouc" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
-<span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
-</span>
-<span class="body">
-<span class="name">Beppo le bouc</span>
-<span class="meta"><span>2007</span><span>Arthur Drescher</span><span>★ 5.8</span></span>
-</span>
-</a>
-</li>
-</ul>
-</div>
-<div class="tl-cat" style="--accent:var(--as-dor);--accent-bg:var(--as-dor-bg);--accent-ink:var(--as-dor-ink)">
+<div class="rows" data-n="4"><div class="tl-cat" style="--accent:var(--as-dor);--accent-bg:var(--as-dor-bg);--accent-ink:var(--as-dor-ink)">
 <p class="tl-cat-name"><a href="/fr/prix/as-dor/2007/">As d&#39;Or</a></p>
 <ul class="podium">
 <li>
@@ -1529,6 +1513,35 @@ document.documentElement.classList.add("anim")}catch(e){}
 <span class="body">
 <span class="name">La Nuit des Magiciens</span>
 <span class="meta"><span>2005</span><span>Kirsten Becker</span><span>★ 6.6</span></span>
+</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="tl-cat" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">
+<p class="tl-cat-name"><a href="/fr/prix/spiel-des-jahres/2007/">Spiel des Jahres</a></p>
+<ul class="podium">
+<li>
+<a href="/fr/jeu/zooloretto/">
+<span class="shot">
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/WiO4FLeGBs-_88UQdpHrcA__small/img/Vb6YHpZ06cB_iYWigESl3ZCyNeY=/fit-in/200x150/filters:strip_icc()/pic7758113.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/WiO4FLeGBs-_88UQdpHrcA__small/img/Vb6YHpZ06cB_iYWigESl3ZCyNeY=/fit-in/200x150/filters:strip_icc()/pic7758113.jpg" alt="Jaquette du jeu Zooloretto" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
+</span>
+<span class="body">
+<span class="name">Zooloretto</span>
+<span class="meta"><span>2007</span><span>Michael Schacht</span><span>★ 6.8</span></span>
+</span>
+</a>
+</li>
+<li>
+<a href="/fr/jeu/beppo-der-bock/">
+<span class="shot">
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/UtT2NJSpBzhNg0gSBm2R1Q__small/img/Uy0TnIXKkkCDVZ16lHTKof4aOls=/fit-in/200x150/filters:strip_icc()/pic7068372.png" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/UtT2NJSpBzhNg0gSBm2R1Q__small/img/Uy0TnIXKkkCDVZ16lHTKof4aOls=/fit-in/200x150/filters:strip_icc()/pic7068372.png" alt="Jaquette du jeu Beppo le bouc" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
+</span>
+<span class="body">
+<span class="name">Beppo le bouc</span>
+<span class="meta"><span>2007</span><span>Arthur Drescher</span><span>★ 5.8</span></span>
 </span>
 </a>
 </li>
@@ -1587,36 +1600,7 @@ document.documentElement.classList.add("anim")}catch(e){}
 <span class="y"><a href="/fr/annee/2006/">2006</a></span>
 <span class="sub">9 récompenses</span>
 </div>
-<div class="rows" data-n="4"><div class="tl-cat" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">
-<p class="tl-cat-name"><a href="/fr/prix/spiel-des-jahres/2006/">Spiel des Jahres</a></p>
-<ul class="podium">
-<li>
-<a href="/fr/jeu/thurn-and-taxis/">
-<span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/OlwMFxx9t6HGndTSKaWxhg__small/img/Fz4ZowJ6MyHSUTZv6XVPs5w4NM0=/fit-in/200x150/filters:strip_icc()/pic115300.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/OlwMFxx9t6HGndTSKaWxhg__small/img/Fz4ZowJ6MyHSUTZv6XVPs5w4NM0=/fit-in/200x150/filters:strip_icc()/pic115300.jpg" alt="Jaquette du jeu Thurn et Taxis : L&#39;Aventure postale" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
-<span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
-</span>
-<span class="body">
-<span class="name">Thurn et Taxis : L&#39;Aventure postale</span>
-<span class="meta"><span>2006</span><span>Andreas Seyfarth</span><span>★ 7.1</span></span>
-</span>
-</a>
-</li>
-<li>
-<a href="/fr/jeu/der-schwarze-pirat/">
-<span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/1Zi1sVYfeqn4Q1K5fVeQcw__small/img/sbKfU8XP4_c7TMPDRswDH_1v4SQ=/fit-in/200x150/filters:strip_icc()/pic293813.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/1Zi1sVYfeqn4Q1K5fVeQcw__small/img/sbKfU8XP4_c7TMPDRswDH_1v4SQ=/fit-in/200x150/filters:strip_icc()/pic293813.jpg" alt="Jaquette du jeu À l&#39;abordage" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
-<span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
-</span>
-<span class="body">
-<span class="name">À l&#39;abordage</span>
-<span class="meta"><span>2006</span><span>Guido Hoffmann</span><span>★ 6.5</span></span>
-</span>
-</a>
-</li>
-</ul>
-</div>
-<div class="tl-cat" style="--accent:var(--as-dor);--accent-bg:var(--as-dor-bg);--accent-ink:var(--as-dor-ink)">
+<div class="rows" data-n="4"><div class="tl-cat" style="--accent:var(--as-dor);--accent-bg:var(--as-dor-bg);--accent-ink:var(--as-dor-ink)">
 <p class="tl-cat-name"><a href="/fr/prix/as-dor/2006/">As d&#39;Or</a></p>
 <ul class="podium">
 <li>
@@ -1640,6 +1624,35 @@ document.documentElement.classList.add("anim")}catch(e){}
 <span class="body">
 <span class="name">Splash Attack</span>
 <span class="meta"><span>2005</span><span>Thierry Chapeau</span><span>★ 5.3</span></span>
+</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="tl-cat" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">
+<p class="tl-cat-name"><a href="/fr/prix/spiel-des-jahres/2006/">Spiel des Jahres</a></p>
+<ul class="podium">
+<li>
+<a href="/fr/jeu/thurn-and-taxis/">
+<span class="shot">
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/OlwMFxx9t6HGndTSKaWxhg__small/img/Fz4ZowJ6MyHSUTZv6XVPs5w4NM0=/fit-in/200x150/filters:strip_icc()/pic115300.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/OlwMFxx9t6HGndTSKaWxhg__small/img/Fz4ZowJ6MyHSUTZv6XVPs5w4NM0=/fit-in/200x150/filters:strip_icc()/pic115300.jpg" alt="Jaquette du jeu Thurn et Taxis : L&#39;Aventure postale" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
+</span>
+<span class="body">
+<span class="name">Thurn et Taxis : L&#39;Aventure postale</span>
+<span class="meta"><span>2006</span><span>Andreas Seyfarth</span><span>★ 7.1</span></span>
+</span>
+</a>
+</li>
+<li>
+<a href="/fr/jeu/der-schwarze-pirat/">
+<span class="shot">
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/1Zi1sVYfeqn4Q1K5fVeQcw__small/img/sbKfU8XP4_c7TMPDRswDH_1v4SQ=/fit-in/200x150/filters:strip_icc()/pic293813.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/1Zi1sVYfeqn4Q1K5fVeQcw__small/img/sbKfU8XP4_c7TMPDRswDH_1v4SQ=/fit-in/200x150/filters:strip_icc()/pic293813.jpg" alt="Jaquette du jeu À l&#39;abordage" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
+</span>
+<span class="body">
+<span class="name">À l&#39;abordage</span>
+<span class="meta"><span>2006</span><span>Guido Hoffmann</span><span>★ 6.5</span></span>
 </span>
 </a>
 </li>
@@ -1698,7 +1711,24 @@ document.documentElement.classList.add("anim")}catch(e){}
 <span class="y"><a href="/fr/annee/2005/">2005</a></span>
 <span class="sub">7 récompenses</span>
 </div>
-<div class="rows" data-n="3"><div class="tl-cat" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">
+<div class="rows" data-n="3"><div class="tl-cat" style="--accent:var(--as-dor);--accent-bg:var(--as-dor-bg);--accent-ink:var(--as-dor-ink)">
+<p class="tl-cat-name"><a href="/fr/prix/as-dor/2005/">As d&#39;Or</a></p>
+<ul class="podium">
+<li>
+<a href="/fr/jeu/ticket-to-ride/">
+<span class="shot">
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/kdWYkW-7AqG63HhqPL6ekA__small/img/5G46jv8MFh_BfX67iMSouTMhKxc=/fit-in/200x150/filters:strip_icc()/pic8937637.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/kdWYkW-7AqG63HhqPL6ekA__small/img/5G46jv8MFh_BfX67iMSouTMhKxc=/fit-in/200x150/filters:strip_icc()/pic8937637.jpg" alt="Jaquette du jeu Les Aventuriers du Rail" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
+</span>
+<span class="body">
+<span class="name">Les Aventuriers du Rail</span>
+<span class="meta"><span>2004</span><span>Alan R. Moon</span><span>★ 7.4</span></span>
+</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="tl-cat" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">
 <p class="tl-cat-name"><a href="/fr/prix/spiel-des-jahres/2005/">Spiel des Jahres</a></p>
 <ul class="podium">
 <li>
@@ -1722,23 +1752,6 @@ document.documentElement.classList.add("anim")}catch(e){}
 <span class="body">
 <span class="name">Das Kleine Gespenst</span>
 <span class="meta"><span>2005</span><span>Kai Haferkamp</span><span>★ 6.1</span></span>
-</span>
-</a>
-</li>
-</ul>
-</div>
-<div class="tl-cat" style="--accent:var(--as-dor);--accent-bg:var(--as-dor-bg);--accent-ink:var(--as-dor-ink)">
-<p class="tl-cat-name"><a href="/fr/prix/as-dor/2005/">As d&#39;Or</a></p>
-<ul class="podium">
-<li>
-<a href="/fr/jeu/ticket-to-ride/">
-<span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/kdWYkW-7AqG63HhqPL6ekA__small/img/5G46jv8MFh_BfX67iMSouTMhKxc=/fit-in/200x150/filters:strip_icc()/pic8937637.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/kdWYkW-7AqG63HhqPL6ekA__small/img/5G46jv8MFh_BfX67iMSouTMhKxc=/fit-in/200x150/filters:strip_icc()/pic8937637.jpg" alt="Jaquette du jeu Les Aventuriers du Rail" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
-<span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
-</span>
-<span class="body">
-<span class="name">Les Aventuriers du Rail</span>
-<span class="meta"><span>2004</span><span>Alan R. Moon</span><span>★ 7.4</span></span>
 </span>
 </a>
 </li>
@@ -1781,7 +1794,8 @@ document.documentElement.classList.add("anim")}catch(e){}
 <span class="sub">6 récompenses</span>
 <span class="badge badge--flag">Année à part</span>
 </div>
-<div class="rows" data-n="3"><div class="tl-cat" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">
+<div class="rows" data-n="3"><div class="tl-note" style="--accent:var(--as-dor);--accent-bg:var(--as-dor-bg);--accent-ink:var(--as-dor-ink)"><div><b>As d&#39;Or · Année de transition</b><p>L&#39;As d&#39;Or fusionnait avec le Jeu de l&#39;Année. Le premier prix unifié date de 2005.</p></div></div>
+<div class="tl-cat" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">
 <p class="tl-cat-name"><a href="/fr/prix/spiel-des-jahres/2004/">Spiel des Jahres</a></p>
 <ul class="podium">
 <li>
@@ -1810,7 +1824,6 @@ document.documentElement.classList.add("anim")}catch(e){}
 </li>
 </ul>
 </div>
-<div class="tl-note" style="--accent:var(--as-dor);--accent-bg:var(--as-dor-bg);--accent-ink:var(--as-dor-ink)"><div><b>As d&#39;Or · Année de transition</b><p>L&#39;As d&#39;Or fusionnait avec le Jeu de l&#39;Année. Le premier prix unifié date de 2005.</p></div></div>
 <div class="tl-cat" style="--accent:var(--deutscher-spiele-preis);--accent-bg:var(--deutscher-spiele-preis-bg);--accent-ink:var(--deutscher-spiele-preis-ink)">
 <p class="tl-cat-name"><a href="/fr/prix/deutscher-spiele-preis/2004/">Deutscher Spiele Preis</a></p>
 <ul class="podium">
@@ -1847,7 +1860,24 @@ document.documentElement.classList.add("anim")}catch(e){}
 <span class="y"><a href="/fr/annee/2003/">2003</a></span>
 <span class="sub">7 récompenses</span>
 </div>
-<div class="rows" data-n="3"><div class="tl-cat" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">
+<div class="rows" data-n="3"><div class="tl-cat" style="--accent:var(--as-dor);--accent-bg:var(--as-dor-bg);--accent-ink:var(--as-dor-ink)">
+<p class="tl-cat-name"><a href="/fr/prix/as-dor/2003/">As d&#39;Or</a></p>
+<ul class="podium">
+<li>
+<a href="/fr/jeu/alhambra/">
+<span class="shot">
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/OiqKsYDh7pqeRYKG__kMSw__small/img/Pj2FP8bV-BHofcDS0eGLh8gzTmI=/fit-in/200x150/filters:strip_icc()/pic4893652.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/OiqKsYDh7pqeRYKG__kMSw__small/img/Pj2FP8bV-BHofcDS0eGLh8gzTmI=/fit-in/200x150/filters:strip_icc()/pic4893652.jpg" alt="Jaquette du jeu Alhambra" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
+</span>
+<span class="body">
+<span class="name">Alhambra</span>
+<span class="meta"><span>2003</span><span>Dirk Henn</span><span>★ 7.0</span></span>
+</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="tl-cat" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">
 <p class="tl-cat-name"><a href="/fr/prix/spiel-des-jahres/2003/">Spiel des Jahres</a></p>
 <ul class="podium">
 <li>
@@ -1871,23 +1901,6 @@ document.documentElement.classList.add("anim")}catch(e){}
 <span class="body">
 <span class="name">Viva Topo!</span>
 <span class="meta"><span>2002</span><span>Manfred Ludwig</span><span>★ 6.8</span></span>
-</span>
-</a>
-</li>
-</ul>
-</div>
-<div class="tl-cat" style="--accent:var(--as-dor);--accent-bg:var(--as-dor-bg);--accent-ink:var(--as-dor-ink)">
-<p class="tl-cat-name"><a href="/fr/prix/as-dor/2003/">As d&#39;Or</a></p>
-<ul class="podium">
-<li>
-<a href="/fr/jeu/alhambra/">
-<span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/OiqKsYDh7pqeRYKG__kMSw__small/img/Pj2FP8bV-BHofcDS0eGLh8gzTmI=/fit-in/200x150/filters:strip_icc()/pic4893652.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/OiqKsYDh7pqeRYKG__kMSw__small/img/Pj2FP8bV-BHofcDS0eGLh8gzTmI=/fit-in/200x150/filters:strip_icc()/pic4893652.jpg" alt="Jaquette du jeu Alhambra" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
-<span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
-</span>
-<span class="body">
-<span class="name">Alhambra</span>
-<span class="meta"><span>2003</span><span>Dirk Henn</span><span>★ 7.0</span></span>
 </span>
 </a>
 </li>
@@ -1929,7 +1942,24 @@ document.documentElement.classList.add("anim")}catch(e){}
 <span class="y"><a href="/fr/annee/2002/">2002</a></span>
 <span class="sub">7 récompenses</span>
 </div>
-<div class="rows" data-n="3"><div class="tl-cat" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">
+<div class="rows" data-n="3"><div class="tl-cat" style="--accent:var(--as-dor);--accent-bg:var(--as-dor-bg);--accent-ink:var(--as-dor-ink)">
+<p class="tl-cat-name"><a href="/fr/prix/as-dor/2002/">As d&#39;Or</a></p>
+<ul class="podium">
+<li>
+<a href="/fr/jeu/bakari/">
+<span class="shot">
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/S2AdBgD6anbMuaHDc8dYWw__small/img/yBsdUxF8jOVJ_op2nSNmCSwyRDk=/fit-in/200x150/filters:strip_icc()/pic451307.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/S2AdBgD6anbMuaHDc8dYWw__small/img/yBsdUxF8jOVJ_op2nSNmCSwyRDk=/fit-in/200x150/filters:strip_icc()/pic451307.jpg" alt="Jaquette du jeu Bakari" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
+</span>
+<span class="body">
+<span class="name">Bakari</span>
+<span class="meta"><span>2002</span><span>Virginia Charves</span><span>★ 5.3</span></span>
+</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="tl-cat" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">
 <p class="tl-cat-name"><a href="/fr/prix/spiel-des-jahres/2002/">Spiel des Jahres</a></p>
 <ul class="podium">
 <li>
@@ -1953,23 +1983,6 @@ document.documentElement.classList.add("anim")}catch(e){}
 <span class="body">
 <span class="name">Le Bal masqué des coccinelles</span>
 <span class="meta"><span>2002</span><span>Peter-Paul Joopen</span><span>★ 6.5</span></span>
-</span>
-</a>
-</li>
-</ul>
-</div>
-<div class="tl-cat" style="--accent:var(--as-dor);--accent-bg:var(--as-dor-bg);--accent-ink:var(--as-dor-ink)">
-<p class="tl-cat-name"><a href="/fr/prix/as-dor/2002/">As d&#39;Or</a></p>
-<ul class="podium">
-<li>
-<a href="/fr/jeu/bakari/">
-<span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/S2AdBgD6anbMuaHDc8dYWw__small/img/yBsdUxF8jOVJ_op2nSNmCSwyRDk=/fit-in/200x150/filters:strip_icc()/pic451307.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/S2AdBgD6anbMuaHDc8dYWw__small/img/yBsdUxF8jOVJ_op2nSNmCSwyRDk=/fit-in/200x150/filters:strip_icc()/pic451307.jpg" alt="Jaquette du jeu Bakari" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
-<span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
-</span>
-<span class="body">
-<span class="name">Bakari</span>
-<span class="meta"><span>2002</span><span>Virginia Charves</span><span>★ 5.3</span></span>
 </span>
 </a>
 </li>
@@ -2011,7 +2024,24 @@ document.documentElement.classList.add("anim")}catch(e){}
 <span class="y"><a href="/fr/annee/2001/">2001</a></span>
 <span class="sub">7 récompenses</span>
 </div>
-<div class="rows" data-n="3"><div class="tl-cat" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">
+<div class="rows" data-n="3"><div class="tl-cat" style="--accent:var(--as-dor);--accent-bg:var(--as-dor-bg);--accent-ink:var(--as-dor-ink)">
+<p class="tl-cat-name"><a href="/fr/prix/as-dor/2001/">As d&#39;Or</a></p>
+<ul class="podium">
+<li>
+<a href="/fr/jeu/blokus/">
+<span class="shot">
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/96YA5wUJDxtPkmPxemr5Qg__small/img/EBt2y7Awj5djyo185R7g6FV3P9g=/fit-in/200x150/filters:strip_icc()/pic2197702.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/96YA5wUJDxtPkmPxemr5Qg__small/img/EBt2y7Awj5djyo185R7g6FV3P9g=/fit-in/200x150/filters:strip_icc()/pic2197702.jpg" alt="Jaquette du jeu Blokus" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
+</span>
+<span class="body">
+<span class="name">Blokus</span>
+<span class="meta"><span>2000</span><span>Bernard Tavitian</span><span>★ 6.9</span></span>
+</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="tl-cat" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">
 <p class="tl-cat-name"><a href="/fr/prix/spiel-des-jahres/2001/">Spiel des Jahres</a></p>
 <ul class="podium">
 <li>
@@ -2035,23 +2065,6 @@ document.documentElement.classList.add("anim")}catch(e){}
 <span class="body">
 <span class="name">Klondike</span>
 <span class="meta"><span>1993</span><span>Stefanie Rohner</span><span>★ 6.3</span></span>
-</span>
-</a>
-</li>
-</ul>
-</div>
-<div class="tl-cat" style="--accent:var(--as-dor);--accent-bg:var(--as-dor-bg);--accent-ink:var(--as-dor-ink)">
-<p class="tl-cat-name"><a href="/fr/prix/as-dor/2001/">As d&#39;Or</a></p>
-<ul class="podium">
-<li>
-<a href="/fr/jeu/blokus/">
-<span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/96YA5wUJDxtPkmPxemr5Qg__small/img/EBt2y7Awj5djyo185R7g6FV3P9g=/fit-in/200x150/filters:strip_icc()/pic2197702.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/96YA5wUJDxtPkmPxemr5Qg__small/img/EBt2y7Awj5djyo185R7g6FV3P9g=/fit-in/200x150/filters:strip_icc()/pic2197702.jpg" alt="Jaquette du jeu Blokus" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
-<span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
-</span>
-<span class="body">
-<span class="name">Blokus</span>
-<span class="meta"><span>2000</span><span>Bernard Tavitian</span><span>★ 6.9</span></span>
 </span>
 </a>
 </li>
@@ -2093,24 +2106,7 @@ document.documentElement.classList.add("anim")}catch(e){}
 <span class="y"><a href="/fr/annee/2000/">2000</a></span>
 <span class="sub">6 récompenses</span>
 </div>
-<div class="rows" data-n="3"><div class="tl-cat" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">
-<p class="tl-cat-name"><a href="/fr/prix/spiel-des-jahres/2000/">Spiel des Jahres</a></p>
-<ul class="podium">
-<li>
-<a href="/fr/jeu/torres/">
-<span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/vLDgCpcL-beOsC5iWfZ9ig__small/img/TPQCIaZKOl2ApBfBk0HgVjVsovw=/fit-in/200x150/filters:strip_icc()/pic3515154.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/vLDgCpcL-beOsC5iWfZ9ig__small/img/TPQCIaZKOl2ApBfBk0HgVjVsovw=/fit-in/200x150/filters:strip_icc()/pic3515154.jpg" alt="Jaquette du jeu Torres" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
-<span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
-</span>
-<span class="body">
-<span class="name">Torres</span>
-<span class="meta"><span>1999</span><span>Michael Kiesling</span><span>★ 7.1</span></span>
-</span>
-</a>
-</li>
-</ul>
-</div>
-<div class="tl-cat" style="--accent:var(--as-dor);--accent-bg:var(--as-dor-bg);--accent-ink:var(--as-dor-ink)">
+<div class="rows" data-n="3"><div class="tl-cat" style="--accent:var(--as-dor);--accent-bg:var(--as-dor-bg);--accent-ink:var(--as-dor-ink)">
 <p class="tl-cat-name"><a href="/fr/prix/as-dor/2000/">As d&#39;Or</a></p>
 <ul class="podium">
 <li>
@@ -2122,6 +2118,23 @@ document.documentElement.classList.add("anim")}catch(e){}
 <span class="body">
 <span class="name">Kahuna</span>
 <span class="meta"><span>1998</span><span>Günter Cornett</span><span>★ 6.6</span></span>
+</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="tl-cat" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">
+<p class="tl-cat-name"><a href="/fr/prix/spiel-des-jahres/2000/">Spiel des Jahres</a></p>
+<ul class="podium">
+<li>
+<a href="/fr/jeu/torres/">
+<span class="shot">
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/vLDgCpcL-beOsC5iWfZ9ig__small/img/TPQCIaZKOl2ApBfBk0HgVjVsovw=/fit-in/200x150/filters:strip_icc()/pic3515154.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/vLDgCpcL-beOsC5iWfZ9ig__small/img/TPQCIaZKOl2ApBfBk0HgVjVsovw=/fit-in/200x150/filters:strip_icc()/pic3515154.jpg" alt="Jaquette du jeu Torres" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
+</span>
+<span class="body">
+<span class="name">Torres</span>
+<span class="meta"><span>1999</span><span>Michael Kiesling</span><span>★ 7.1</span></span>
 </span>
 </a>
 </li>

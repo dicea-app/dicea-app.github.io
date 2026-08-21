@@ -181,11 +181,10 @@ p{margin:0 0 1em}
 .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.75rem;font-weight:750;
   letter-spacing:.11em;text-transform:uppercase;color:var(--brand);margin:0 0 9px}
 /* Deux filets, un de chaque côté : sur un titre centré, un seul filet à gauche
-   déséquilibre le bloc. Ils disparaissent en dessous de 700 px, où un sur-titre
-   un peu long passe sur deux lignes et laisse un filet pendre au milieu. */
+   déséquilibre le bloc. Ils restent visibles sur téléphone : le sur-titre y
+   conserve ainsi la même signature visuelle que sur ordinateur. */
 .eyebrow::before,.eyebrow::after{content:"";width:20px;height:2px;border-radius:2px;
   background:currentColor;flex:0 0 auto}
-@media (max-width:700px){.eyebrow::before,.eyebrow::after{display:none}}
 
 /* --- En-tête : marque bien visible, barre translucide au défilement -------
    Seul bloc du site à ne pas être centré, et volontairement : la marque tient
@@ -542,6 +541,20 @@ main{padding-bottom:72px;scroll-margin-top:calc(var(--head-h) + 20px)}
 .grid--decades{grid-template-columns:1fr;gap:20px}
 @media (min-width:560px){.grid--decades{grid-template-columns:repeat(2,1fr)}}
 @media (min-width:900px){.grid--decades{grid-template-columns:repeat(3,1fr)}}
+/* Le téléphone suit un étalon de deux jeux par rangée. La largeur est
+   calculée après l'espacement : trois cartes font donc 2 + 1 centrée grâce au
+   conteneur flex. Les décennies ne figurent volontairement pas ici, leurs
+   grandes tuiles illustrées restent seules sur leur rangée. */
+@media (max-width:559px){
+  .grid--bento{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .grid--games,.grid--games-lg{gap:12px}
+  .grid--games > li,.grid--games-lg > li{
+    flex:0 1 calc(50% - 6px);max-width:calc(50% - 6px)}
+  .tile{gap:8px;padding:16px 10px}
+  .tile .logo{width:44px;height:44px}
+  .awardblock{padding:16px 12px}
+  #history{display:none}
+}
 
 /* --- Tuile d'un prix ----------------------------------------------------- */
 .tile{position:relative;display:flex;flex-direction:column;align-items:center;
@@ -1226,8 +1239,8 @@ document.documentElement.classList.add("anim")}catch(e){}
 <div class="wrap">
 <ul>
 <li><a href="/fr/">Accueil</a></li>
-<li><a href="/fr/prix/spiel-des-jahres/">Spiel des Jahres</a></li>
 <li><a href="/fr/prix/as-dor/">As d&#39;Or</a></li>
+<li><a href="/fr/prix/spiel-des-jahres/">Spiel des Jahres</a></li>
 <li><a href="/fr/prix/deutscher-spiele-preis/">Deutscher Spiele Preis</a></li>
 <li><a href="/fr/prix/golden-geek/">Golden Geek Awards</a></li>
 <li><a href="/fr/meilleurs-jeux/" aria-current="page">Meilleurs jeux</a></li>
@@ -1278,8 +1291,8 @@ document.documentElement.classList.add("anim")}catch(e){}
 <div class="body">
 <h3><a href="/fr/jeu/dragomino/">Dragomino</a></h3>
 <ul class="badges">
-<li><span class="badge badge--award" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">Spiel des Jahres 2021</span></li>
 <li><span class="badge badge--award" style="--accent:var(--as-dor);--accent-bg:var(--as-dor-bg);--accent-ink:var(--as-dor-ink)">As d&#39;Or 2021</span></li>
+<li><span class="badge badge--award" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">Spiel des Jahres 2021</span></li>
 </ul>
 <p class="why">C&#39;est Kingdomino en version courte, pensée pour les plus jeunes. On choisit une tuile, on la pose contre un paysage identique, puis on retourne un œuf : il en sort parfois un bébé dragon. Une partie dure un quart d&#39;heure et les adultes ne s&#39;ennuient pas.</p>
 </div>
@@ -1290,8 +1303,8 @@ document.documentElement.classList.add("anim")}catch(e){}
 <div class="body">
 <h3><a href="/fr/jeu/mooki-island/">L&#39;île des Mookies</a></h3>
 <ul class="badges">
-<li><span class="badge badge--award" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">Spiel des Jahres 2026</span></li>
 <li><span class="badge badge--award" style="--accent:var(--as-dor);--accent-bg:var(--as-dor-bg);--accent-ink:var(--as-dor-ink)">As d&#39;Or 2026</span></li>
+<li><span class="badge badge--award" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">Spiel des Jahres 2026</span></li>
 </ul>
 <p class="why">Chacun prend une carte et la pose devant soi : il faut réunir le plus de Mookies possible dans chaque famille, sans se faire chiper la mise par l&#39;araignée farceuse. Dix minutes, dès quatre ans, et déjà une vraie petite stratégie derrière.</p>
 </div>
@@ -1396,10 +1409,9 @@ document.documentElement.classList.add("anim")}catch(e){}
 <div class="body">
 <h3><a href="/fr/jeu/azul/">Azul</a></h3>
 <ul class="badges">
-<li><span class="badge badge--award" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">Spiel des Jahres 2018</span></li>
 <li><span class="badge badge--award" style="--accent:var(--as-dor);--accent-bg:var(--as-dor-bg);--accent-ink:var(--as-dor-ink)">As d&#39;Or 2018</span></li>
+<li><span class="badge badge--award" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">Spiel des Jahres 2018</span></li>
 <li><span class="badge badge--award" style="--accent:var(--deutscher-spiele-preis);--accent-bg:var(--deutscher-spiele-preis-bg);--accent-ink:var(--deutscher-spiele-preis-ink)">Deutscher Spiele Preis 2018</span></li>
-<li><span class="badge badge--award" style="--accent:var(--golden-geek);--accent-bg:var(--golden-geek-bg);--accent-ink:var(--golden-geek-ink)">Golden Geek Awards 2017</span></li>
 </ul>
 <p class="why">On prend des tuiles de faïence sur des présentoirs, en sachant que celles qu&#39;on laisse profiteront au joueur suivant. On les range ensuite sur son mur pour marquer, mais chaque tuile en trop coûte des points. C&#39;est là que la tension arrive.</p>
 </div>
@@ -1423,8 +1435,8 @@ document.documentElement.classList.add("anim")}catch(e){}
 <div class="body">
 <h3><a href="/fr/jeu/ticket-to-ride/">Les Aventuriers du Rail</a></h3>
 <ul class="badges">
-<li><span class="badge badge--award" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">Spiel des Jahres 2004</span></li>
 <li><span class="badge badge--award" style="--accent:var(--as-dor);--accent-bg:var(--as-dor-bg);--accent-ink:var(--as-dor-ink)">As d&#39;Or 2005</span></li>
+<li><span class="badge badge--award" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">Spiel des Jahres 2004</span></li>
 </ul>
 <p class="why">On collecte des cartes wagon de la même couleur pour s&#39;emparer des lignes de chemin de fer et relier les villes inscrites sur ses billets. Tout le sel vient du moment où quelqu&#39;un vous coupe la route. Les règles s&#39;expliquent en deux minutes.</p>
 </div>
@@ -1440,8 +1452,8 @@ document.documentElement.classList.add("anim")}catch(e){}
 <div class="body">
 <h3><a href="/fr/jeu/dixit/">Dixit</a></h3>
 <ul class="badges">
-<li><span class="badge badge--award" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">Spiel des Jahres 2010</span></li>
 <li><span class="badge badge--award" style="--accent:var(--as-dor);--accent-bg:var(--as-dor-bg);--accent-ink:var(--as-dor-ink)">As d&#39;Or 2009</span></li>
+<li><span class="badge badge--award" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">Spiel des Jahres 2010</span></li>
 </ul>
 <p class="why">On donne une phrase mystérieuse sur une illustration onirique, puis chacun vote. Très fédérateur avec un public non joueur, mais il lui faut un vrai groupe.</p>
 </div>
@@ -1474,7 +1486,6 @@ document.documentElement.classList.add("anim")}catch(e){}
 <ul class="badges">
 <li><span class="badge badge--award" style="--accent:var(--as-dor);--accent-bg:var(--as-dor-bg);--accent-ink:var(--as-dor-ink)">As d&#39;Or 2018</span></li>
 <li><span class="badge badge--award" style="--accent:var(--deutscher-spiele-preis);--accent-bg:var(--deutscher-spiele-preis-bg);--accent-ink:var(--deutscher-spiele-preis-ink)">Deutscher Spiele Preis 2017</span></li>
-<li><span class="badge badge--award" style="--accent:var(--golden-geek);--accent-bg:var(--golden-geek-bg);--accent-ink:var(--golden-geek-ink)">Golden Geek Awards 2016</span></li>
 </ul>
 <p class="why">On rend Mars habitable. Chaque carte jouée fait monter la température, l&#39;oxygène ou le niveau des océans, et fait grossir une production qui finit par s&#39;emballer. Avec deux cents cartes, on ne joue jamais deux fois la même partie.</p>
 </div>
@@ -1511,8 +1522,6 @@ document.documentElement.classList.add("anim")}catch(e){}
 <h3><a href="/fr/jeu/dune-imperium/">Dune: Imperium</a></h3>
 <ul class="badges">
 <li><span class="badge badge--award" style="--accent:var(--as-dor);--accent-bg:var(--as-dor-bg);--accent-ink:var(--as-dor-ink)">As d&#39;Or 2022</span></li>
-<li><span class="badge badge--award" style="--accent:var(--deutscher-spiele-preis);--accent-bg:var(--deutscher-spiele-preis-bg);--accent-ink:var(--deutscher-spiele-preis-ink)">Deutscher Spiele Preis 2022</span></li>
-<li><span class="badge badge--award" style="--accent:var(--golden-geek);--accent-bg:var(--golden-geek-bg);--accent-ink:var(--golden-geek-ink)">Golden Geek Awards 2020</span></li>
 </ul>
 <p class="why">Deck-building et placement d&#39;ouvriers dans le même tour : on envoie ses agents aux quatre coins d&#39;Arrakis, puis on révèle sa main pour l&#39;intrigue et le combat. C&#39;est court pour sa densité, et le thème porte vraiment la partie.</p>
 </div>

@@ -183,11 +183,10 @@ p{margin:0 0 1em}
 .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.75rem;font-weight:750;
   letter-spacing:.11em;text-transform:uppercase;color:var(--brand);margin:0 0 9px}
 /* Deux filets, un de chaque côté : sur un titre centré, un seul filet à gauche
-   déséquilibre le bloc. Ils disparaissent en dessous de 700 px, où un sur-titre
-   un peu long passe sur deux lignes et laisse un filet pendre au milieu. */
+   déséquilibre le bloc. Ils restent visibles sur téléphone : le sur-titre y
+   conserve ainsi la même signature visuelle que sur ordinateur. */
 .eyebrow::before,.eyebrow::after{content:"";width:20px;height:2px;border-radius:2px;
   background:currentColor;flex:0 0 auto}
-@media (max-width:700px){.eyebrow::before,.eyebrow::after{display:none}}
 
 /* --- En-tête : marque bien visible, barre translucide au défilement -------
    Seul bloc du site à ne pas être centré, et volontairement : la marque tient
@@ -544,6 +543,20 @@ main{padding-bottom:72px;scroll-margin-top:calc(var(--head-h) + 20px)}
 .grid--decades{grid-template-columns:1fr;gap:20px}
 @media (min-width:560px){.grid--decades{grid-template-columns:repeat(2,1fr)}}
 @media (min-width:900px){.grid--decades{grid-template-columns:repeat(3,1fr)}}
+/* Le téléphone suit un étalon de deux jeux par rangée. La largeur est
+   calculée après l'espacement : trois cartes font donc 2 + 1 centrée grâce au
+   conteneur flex. Les décennies ne figurent volontairement pas ici, leurs
+   grandes tuiles illustrées restent seules sur leur rangée. */
+@media (max-width:559px){
+  .grid--bento{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .grid--games,.grid--games-lg{gap:12px}
+  .grid--games > li,.grid--games-lg > li{
+    flex:0 1 calc(50% - 6px);max-width:calc(50% - 6px)}
+  .tile{gap:8px;padding:16px 10px}
+  .tile .logo{width:44px;height:44px}
+  .awardblock{padding:16px 12px}
+  #history{display:none}
+}
 
 /* --- Tuile d'un prix ----------------------------------------------------- */
 .tile{position:relative;display:flex;flex-direction:column;align-items:center;
@@ -1261,7 +1274,7 @@ document.documentElement.classList.add("anim")}catch(e){}
 <div class="body">
 <h3><a href="/en/game/mississippi-queen/">Mississippi Queen</a></h3>
 <ul class="badges"><li><span class="badge badge--award" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">Spiel des Jahres</span></li></ul>
-<p class="why">Every year, our algorithm names the outright winner shown at the top of the timeline. The rule is mathematical: the game that piled up the most of these awards wins. On a tie, the value of the medals (winner or runner-up) settles it. And if the tie still holds, the legendary Spiel des Jahres, the oldest and most influential institution in the world, acts as referee.</p>
+<p class="why">Every year, our algorithm names the outright winner shown at the top of the timeline. The game with the most category wins comes first. When wins are tied, the other places in the results break the tie, followed by the legendary Spiel des Jahres as referee.</p>
 </div>
 </div>
 </section>

@@ -183,11 +183,10 @@ p{margin:0 0 1em}
 .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.75rem;font-weight:750;
   letter-spacing:.11em;text-transform:uppercase;color:var(--brand);margin:0 0 9px}
 /* Deux filets, un de chaque côté : sur un titre centré, un seul filet à gauche
-   déséquilibre le bloc. Ils disparaissent en dessous de 700 px, où un sur-titre
-   un peu long passe sur deux lignes et laisse un filet pendre au milieu. */
+   déséquilibre le bloc. Ils restent visibles sur téléphone : le sur-titre y
+   conserve ainsi la même signature visuelle que sur ordinateur. */
 .eyebrow::before,.eyebrow::after{content:"";width:20px;height:2px;border-radius:2px;
   background:currentColor;flex:0 0 auto}
-@media (max-width:700px){.eyebrow::before,.eyebrow::after{display:none}}
 
 /* --- En-tête : marque bien visible, barre translucide au défilement -------
    Seul bloc du site à ne pas être centré, et volontairement : la marque tient
@@ -544,6 +543,20 @@ main{padding-bottom:72px;scroll-margin-top:calc(var(--head-h) + 20px)}
 .grid--decades{grid-template-columns:1fr;gap:20px}
 @media (min-width:560px){.grid--decades{grid-template-columns:repeat(2,1fr)}}
 @media (min-width:900px){.grid--decades{grid-template-columns:repeat(3,1fr)}}
+/* Le téléphone suit un étalon de deux jeux par rangée. La largeur est
+   calculée après l'espacement : trois cartes font donc 2 + 1 centrée grâce au
+   conteneur flex. Les décennies ne figurent volontairement pas ici, leurs
+   grandes tuiles illustrées restent seules sur leur rangée. */
+@media (max-width:559px){
+  .grid--bento{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .grid--games,.grid--games-lg{gap:12px}
+  .grid--games > li,.grid--games-lg > li{
+    flex:0 1 calc(50% - 6px);max-width:calc(50% - 6px)}
+  .tile{gap:8px;padding:16px 10px}
+  .tile .logo{width:44px;height:44px}
+  .awardblock{padding:16px 12px}
+  #history{display:none}
+}
 
 /* --- Tuile d'un prix ----------------------------------------------------- */
 .tile{position:relative;display:flex;flex-direction:column;align-items:center;
@@ -1198,7 +1211,7 @@ document.documentElement.classList.add("anim")}catch(e){}
 </script>
 <script type="application/json" id="ui-i18n">{"close":"Fermer l'image"}</script>
 <script type="speculationrules">{"prefetch":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/assets/*"}}]},"eagerness":"moderate"}]}</script>
-<script type="application/ld+json">[{"@context":"https://schema.org","@type":"ItemList","name":"Les jeux primés des années 1980","numberOfItems":12,"itemListOrder":"https://schema.org/ItemListOrderDescending","itemListElement":[{"@type":"ListItem","position":1,"url":"https://dicea-app.com/fr/jeu/cafe-international/","name":"Café International"},{"@type":"ListItem","position":2,"url":"https://dicea-app.com/fr/jeu/abalone/","name":"Abalone"},{"@type":"ListItem","position":3,"url":"https://dicea-app.com/fr/jeu/barbarossa/","name":"Barbarossa"},{"@type":"ListItem","position":4,"url":"https://dicea-app.com/fr/jeu/supergang/","name":"Super Gang"},{"@type":"ListItem","position":5,"url":"https://dicea-app.com/fr/jeu/auf-achse/","name":"Auf Achse"},{"@type":"ListItem","position":6,"url":"https://dicea-app.com/fr/jeu/heimlich-co/","name":"Heimlich & Co."},{"@type":"ListItem","position":7,"url":"https://dicea-app.com/fr/jeu/sherlock-holmes-consulting-detective-the-thames-murders-other-cases/","name":"Sherlock Holmes Détective Conseil : Les meurtres de la Tamise et autres enquêtes"},{"@type":"ListItem","position":8,"url":"https://dicea-app.com/fr/jeu/railway-rivals/","name":"Railway Rivals"},{"@type":"ListItem","position":9,"url":"https://dicea-app.com/fr/jeu/scotland-yard/","name":"Scotland Yard"},{"@type":"ListItem","position":10,"url":"https://dicea-app.com/fr/jeu/enchanted-forest/","name":"Enchanted Forest"},{"@type":"ListItem","position":11,"url":"https://dicea-app.com/fr/jeu/focus/","name":"Focus"},{"@type":"ListItem","position":12,"url":"https://dicea-app.com/fr/jeu/rummikub/","name":"Rummikub"}]},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Accueil","item":"https://dicea-app.com/fr/"},{"@type":"ListItem","position":2,"name":"Par année"},{"@type":"ListItem","position":3,"name":"Années 1980"}]}]</script>
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"ItemList","name":"Les jeux primés des années 1980","numberOfItems":12,"itemListOrder":"https://schema.org/ItemListOrderDescending","itemListElement":[{"@type":"ListItem","position":1,"url":"https://dicea-app.com/fr/jeu/abalone/","name":"Abalone"},{"@type":"ListItem","position":2,"url":"https://dicea-app.com/fr/jeu/cafe-international/","name":"Café International"},{"@type":"ListItem","position":3,"url":"https://dicea-app.com/fr/jeu/supergang/","name":"Super Gang"},{"@type":"ListItem","position":4,"url":"https://dicea-app.com/fr/jeu/barbarossa/","name":"Barbarossa"},{"@type":"ListItem","position":5,"url":"https://dicea-app.com/fr/jeu/auf-achse/","name":"Auf Achse"},{"@type":"ListItem","position":6,"url":"https://dicea-app.com/fr/jeu/heimlich-co/","name":"Heimlich & Co."},{"@type":"ListItem","position":7,"url":"https://dicea-app.com/fr/jeu/sherlock-holmes-consulting-detective-the-thames-murders-other-cases/","name":"Sherlock Holmes Détective Conseil : Les meurtres de la Tamise et autres enquêtes"},{"@type":"ListItem","position":8,"url":"https://dicea-app.com/fr/jeu/railway-rivals/","name":"Railway Rivals"},{"@type":"ListItem","position":9,"url":"https://dicea-app.com/fr/jeu/scotland-yard/","name":"Scotland Yard"},{"@type":"ListItem","position":10,"url":"https://dicea-app.com/fr/jeu/enchanted-forest/","name":"Enchanted Forest"},{"@type":"ListItem","position":11,"url":"https://dicea-app.com/fr/jeu/focus/","name":"Focus"},{"@type":"ListItem","position":12,"url":"https://dicea-app.com/fr/jeu/rummikub/","name":"Rummikub"}]},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Accueil","item":"https://dicea-app.com/fr/"},{"@type":"ListItem","position":2,"name":"Par année"},{"@type":"ListItem","position":3,"name":"Années 1980"}]}]</script>
 </head>
 <body>
 <a class="skip" href="#main">Aller au contenu</a>
@@ -1228,8 +1241,8 @@ document.documentElement.classList.add("anim")}catch(e){}
 <div class="wrap">
 <ul>
 <li><a href="/fr/">Accueil</a></li>
-<li><a href="/fr/prix/spiel-des-jahres/">Spiel des Jahres</a></li>
 <li><a href="/fr/prix/as-dor/">As d&#39;Or</a></li>
+<li><a href="/fr/prix/spiel-des-jahres/">Spiel des Jahres</a></li>
 <li><a href="/fr/prix/deutscher-spiele-preis/">Deutscher Spiele Preis</a></li>
 <li><a href="/fr/prix/golden-geek/">Golden Geek Awards</a></li>
 <li><a href="/fr/meilleurs-jeux/">Meilleurs jeux</a></li>
@@ -1254,35 +1267,35 @@ document.documentElement.classList.add("anim")}catch(e){}
 <span class="y"><a href="/fr/annee/1989/">1989</a></span>
 <span class="sub">2 récompenses</span>
 </div>
-<div class="rows" data-n="2"><div class="tl-cat" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">
-<p class="tl-cat-name"><a href="/fr/prix/spiel-des-jahres/1989/">Spiel des Jahres</a></p>
-<ul class="podium">
-<li>
-<a href="/fr/jeu/cafe-international/">
-<span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/VieUvCI62VUhQ9C4agum3A__small/img/dZ4v6yOOU5E-oPFK0UbqBGoXyzU=/fit-in/200x150/filters:strip_icc()/pic3987975.png" alt="" aria-hidden="true" width="66" height="66" fetchpriority="high" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/VieUvCI62VUhQ9C4agum3A__small/img/dZ4v6yOOU5E-oPFK0UbqBGoXyzU=/fit-in/200x150/filters:strip_icc()/pic3987975.png" alt="Jaquette du jeu Café International" width="66" height="66" fetchpriority="high" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
-<span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
-</span>
-<span class="body">
-<span class="name">Café International</span>
-<span class="meta"><span>1989</span><span>Rudi Hoffmann</span><span>★ 6.2</span></span>
-</span>
-</a>
-</li>
-</ul>
-</div>
-<div class="tl-cat" style="--accent:var(--as-dor);--accent-bg:var(--as-dor-bg);--accent-ink:var(--as-dor-ink)">
+<div class="rows" data-n="2"><div class="tl-cat" style="--accent:var(--as-dor);--accent-bg:var(--as-dor-bg);--accent-ink:var(--as-dor-ink)">
 <p class="tl-cat-name"><a href="/fr/prix/as-dor/1989/">As d&#39;Or</a></p>
 <ul class="podium">
 <li>
 <a href="/fr/jeu/abalone/">
 <span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/UzH1jAlqYUH9VEq2Wtvzjw__small/img/gWROpok8ZlqghhqoGFBFn-Znj2s=/fit-in/200x150/filters:strip_icc()/pic5253079.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/UzH1jAlqYUH9VEq2Wtvzjw__small/img/gWROpok8ZlqghhqoGFBFn-Znj2s=/fit-in/200x150/filters:strip_icc()/pic5253079.jpg" alt="Jaquette du jeu Abalone" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/UzH1jAlqYUH9VEq2Wtvzjw__small/img/gWROpok8ZlqghhqoGFBFn-Znj2s=/fit-in/200x150/filters:strip_icc()/pic5253079.jpg" alt="" aria-hidden="true" width="66" height="66" fetchpriority="high" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/UzH1jAlqYUH9VEq2Wtvzjw__small/img/gWROpok8ZlqghhqoGFBFn-Znj2s=/fit-in/200x150/filters:strip_icc()/pic5253079.jpg" alt="Jaquette du jeu Abalone" width="66" height="66" fetchpriority="high" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
 <span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
 </span>
 <span class="body">
 <span class="name">Abalone</span>
 <span class="meta"><span>1987</span><span>Michel Lalet</span><span>★ 6.5</span></span>
+</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="tl-cat" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">
+<p class="tl-cat-name"><a href="/fr/prix/spiel-des-jahres/1989/">Spiel des Jahres</a></p>
+<ul class="podium">
+<li>
+<a href="/fr/jeu/cafe-international/">
+<span class="shot">
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/VieUvCI62VUhQ9C4agum3A__small/img/dZ4v6yOOU5E-oPFK0UbqBGoXyzU=/fit-in/200x150/filters:strip_icc()/pic3987975.png" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/VieUvCI62VUhQ9C4agum3A__small/img/dZ4v6yOOU5E-oPFK0UbqBGoXyzU=/fit-in/200x150/filters:strip_icc()/pic3987975.png" alt="Jaquette du jeu Café International" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
+</span>
+<span class="body">
+<span class="name">Café International</span>
+<span class="meta"><span>1989</span><span>Rudi Hoffmann</span><span>★ 6.2</span></span>
 </span>
 </a>
 </li>
@@ -1295,24 +1308,7 @@ document.documentElement.classList.add("anim")}catch(e){}
 <span class="y"><a href="/fr/annee/1988/">1988</a></span>
 <span class="sub">2 récompenses</span>
 </div>
-<div class="rows" data-n="2"><div class="tl-cat" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">
-<p class="tl-cat-name"><a href="/fr/prix/spiel-des-jahres/1988/">Spiel des Jahres</a></p>
-<ul class="podium">
-<li>
-<a href="/fr/jeu/barbarossa/">
-<span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/YwUyWTWnDIcsMsOXR_AnNA__small/img/Kmh685vfzSSyljQptV2tfPBsW-I=/fit-in/200x150/filters:strip_icc()/pic1152337.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/YwUyWTWnDIcsMsOXR_AnNA__small/img/Kmh685vfzSSyljQptV2tfPBsW-I=/fit-in/200x150/filters:strip_icc()/pic1152337.jpg" alt="Jaquette du jeu Barbarossa" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
-<span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
-</span>
-<span class="body">
-<span class="name">Barbarossa</span>
-<span class="meta"><span>1988</span><span>Klaus Teuber</span><span>★ 6.3</span></span>
-</span>
-</a>
-</li>
-</ul>
-</div>
-<div class="tl-cat" style="--accent:var(--as-dor);--accent-bg:var(--as-dor-bg);--accent-ink:var(--as-dor-ink)">
+<div class="rows" data-n="2"><div class="tl-cat" style="--accent:var(--as-dor);--accent-bg:var(--as-dor-bg);--accent-ink:var(--as-dor-ink)">
 <p class="tl-cat-name"><a href="/fr/prix/as-dor/1988/">As d&#39;Or</a></p>
 <ul class="podium">
 <li>
@@ -1324,6 +1320,23 @@ document.documentElement.classList.add("anim")}catch(e){}
 <span class="body">
 <span class="name">Super Gang</span>
 <span class="meta"><span>1985</span><span>Gérard Delfanti</span><span>★ 7.1</span></span>
+</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="tl-cat" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">
+<p class="tl-cat-name"><a href="/fr/prix/spiel-des-jahres/1988/">Spiel des Jahres</a></p>
+<ul class="podium">
+<li>
+<a href="/fr/jeu/barbarossa/">
+<span class="shot">
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/YwUyWTWnDIcsMsOXR_AnNA__small/img/Kmh685vfzSSyljQptV2tfPBsW-I=/fit-in/200x150/filters:strip_icc()/pic1152337.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/YwUyWTWnDIcsMsOXR_AnNA__small/img/Kmh685vfzSSyljQptV2tfPBsW-I=/fit-in/200x150/filters:strip_icc()/pic1152337.jpg" alt="Jaquette du jeu Barbarossa" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
+</span>
+<span class="body">
+<span class="name">Barbarossa</span>
+<span class="meta"><span>1988</span><span>Klaus Teuber</span><span>★ 6.3</span></span>
 </span>
 </a>
 </li>

@@ -183,11 +183,10 @@ p{margin:0 0 1em}
 .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.75rem;font-weight:750;
   letter-spacing:.11em;text-transform:uppercase;color:var(--brand);margin:0 0 9px}
 /* Deux filets, un de chaque côté : sur un titre centré, un seul filet à gauche
-   déséquilibre le bloc. Ils disparaissent en dessous de 700 px, où un sur-titre
-   un peu long passe sur deux lignes et laisse un filet pendre au milieu. */
+   déséquilibre le bloc. Ils restent visibles sur téléphone : le sur-titre y
+   conserve ainsi la même signature visuelle que sur ordinateur. */
 .eyebrow::before,.eyebrow::after{content:"";width:20px;height:2px;border-radius:2px;
   background:currentColor;flex:0 0 auto}
-@media (max-width:700px){.eyebrow::before,.eyebrow::after{display:none}}
 
 /* --- En-tête : marque bien visible, barre translucide au défilement -------
    Seul bloc du site à ne pas être centré, et volontairement : la marque tient
@@ -544,6 +543,20 @@ main{padding-bottom:72px;scroll-margin-top:calc(var(--head-h) + 20px)}
 .grid--decades{grid-template-columns:1fr;gap:20px}
 @media (min-width:560px){.grid--decades{grid-template-columns:repeat(2,1fr)}}
 @media (min-width:900px){.grid--decades{grid-template-columns:repeat(3,1fr)}}
+/* Le téléphone suit un étalon de deux jeux par rangée. La largeur est
+   calculée après l'espacement : trois cartes font donc 2 + 1 centrée grâce au
+   conteneur flex. Les décennies ne figurent volontairement pas ici, leurs
+   grandes tuiles illustrées restent seules sur leur rangée. */
+@media (max-width:559px){
+  .grid--bento{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .grid--games,.grid--games-lg{gap:12px}
+  .grid--games > li,.grid--games-lg > li{
+    flex:0 1 calc(50% - 6px);max-width:calc(50% - 6px)}
+  .tile{gap:8px;padding:16px 10px}
+  .tile .logo{width:44px;height:44px}
+  .awardblock{padding:16px 12px}
+  #history{display:none}
+}
 
 /* --- Tuile d'un prix ----------------------------------------------------- */
 .tile{position:relative;display:flex;flex-direction:column;align-items:center;
@@ -1228,8 +1241,8 @@ document.documentElement.classList.add("anim")}catch(e){}
 <div class="wrap">
 <ul>
 <li><a href="/fr/">Accueil</a></li>
-<li><a href="/fr/prix/spiel-des-jahres/">Spiel des Jahres</a></li>
 <li><a href="/fr/prix/as-dor/">As d&#39;Or</a></li>
+<li><a href="/fr/prix/spiel-des-jahres/">Spiel des Jahres</a></li>
 <li><a href="/fr/prix/deutscher-spiele-preis/">Deutscher Spiele Preis</a></li>
 <li><a href="/fr/prix/golden-geek/">Golden Geek Awards</a></li>
 <li><a href="/fr/meilleurs-jeux/">Meilleurs jeux</a></li>
@@ -1385,17 +1398,17 @@ document.documentElement.classList.add("anim")}catch(e){}
 <h2>Les autres prix de cette année</h2>
 </div>
 <ul class="grid grid--bento">
-<li class="tile reveal" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">
-<img class="logo" src="/assets/spiel_des_jahres.png" alt="Logo du prix Spiel des Jahres" width="52" height="52" loading="lazy" decoding="async">
-<h3><a href="/fr/prix/spiel-des-jahres/2020/">Spiel des Jahres</a></h3>
-<p>Le prix mondial absolu récompensant les meilleurs jeux.</p>
-<p class="foot"><span class="dot"></span>Pictures, The Crew : en quête de la neuvième planète et Roulapik</p>
-</li>
 <li class="tile reveal" style="--accent:var(--as-dor);--accent-bg:var(--as-dor-bg);--accent-ink:var(--as-dor-ink)">
 <img class="logo" src="/assets/as_dor.png" alt="Logo du prix As d&#39;Or" width="52" height="52" loading="lazy" decoding="async">
 <h3><a href="/fr/prix/as-dor/2020/">As d&#39;Or</a></h3>
 <p>La grande récompense francophone du festival de Cannes.</p>
 <p class="foot"><span class="dot"></span>Oriflamme, Res Arcana et Dream Catcher</p>
+</li>
+<li class="tile reveal" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">
+<img class="logo" src="/assets/spiel_des_jahres.png" alt="Logo du prix Spiel des Jahres" width="52" height="52" loading="lazy" decoding="async">
+<h3><a href="/fr/prix/spiel-des-jahres/2020/">Spiel des Jahres</a></h3>
+<p>Le prix mondial absolu récompensant les meilleurs jeux.</p>
+<p class="foot"><span class="dot"></span>Pictures, The Crew : en quête de la neuvième planète et Roulapik</p>
 </li>
 <li class="tile reveal" style="--accent:var(--deutscher-spiele-preis);--accent-bg:var(--deutscher-spiele-preis-bg);--accent-ink:var(--deutscher-spiele-preis-ink)">
 <img class="logo" src="/assets/deutscher_spiele_preis.png" alt="Logo du prix Deutscher Spiele Preis" width="52" height="52" loading="lazy" decoding="async">

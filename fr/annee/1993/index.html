@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Les jeux de société primés en 1993 : les 4 grands prix</title>
-<meta name="description" content="As d&#39;Or, Spiel des Jahres, Deutscher Spiele Preis et Golden Geek 1993 côte à côte. Spiel des Jahres : Perudo. As d&#39;Or : S.O.S. Plombier. Deutscher Spiele Preis…">
+<meta name="description" content="As d&#39;Or, Spiel des Jahres, Deutscher Spiele Preis et Golden Geek 1993 côte à côte. As d&#39;Or : S.O.S. Plombier. Spiel des Jahres : Perudo. Deutscher Spiele Preis…">
 <link rel="canonical" href="https://dicea-app.com/fr/annee/1993/">
 <link rel="alternate" hreflang="fr" href="https://dicea-app.com/fr/annee/1993/">
 <link rel="alternate" hreflang="en" href="https://dicea-app.com/en/year/1993/">
@@ -15,13 +15,13 @@
 <meta property="og:site_name" content="Palmarès du jeu de société">
 <meta property="og:locale" content="fr_FR">
 <meta property="og:title" content="Les jeux de société primés en 1993 : les 4 grands prix">
-<meta property="og:description" content="As d&#39;Or, Spiel des Jahres, Deutscher Spiele Preis et Golden Geek 1993 côte à côte. Spiel des Jahres : Perudo. As d&#39;Or : S.O.S. Plombier. Deutscher Spiele Preis…">
+<meta property="og:description" content="As d&#39;Or, Spiel des Jahres, Deutscher Spiele Preis et Golden Geek 1993 côte à côte. As d&#39;Or : S.O.S. Plombier. Spiel des Jahres : Perudo. Deutscher Spiele Preis…">
 <meta property="og:url" content="https://dicea-app.com/fr/annee/1993/">
 <meta property="og:image" content="https://cf.geekdo-images.com/wX4cTWNjTG7XiGHGgSpiiw__original/img/86bXDwl4gmMb_GehNQ-9y6O9G0E=/0x0/filters:format(png)/pic8630033.png">
 <meta property="og:image:alt" content="Les jeux de société primés en 1993 : les 4 grands prix">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Les jeux de société primés en 1993 : les 4 grands prix">
-<meta name="twitter:description" content="As d&#39;Or, Spiel des Jahres, Deutscher Spiele Preis et Golden Geek 1993 côte à côte. Spiel des Jahres : Perudo. As d&#39;Or : S.O.S. Plombier. Deutscher Spiele Preis…">
+<meta name="twitter:description" content="As d&#39;Or, Spiel des Jahres, Deutscher Spiele Preis et Golden Geek 1993 côte à côte. As d&#39;Or : S.O.S. Plombier. Spiel des Jahres : Perudo. Deutscher Spiele Preis…">
 <meta name="twitter:image" content="https://cf.geekdo-images.com/wX4cTWNjTG7XiGHGgSpiiw__original/img/86bXDwl4gmMb_GehNQ-9y6O9G0E=/0x0/filters:format(png)/pic8630033.png">
 <meta name="theme-color" content="#087c95" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0e1416" media="(prefers-color-scheme: dark)">
@@ -183,11 +183,10 @@ p{margin:0 0 1em}
 .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.75rem;font-weight:750;
   letter-spacing:.11em;text-transform:uppercase;color:var(--brand);margin:0 0 9px}
 /* Deux filets, un de chaque côté : sur un titre centré, un seul filet à gauche
-   déséquilibre le bloc. Ils disparaissent en dessous de 700 px, où un sur-titre
-   un peu long passe sur deux lignes et laisse un filet pendre au milieu. */
+   déséquilibre le bloc. Ils restent visibles sur téléphone : le sur-titre y
+   conserve ainsi la même signature visuelle que sur ordinateur. */
 .eyebrow::before,.eyebrow::after{content:"";width:20px;height:2px;border-radius:2px;
   background:currentColor;flex:0 0 auto}
-@media (max-width:700px){.eyebrow::before,.eyebrow::after{display:none}}
 
 /* --- En-tête : marque bien visible, barre translucide au défilement -------
    Seul bloc du site à ne pas être centré, et volontairement : la marque tient
@@ -544,6 +543,20 @@ main{padding-bottom:72px;scroll-margin-top:calc(var(--head-h) + 20px)}
 .grid--decades{grid-template-columns:1fr;gap:20px}
 @media (min-width:560px){.grid--decades{grid-template-columns:repeat(2,1fr)}}
 @media (min-width:900px){.grid--decades{grid-template-columns:repeat(3,1fr)}}
+/* Le téléphone suit un étalon de deux jeux par rangée. La largeur est
+   calculée après l'espacement : trois cartes font donc 2 + 1 centrée grâce au
+   conteneur flex. Les décennies ne figurent volontairement pas ici, leurs
+   grandes tuiles illustrées restent seules sur leur rangée. */
+@media (max-width:559px){
+  .grid--bento{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .grid--games,.grid--games-lg{gap:12px}
+  .grid--games > li,.grid--games-lg > li{
+    flex:0 1 calc(50% - 6px);max-width:calc(50% - 6px)}
+  .tile{gap:8px;padding:16px 10px}
+  .tile .logo{width:44px;height:44px}
+  .awardblock{padding:16px 12px}
+  #history{display:none}
+}
 
 /* --- Tuile d'un prix ----------------------------------------------------- */
 .tile{position:relative;display:flex;flex-direction:column;align-items:center;
@@ -1198,7 +1211,7 @@ document.documentElement.classList.add("anim")}catch(e){}
 </script>
 <script type="application/json" id="ui-i18n">{"close":"Fermer l'image"}</script>
 <script type="speculationrules">{"prefetch":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/assets/*"}}]},"eagerness":"moderate"}]}</script>
-<script type="application/ld+json">[{"@context":"https://schema.org","@type":"ItemList","name":"Les jeux de société primés en 1993 : les 4 grands prix","numberOfItems":6,"itemListOrder":"https://schema.org/ItemListOrderDescending","itemListElement":[{"@type":"ListItem","position":1,"url":"https://dicea-app.com/fr/jeu/perudo/","name":"Perudo"},{"@type":"ListItem","position":2,"url":"https://dicea-app.com/fr/jeu/pipeline/","name":"S.O.S. Plombier"},{"@type":"ListItem","position":3,"url":"https://dicea-app.com/fr/jeu/modern-art/","name":"Modern Art"},{"@type":"ListItem","position":4,"url":"https://dicea-app.com/fr/jeu/tutankhamen/","name":"Tutankhamen"},{"@type":"ListItem","position":5,"url":"https://dicea-app.com/fr/jeu/vernissage/","name":"Vernissage"},{"@type":"ListItem","position":6,"url":"https://dicea-app.com/fr/jeu/in-a-spin/","name":"In a Spin"}]},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Accueil","item":"https://dicea-app.com/fr/"},{"@type":"ListItem","position":2,"name":"Années 1990","item":"https://dicea-app.com/fr/decennie/1990/"},{"@type":"ListItem","position":3,"name":"1993"}]}]</script>
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"ItemList","name":"Les jeux de société primés en 1993 : les 4 grands prix","numberOfItems":6,"itemListOrder":"https://schema.org/ItemListOrderDescending","itemListElement":[{"@type":"ListItem","position":1,"url":"https://dicea-app.com/fr/jeu/pipeline/","name":"S.O.S. Plombier"},{"@type":"ListItem","position":2,"url":"https://dicea-app.com/fr/jeu/perudo/","name":"Perudo"},{"@type":"ListItem","position":3,"url":"https://dicea-app.com/fr/jeu/modern-art/","name":"Modern Art"},{"@type":"ListItem","position":4,"url":"https://dicea-app.com/fr/jeu/tutankhamen/","name":"Tutankhamen"},{"@type":"ListItem","position":5,"url":"https://dicea-app.com/fr/jeu/vernissage/","name":"Vernissage"},{"@type":"ListItem","position":6,"url":"https://dicea-app.com/fr/jeu/in-a-spin/","name":"In a Spin"}]},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Accueil","item":"https://dicea-app.com/fr/"},{"@type":"ListItem","position":2,"name":"Années 1990","item":"https://dicea-app.com/fr/decennie/1990/"},{"@type":"ListItem","position":3,"name":"1993"}]}]</script>
 </head>
 <body>
 <a class="skip" href="#main">Aller au contenu</a>
@@ -1228,8 +1241,8 @@ document.documentElement.classList.add("anim")}catch(e){}
 <div class="wrap">
 <ul>
 <li><a href="/fr/">Accueil</a></li>
-<li><a href="/fr/prix/spiel-des-jahres/">Spiel des Jahres</a></li>
 <li><a href="/fr/prix/as-dor/">As d&#39;Or</a></li>
+<li><a href="/fr/prix/spiel-des-jahres/">Spiel des Jahres</a></li>
 <li><a href="/fr/prix/deutscher-spiele-preis/">Deutscher Spiele Preis</a></li>
 <li><a href="/fr/prix/golden-geek/">Golden Geek Awards</a></li>
 <li><a href="/fr/meilleurs-jeux/">Meilleurs jeux</a></li>
@@ -1261,32 +1274,9 @@ document.documentElement.classList.add("anim")}catch(e){}
 <div class="body">
 <h3><a href="/fr/jeu/perudo/">Perudo</a></h3>
 <ul class="badges"><li><span class="badge badge--award" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">Spiel des Jahres</span></li></ul>
-<p class="why">Chaque année, notre algorithme désigne le vainqueur absolu affiché en tête de la frise. La règle est mathématique : le jeu ayant cumulé le plus de ces récompenses l&#39;emporte. En cas d&#39;égalité, la valeur des médailles (vainqueur ou dauphin) tranche. Et si l&#39;égalité persiste, c&#39;est le mythique Spiel des Jahres, l&#39;institution la plus ancienne et influente au monde, qui fait office de juge de paix.</p>
+<p class="why">Chaque année, notre algorithme désigne le vainqueur absolu affiché en tête de la frise. Le jeu ayant remporté le plus de catégories l&#39;emporte. À égalité de victoires, les autres places du palmarès départagent les jeux, puis le mythique Spiel des Jahres fait office de juge de paix.</p>
 </div>
 </div>
-</section>
-<section class="section" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">
-<div class="head reveal"><p class="eyebrow">Mi-juillet</p><h2 id="spiel-des-jahres"><a href="/fr/prix/spiel-des-jahres/1993/">Spiel des Jahres 1993</a></h2></div>
-<div class="cats" data-n="1">
-<section class="cat reveal" id="spiel-des-jahres-sdj_family" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">
-<h3>Jeu familial<a class="anchor" href="#spiel-des-jahres-sdj_family" aria-label="Jeu familial 1993">#</a></h3>
-<ul class="podium">
-<li>
-<a href="/fr/jeu/perudo/">
-<span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/wX4cTWNjTG7XiGHGgSpiiw__small/img/vU6kaL3f06BaVfmwUV91trrvDng=/fit-in/200x150/filters:strip_icc()/pic8630033.png" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/wX4cTWNjTG7XiGHGgSpiiw__small/img/vU6kaL3f06BaVfmwUV91trrvDng=/fit-in/200x150/filters:strip_icc()/pic8630033.png" alt="Jaquette du jeu Perudo" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
-<span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
-</span>
-<span class="body">
-<span class="name">Perudo</span>
-<span class="meta"><span>1800</span><span>Richard Borg</span><span>★ 6.9</span></span>
-</span>
-</a>
-</li>
-</ul>
-</section>
-</div>
-
 </section>
 <section class="section" style="--accent:var(--as-dor);--accent-bg:var(--as-dor-bg);--accent-ink:var(--as-dor-ink)">
 <div class="head reveal"><p class="eyebrow">Fin février</p><h2 id="as-dor"><a href="/fr/prix/as-dor/1993/">As d&#39;Or 1993</a></h2></div>
@@ -1303,6 +1293,29 @@ document.documentElement.classList.add("anim")}catch(e){}
 <span class="body">
 <span class="name">S.O.S. Plombier</span>
 <span class="meta"><span>1993</span><span>John LaBelle</span><span>★ 5.5</span></span>
+</span>
+</a>
+</li>
+</ul>
+</section>
+</div>
+
+</section>
+<section class="section" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">
+<div class="head reveal"><p class="eyebrow">Mi-juillet</p><h2 id="spiel-des-jahres"><a href="/fr/prix/spiel-des-jahres/1993/">Spiel des Jahres 1993</a></h2></div>
+<div class="cats" data-n="1">
+<section class="cat reveal" id="spiel-des-jahres-sdj_family" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">
+<h3>Jeu familial<a class="anchor" href="#spiel-des-jahres-sdj_family" aria-label="Jeu familial 1993">#</a></h3>
+<ul class="podium">
+<li>
+<a href="/fr/jeu/perudo/">
+<span class="shot">
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/wX4cTWNjTG7XiGHGgSpiiw__small/img/vU6kaL3f06BaVfmwUV91trrvDng=/fit-in/200x150/filters:strip_icc()/pic8630033.png" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/wX4cTWNjTG7XiGHGgSpiiw__small/img/vU6kaL3f06BaVfmwUV91trrvDng=/fit-in/200x150/filters:strip_icc()/pic8630033.png" alt="Jaquette du jeu Perudo" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
+</span>
+<span class="body">
+<span class="name">Perudo</span>
+<span class="meta"><span>1800</span><span>Richard Borg</span><span>★ 6.9</span></span>
 </span>
 </a>
 </li>

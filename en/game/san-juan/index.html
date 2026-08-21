@@ -181,11 +181,10 @@ p{margin:0 0 1em}
 .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.75rem;font-weight:750;
   letter-spacing:.11em;text-transform:uppercase;color:var(--brand);margin:0 0 9px}
 /* Deux filets, un de chaque côté : sur un titre centré, un seul filet à gauche
-   déséquilibre le bloc. Ils disparaissent en dessous de 700 px, où un sur-titre
-   un peu long passe sur deux lignes et laisse un filet pendre au milieu. */
+   déséquilibre le bloc. Ils restent visibles sur téléphone : le sur-titre y
+   conserve ainsi la même signature visuelle que sur ordinateur. */
 .eyebrow::before,.eyebrow::after{content:"";width:20px;height:2px;border-radius:2px;
   background:currentColor;flex:0 0 auto}
-@media (max-width:700px){.eyebrow::before,.eyebrow::after{display:none}}
 
 /* --- En-tête : marque bien visible, barre translucide au défilement -------
    Seul bloc du site à ne pas être centré, et volontairement : la marque tient
@@ -542,6 +541,20 @@ main{padding-bottom:72px;scroll-margin-top:calc(var(--head-h) + 20px)}
 .grid--decades{grid-template-columns:1fr;gap:20px}
 @media (min-width:560px){.grid--decades{grid-template-columns:repeat(2,1fr)}}
 @media (min-width:900px){.grid--decades{grid-template-columns:repeat(3,1fr)}}
+/* Le téléphone suit un étalon de deux jeux par rangée. La largeur est
+   calculée après l'espacement : trois cartes font donc 2 + 1 centrée grâce au
+   conteneur flex. Les décennies ne figurent volontairement pas ici, leurs
+   grandes tuiles illustrées restent seules sur leur rangée. */
+@media (max-width:559px){
+  .grid--bento{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .grid--games,.grid--games-lg{gap:12px}
+  .grid--games > li,.grid--games-lg > li{
+    flex:0 1 calc(50% - 6px);max-width:calc(50% - 6px)}
+  .tile{gap:8px;padding:16px 10px}
+  .tile .logo{width:44px;height:44px}
+  .awardblock{padding:16px 12px}
+  #history{display:none}
+}
 
 /* --- Tuile d'un prix ----------------------------------------------------- */
 .tile{position:relative;display:flex;flex-direction:column;align-items:center;
@@ -1247,7 +1260,7 @@ document.documentElement.classList.add("anim")}catch(e){}
 <h1>San Juan</h1>
 <div class="gamehero">
 <figure class="art" style="margin:0"><img src="https://cf.geekdo-images.com/kiD03bslLpN_0Qe1LJ8OGg__original/img/rFYh1En1BFLZ3n0Do-BwOnn7efU=/0x0/filters:format(jpeg)/pic174174.jpg" alt="Box art for San Juan" width="820" height="547" fetchpriority="high" decoding="async" data-zoom="View the box art for San Juan full size" referrerpolicy="no-referrer-when-downgrade"></figure>
-<ul class="awards"><li><span class="badge badge--award" style="--accent:var(--deutscher-spiele-preis);--accent-bg:var(--deutscher-spiele-preis-bg);--accent-ink:var(--deutscher-spiele-preis-ink)">Deutscher Spiele Preis</span></li></ul>
+<ul class="awards"></ul>
 <p class="meta"><span>2004</span><span>Andreas Seyfarth</span></p>
 <div class="specs">
 <div class="rating">
@@ -1272,7 +1285,7 @@ document.documentElement.classList.add("anim")}catch(e){}
 <h2>All of its awards</h2>
 </div>
 <ul class="podium">
-<li style="--accent:var(--deutscher-spiele-preis);--accent-bg:var(--deutscher-spiele-preis-bg);--accent-ink:var(--deutscher-spiele-preis-ink)"><a href="/en/awards/deutscher-spiele-preis/2004/"><span class="shot"><img class="cover cover--sm" src="/assets/deutscher_spiele_preis.png" alt="" aria-hidden="true" width="62" height="62" loading="lazy" decoding="async" style="object-fit:contain;padding:8px;background:var(--surface)"></span><span class="body"><span class="name">Deutscher Spiele Preis 2004</span><span class="meta"><span>Ranking</span><span>Runner-up</span></span></span></a></li>
+<li style="--accent:var(--deutscher-spiele-preis);--accent-bg:var(--deutscher-spiele-preis-bg);--accent-ink:var(--deutscher-spiele-preis-ink)"><a href="/en/awards/deutscher-spiele-preis/2004/"><span class="body"><span class="name">Deutscher Spiele Preis 2004</span><span class="meta"><span>Ranking</span><span>Runner-up</span></span></span></a></li>
 </ul>
 </section>
 <section class="section prose">
