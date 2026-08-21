@@ -25,11 +25,11 @@
 <meta name="twitter:image" content="https://cf.geekdo-images.com/WuOY1XAIJQ-RGAmT_apW_w__original/img/06TSBC2s-cwbxfPmy_pf7n5p-jM=/0x0/filters:format(jpeg)/pic8632998.jpg">
 <meta name="theme-color" content="#087c95" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0e1416" media="(prefers-color-scheme: dark)">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23087c95'/%3E%3Cpath d='M10 6h12v5a6 6 0 0 1-12 0z' fill='%23aeecff'/%3E%3Cpath d='M14 17h4v5h3v3H11v-3h3z' fill='%23aeecff'/%3E%3C/svg%3E">
+<link rel="icon" type="image/png" sizes="128x128" href="/assets/dicea-favicon.png"><link rel="apple-touch-icon" href="/assets/dicea-icon.png">
 <style>:root{
   color-scheme:light dark;
 
-  /* Rôles Material 3 de l'app — thème clair */
+  /* Rôles Material 3 de l'app, thème clair */
   --brand:#01677d;--on-brand:#ffffff;
   --brand-container:#b3ebff;--on-brand-container:#001f27;
   --bg:#f5fafd;
@@ -38,7 +38,7 @@
   --line:#bfc8cc;--line-strong:#70787c;--outline:#70787c;
   --danger:#ba1a1a;
 
-  /* Accent par prix — identique au calcul de l'app, plus son container M3 */
+  /* Accent par prix, identique au calcul de l'app, plus son container M3 */
   --as-dor:#01677d;--as-dor-bg:#b3ebff;--as-dor-ink:#001f27;
   --spiel-des-jahres:#4b626a;--spiel-des-jahres-bg:#cee6f0;--spiel-des-jahres-ink:#061e25;
   --deutscher-spiele-preis:#525f74;--deutscher-spiele-preis-bg:#d6e3f7;
@@ -46,6 +46,18 @@
   --golden-geek:#585c7e;--golden-geek-bg:#dfe0ff;--golden-geek-ink:#151937;
 
   --gold:#8a6a12;--silver:#5c6468;--bronze:#7a4f2e;
+
+  /* Soleil et lune du sélecteur de thème. L'ambre et l'indigo sont pris dans
+     les familles déjà présentes (l'or des médailles, l'indigo des Golden Geek)
+     plutôt qu'inventés : deux teintes de plus, mais pas deux teintes
+     étrangères. Contraste vérifié sur le fond de puce des deux thèmes. */
+  --sun:#b06a00;--moon:#4c51a8;
+
+  /* Hauteur de la barre collante. C'est **elle** qui donne le `top` des titres
+     de section collants et la marge de défilement des ancres : une seule valeur
+     à corriger si l'en-tête change de gabarit. Le script l'affine avec la
+     hauteur réelle, mais la valeur ci-dessous doit rester juste sans JS. */
+  --head-h:92px;
 
   --r-lg:20px;--r:14px;--r-sm:10px;--r-pill:999px;
   /* Le site occupe la largeur qu'on lui donne. `--measure` ne bride plus rien :
@@ -75,6 +87,7 @@
     --deutscher-spiele-preis-ink:#d6e3f7;
     --golden-geek:#c1c4eb;--golden-geek-bg:#414465;--golden-geek-ink:#dfe0ff;
     --gold:#e5c46a;--silver:#c3ccd0;--bronze:#dba883;
+    --sun:#ffc65c;--moon:#b9bcf0;
     --shadow-1:0 1px 2px rgba(0,0,0,.5);
     --shadow-2:0 2px 8px rgba(0,0,0,.5),0 16px 34px rgba(0,0,0,.42);
   }
@@ -93,16 +106,31 @@
   --deutscher-spiele-preis-ink:#d6e3f7;
   --golden-geek:#c1c4eb;--golden-geek-bg:#414465;--golden-geek-ink:#dfe0ff;
   --gold:#e5c46a;--silver:#c3ccd0;--bronze:#dba883;
+  --sun:#ffc65c;--moon:#b9bcf0;
   --shadow-1:0 1px 2px rgba(0,0,0,.5);
   --shadow-2:0 2px 8px rgba(0,0,0,.5),0 16px 34px rgba(0,0,0,.42);
 }
 
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+/* --- Tout est centré -----------------------------------------------------
+   Le site est une archive, pas un article : chaque page est faite de titres
+   courts, de listes et de grilles de jaquettes. Alignés à gauche sur un écran
+   large, ces blocs laissaient un vide à droite qui donnait l'impression d'une
+   page mal cadrée. Le centrage est donc posé **une fois, sur le corps**, et
+   tout en hérite : titres, sur-titres, phrases d'introduction, contenu des
+   tuiles, menu, fil d'Ariane, pied de page.
+
+   L'unique exception est la prose longue (`.prose`), où le centrage de dix
+   lignes de suite se paie en lisibilité : le bloc reste centré dans la page, le
+   texte s'y aligne à gauche. C'est le compromis habituel de la typographie de
+   labeur, et il ne concerne que les descriptions de jeux et les portraits de
+   prix. */
 body{
   margin:0;background:var(--bg);color:var(--ink);
   font-family:var(--font);font-size:17px;line-height:1.62;
   overflow-wrap:break-word;-webkit-font-smoothing:antialiased;
+  text-align:center;
 }
 img{max-width:100%;height:auto}
 a{color:var(--brand);text-underline-offset:.18em;text-decoration-thickness:1px}
@@ -115,49 +143,144 @@ h2{font-size:clamp(1.35rem,1.12rem + 1vw,1.9rem);font-weight:750;margin-top:0}
 h3{font-size:clamp(1.05rem,.98rem + .35vw,1.25rem);font-weight:700;margin-top:0}
 h4{font-size:1rem;font-weight:700;margin-top:0}
 p{margin:0 0 1em}
-/* La largeur de lecture n'est bridée que dans les blocs de prose : ailleurs, le
-   texte occupe la largeur qu'on lui donne — un paragraphe orphelin à 60 % d'un
-   écran large sans raison, c'est ce qu'on veut éviter. */
-.prose p,.prose ul,.prose ol,.lede{max-width:var(--measure)}
+/* Le seul bloc à ne pas être centré ligne à ligne : la colonne de lecture. Elle
+   est bornée à 72 caractères et centrée dans la page, donc le texte aligné à
+   gauche qu'elle contient reste manifestement voulu. Les titres, eux, se
+   recentrent. */
+.prose{max-width:72ch;margin-inline:auto;text-align:left}
+.prose h2,.prose h3,.prose h4,.prose .head{text-align:center}
+.lede{margin-inline:auto}
 
 .wrap{max-width:var(--page);margin-inline:auto;padding-inline:clamp(16px,4vw,36px)}
 .skip{position:absolute;left:-9999px;top:0;z-index:60;background:var(--brand);
   color:var(--on-brand);padding:14px 20px;border-radius:0 0 var(--r-sm) 0;font-weight:600}
 .skip:focus{left:0}
 
-/* La marge de défilement dégage la barre collante quand on arrive sur une
-   section par une ancre — celles du repère de droite comme celles d'un lien
-   partagé. */
-.section{margin-top:clamp(44px,6vw,80px);scroll-margin-top:96px}
-.section > .head{margin-bottom:20px}
-.section > .head p{color:var(--ink-2);margin:0;max-width:var(--measure)}
+/* --- Titres de section collants (« sticky section headers ») --------------
+   Quand on quitte une section, le titre de la suivante vient se poser sous la
+   barre du haut et y reste tant qu'on parcourt son contenu, puis se fait
+   pousser par le titre d'après. On sait donc en permanence ce qu'on est en
+   train de lire, sans rien avoir à remonter.
+
+   Trois conditions, toutes nécessaires : `position:sticky` sur l'en-tête et non
+   sur la section (sinon c'est la section entière qui se fige), un `top` égal à
+   la hauteur de la barre du haut, et un fond opaque, faute de quoi le contenu
+   défilerait visiblement derrière le titre. Le `z-index` reste sous celui de la
+   barre (40), qui doit toujours passer par-dessus. */
+.section{margin-top:clamp(44px,6vw,80px);scroll-margin-top:calc(var(--head-h) + 20px)}
+.section > .head{position:sticky;top:var(--head-h);z-index:20;
+  margin-bottom:20px;padding-block:14px 12px;background:var(--bg)}
+.section > .head p{color:var(--ink-2);margin:0;max-width:72ch;margin-inline:auto}
+/* Un liseré n'apparaît qu'une fois le titre réellement collé, sinon il traîne
+   sous chaque titre au repos. `animation-timeline` n'est pas encore partout :
+   le repli est simplement l'absence de liseré, ce qui ne coûte rien. */
+@supports (animation-timeline:view()){
+  .section > .head{border-bottom:1px solid transparent;
+    animation:stuck-line linear both;animation-timeline:view();
+    animation-range:contain calc(100% - 1px) contain 100%}
+  @keyframes stuck-line{to{border-bottom-color:var(--line)}}
+}
+.section-link{margin:22px 0 0;font-size:.92rem;font-weight:600}
 .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.75rem;font-weight:750;
   letter-spacing:.11em;text-transform:uppercase;color:var(--brand);margin:0 0 9px}
-.eyebrow::before{content:"";width:20px;height:2px;border-radius:2px;background:currentColor}
+/* Deux filets, un de chaque côté : sur un titre centré, un seul filet à gauche
+   déséquilibre le bloc. Ils disparaissent en dessous de 700 px, où un sur-titre
+   un peu long passe sur deux lignes et laisse un filet pendre au milieu. */
+.eyebrow::before,.eyebrow::after{content:"";width:20px;height:2px;border-radius:2px;
+  background:currentColor;flex:0 0 auto}
+@media (max-width:700px){.eyebrow::before,.eyebrow::after{display:none}}
 
-/* --- En-tête : marque bien visible, barre translucide au défilement ------- */
-.site-head{position:sticky;top:0;z-index:40;
+/* --- En-tête : marque bien visible, barre translucide au défilement -------
+   Seul bloc du site à ne pas être centré, et volontairement : la marque tient
+   la gauche, les actions la droite, comme dans l'application. */
+.site-head{position:sticky;top:0;z-index:40;text-align:left;
   background:color-mix(in srgb,var(--bg) 86%,transparent);
   backdrop-filter:saturate(180%) blur(14px);-webkit-backdrop-filter:saturate(180%) blur(14px);
   border-bottom:1px solid transparent;transition:border-color .25s var(--ease)}
 .site-head.is-stuck{border-bottom-color:var(--line)}
+/* La hauteur de la barre est **donnée par son contenu**, jamais par `--head-h`.
+   La lier à sa propre mesure ferait une boucle : le script écrit la hauteur
+   observée dans `--head-h`, le liseré du bas ajoute un pixel, la barre grandit
+   d'un pixel, l'observateur se redéclenche, et l'en-tête enfle à vue d'œil. */
 .site-head .wrap{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;
-  padding-block:12px;min-height:70px}
-.brand{display:flex;align-items:center;gap:12px;margin-right:auto;text-decoration:none;
-  color:var(--ink);min-height:48px}
+  padding-block:10px;min-height:70px}
+/* La marque et son lien de téléchargement forment **une colonne**, et le filet
+   court sur toute la hauteur de cette colonne, pas seulement sur celle du
+   mot-symbole. C'est ce qui rattache le lien à Dicea plutôt qu'à la barre
+   entière : à droite du filet commence autre chose. D'où `align-items:stretch`,
+   qui donne au filet la hauteur du bloc sans qu'aucune valeur ne soit écrite en
+   dur ici. */
+.brand-block{display:flex;align-items:stretch;gap:14px;margin-right:auto;min-width:0}
+/* Les deux étages sont **centrés l'un sur l'autre** : le lien pend sous le
+   milieu de la marque, et non sous son bord gauche. C'est le lien qui est le
+   plus large des deux, donc c'est lui qui donne l'axe, et la marque se pose au
+   milieu. Un axe commun est ce qui fait tenir les deux étages comme un bloc,
+   ce qu'ils sont. */
+.brand-stack{display:flex;flex-direction:column;align-items:center;gap:2px;
+  min-width:0;flex:0 0 auto}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none;
+  color:var(--ink);min-height:44px;min-width:0}
 .brand .dice{width:38px;height:auto;flex:0 0 auto}
 /* Le mot-symbole ne change **jamais** avec le thème : une marque qui se
    recolore n'est plus une marque. Le fichier est dans le teal Dicea, qui tient
-   les deux fonds — c'est pour ça que ce teal-là a été choisi, et il n'y a plus
+   les deux fonds, c'est pour ça que ce teal-là a été choisi, et il n'y a plus
    qu'un seul fichier à servir. */
 .brand .wordmark{height:26px;width:auto;flex:0 0 auto}
-.brand .rule{width:1px;height:26px;background:var(--line);flex:0 0 auto}
-.brand .site{display:flex;flex-direction:column;line-height:1.2;min-width:0}
-.brand .site b{font-weight:700;font-size:.94rem;letter-spacing:-.012em}
-.brand .site span{font-weight:400;font-size:.73rem;color:var(--ink-2)}
-@media (max-width:600px){
-  .brand .rule,.brand .site span{display:none}
+.brand-block .rule{width:1px;align-self:stretch;border-radius:1px;
+  background:var(--line);flex:0 0 auto}
+/* Où l'on est, puis ce que Dicea offre en plus : deux lignes alignées à gauche
+   contre le filet. C'est une adresse, pas un titre, et centrer deux lignes de
+   longueurs très différentes contre un filet vertical les fait flotter. */
+.brand-block .site{display:flex;flex-direction:column;justify-content:center;gap:1px;
+  line-height:1.25;min-width:0;max-width:30ch;text-align:left;text-decoration:none;
+  color:var(--ink)}
+.brand-block .site b{font-weight:700;font-size:.9rem;letter-spacing:-.012em;
+  transition:color .16s var(--ease)}
+.brand-block .site span{font-weight:400;font-size:.73rem;color:var(--ink-2)}
+.brand-block .site:hover b{color:var(--brand)}
+/* Sous 860 px, la barre se réduit à la marque et à son lien : la phrase de
+   droite occupait à elle seule la moitié d'un écran de téléphone, poussait les
+   actions sur une troisième ligne, et la barre collante mangeait un quart de la
+   hauteur utile. L'encart de bas de page redit la même chose, en entier. */
+@media (max-width:860px){
+  .brand-block .rule,.brand-block .site{display:none}
 }
+@media (max-width:600px){
+  .brand .wordmark{height:23px}
+}
+
+/* --- Le lien de téléchargement, sous la marque ---------------------------
+   Discret par construction : la taille d'une mention, pas d'un bouton, et les
+   deux stores restent repliés tant qu'on ne les demande pas. `<details>` natif,
+   donc aucun JavaScript, l'ouverture au clavier et la fermeture à l'`Échap`
+   sont celles du navigateur.
+
+   Aucun retrait : le lien est centré sous la marque par la colonne qui les
+   porte tous les deux. Le menu déroulant, lui, s'ouvre **par la gauche** de la
+   pastille et non par son milieu, pour ne pas dépasser du bord de l'écran sur
+   un téléphone. */
+.get-app{position:relative;font-size:.78rem;line-height:1.3}
+.get-app > summary{display:inline-flex;align-items:center;gap:6px;list-style:none;
+  padding:3px 10px 3px 8px;border-radius:var(--r-pill);border:1px solid transparent;
+  color:var(--ink-2);font-weight:600;cursor:pointer;
+  transition:color .16s var(--ease),border-color .16s var(--ease),
+    background .16s var(--ease)}
+.get-app > summary::-webkit-details-marker{display:none}
+.get-app > summary:hover{color:var(--brand);border-color:var(--line);
+  background:var(--surface)}
+.get-app[open] > summary{color:var(--brand);border-color:var(--line);
+  background:var(--surface)}
+.get-app .i{flex:0 0 auto;transition:transform .2s var(--ease)}
+.get-app[open] .i{transform:translateY(2px)}
+.get-app-menu{position:absolute;left:0;top:calc(100% + 7px);z-index:5;
+  display:flex;flex-direction:column;min-width:212px;padding:6px;
+  border-radius:var(--r);background:var(--surface);border:1px solid var(--line);
+  box-shadow:var(--shadow-2)}
+.get-app-menu a{display:block;padding:9px 12px;border-radius:var(--r-sm);
+  color:var(--ink);text-decoration:none;font-size:.85rem;font-weight:600;
+  white-space:nowrap}
+.get-app-menu a:hover{background:var(--surface-2);color:var(--brand)}
+
 .head-actions{display:flex;align-items:center;gap:6px}
 
 .chip{display:inline-flex;align-items:center;justify-content:center;gap:6px;
@@ -170,13 +293,41 @@ p{margin:0 0 1em}
 .chip.is-on,.chip[aria-pressed="true"],.chip[aria-current="page"]{
   background:var(--brand-container);border-color:transparent;
   color:var(--on-brand-container);font-weight:700}
-.dicea-head{display:inline-flex;align-items:center;min-height:42px;padding-inline:10px;
-  color:var(--ink-2);text-decoration:none;font-size:.85rem;font-weight:600}
-.dicea-head:hover{color:var(--brand)}
+
+/* Sélecteur de langue : le drapeau de la langue **visée**, en SVG inline. Les
+   emojis drapeaux ne s'affichent pas du tout sous Windows, où ils tombent sur
+   deux lettres. Le liseré empêche le blanc du drapeau français de se fondre
+   dans la puce en thème clair. */
+.chip--lang{padding-inline:12px}
+.chip--lang .flag{flex:0 0 auto;border-radius:2px;
+  box-shadow:0 0 0 1px var(--line)}
+/* Le nom de la langue disparaît sur petit écran : le drapeau suffit, et
+   l'intitulé complet reste dans l'attribut `title` et le lecteur d'écran. */
+@media (max-width:520px){.chip--lang > span{display:none}.chip--lang{padding-inline:11px}}
+
+/* Bascule de thème : la lune en thème clair (le clic mène au sombre), le soleil
+   en thème sombre. Le choix se fait ici, en CSS, donc il est juste dès le
+   premier pixel, y compris quand le thème vient du système. L'ordre compte :
+   les règles `[data-theme]` explicites passent après la requête média pour
+   l'emporter dans les deux sens. */
+.chip--theme{padding-inline:11px}
+.chip--theme .i--sun{color:var(--sun);display:none}
+.chip--theme .i--moon{color:var(--moon);display:block}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .chip--theme .i--sun{display:block}
+  :root:not([data-theme="light"]) .chip--theme .i--moon{display:none}
+}
+:root[data-theme="dark"] .chip--theme .i--sun{display:block}
+:root[data-theme="dark"] .chip--theme .i--moon{display:none}
+:root[data-theme="light"] .chip--theme .i--sun{display:none}
+:root[data-theme="light"] .chip--theme .i--moon{display:block}
 
 .site-nav{border-bottom:1px solid var(--line);background:var(--bg)}
 .site-nav ul{display:flex;gap:2px;list-style:none;margin:0;padding:0;max-width:none;
-  overflow-x:auto;scrollbar-width:none}
+  overflow-x:auto;scrollbar-width:none;justify-content:center;
+  /* `safe` empêche le centrage de rogner le premier onglet quand la barre
+     déborde : sur téléphone, elle redevient alors simplement défilable. */
+  justify-content:safe center}
 .site-nav ul::-webkit-scrollbar{display:none}
 .site-nav a{position:relative;display:inline-flex;align-items:center;min-height:48px;
   padding:0 14px;color:var(--ink-2);text-decoration:none;font-size:.89rem;font-weight:600;
@@ -192,7 +343,8 @@ p{margin:0 0 1em}
 /* --- Repère de position : fil d'Ariane sur toutes les pages, dernier
    maillon appuyé pour qu'on sache d'un coup d'œil où l'on est ------------- */
 .crumbs{padding-top:18px}
-.crumbs ol{display:flex;flex-wrap:wrap;align-items:center;gap:6px;list-style:none;
+.crumbs ol{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
+  gap:6px;list-style:none;
   margin:0;padding:0;max-width:none;font-size:.82rem;color:var(--ink-2)}
 .crumbs li{display:flex;align-items:center;gap:6px}
 .crumbs li+li::before{content:"›";color:var(--outline)}
@@ -201,23 +353,43 @@ p{margin:0 0 1em}
 .crumbs [aria-current="page"]{font-weight:700;color:var(--ink);
   background:var(--surface-3);padding:2px 10px;border-radius:var(--r-pill)}
 
-main{padding-bottom:72px;scroll-margin-top:110px}
-.lede{font-size:clamp(1rem,.97rem + .28vw,1.15rem);color:var(--ink-2);margin-bottom:1.3em}
-
+main{padding-bottom:72px;scroll-margin-top:calc(var(--head-h) + 20px)}
+.lede{font-size:clamp(1rem,.97rem + .28vw,1.15rem);color:var(--ink-2);margin-bottom:1.3em;
+  max-width:72ch}
 
 /* --- Bandeau d'ouverture : aplat, pas de dégradé ------------------------- */
 .hero{position:relative;overflow:hidden;border-radius:var(--r-lg);margin-top:20px;
   padding:clamp(26px,4.4vw,56px);background:var(--surface);border:1px solid var(--line);
   box-shadow:var(--shadow-1)}
 .hero::before{content:"";position:absolute;inset:0 0 auto;height:4px;background:var(--brand)}
-.hero h1{margin-bottom:.32em;max-width:20ch}
+.hero h1{margin-bottom:.32em;max-width:20ch;margin-inline:auto}
 .hero .accent{color:var(--brand)}
-.hero p{font-size:clamp(1rem,.96rem + .34vw,1.16rem);color:var(--ink-2)}
-.hero-cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.hero p{font-size:clamp(1rem,.96rem + .34vw,1.16rem);color:var(--ink-2);
+  max-width:64ch;margin-inline:auto}
+.hero-cta{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:24px}
+
+/* --- En-tête d'une page de concours : le logo porte l'identité -----------
+   Le lecteur qui arrive d'un moteur de recherche doit reconnaître le prix avant
+   d'avoir lu le titre. Le logo occupe donc la place du sur-titre, sans prendre
+   de section à lui, et le liseré du haut porte l'accent du concours. */
+.award-hero{position:relative;overflow:hidden;border-radius:var(--r-lg);margin-top:20px;
+  padding:clamp(24px,3.6vw,44px);background:var(--surface);border:1px solid var(--line);
+  box-shadow:var(--shadow-1)}
+.award-hero::before{content:"";position:absolute;inset:0 0 auto;height:4px;
+  background:var(--accent,var(--brand))}
+.award-hero-logo{width:clamp(72px,9vw,96px);height:auto;object-fit:contain;
+  margin:0 auto 16px;display:block;border-radius:16px;background:var(--surface-2);
+  padding:8px;border:1px solid var(--line)}
+.award-hero .eyebrow{color:var(--accent,var(--brand))}
+.award-hero h1{max-width:22ch;margin-inline:auto}
 
 /* --- Tuiles de chiffres -------------------------------------------------- */
+/* Deux paliers explicites plutôt qu'un remplissage automatique : les chiffres
+   clés vont par quatre, et un remplissage laissait une quatrième tuile
+   orpheline à gauche d'une rangée de trois sur écran étroit. */
 .stats{display:grid;gap:12px;margin-top:30px;padding:0;list-style:none;max-width:none;
-  grid-template-columns:repeat(auto-fit,minmax(132px,1fr))}
+  grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (min-width:820px){.stats{grid-template-columns:repeat(4,minmax(0,1fr))}}
 .stats li{background:var(--surface-2);border:1px solid var(--line);
   border-radius:var(--r);padding:15px 17px}
 .stats b{display:block;font-size:clamp(1.5rem,1.25rem + 1vw,2rem);font-weight:800;
@@ -228,7 +400,7 @@ main{padding-bottom:72px;scroll-margin-top:110px}
 /* --- Frise historique ----------------------------------------------------
    **Elle ne défile pas.** Un bloc, une largeur, et tout y tient : c'est la
    condition pour qu'une frise donne ce qu'on lui demande, la vue d'ensemble.
-   Au repos elle ne montre que son échelle — depuis quand chaque prix existe
+   Au repos elle ne montre que son échelle, depuis quand chaque prix existe
    (les barres), les décennies (les repères), où quelque chose s'est passé (les
    points). Le détail vient au survol, au clic ou au clavier, et toujours au
    même endroit : la bande sous l'échelle. Une bulle qui suit le curseur oblige
@@ -240,7 +412,8 @@ main{padding-bottom:72px;scroll-margin-top:110px}
 
 /* La légende porte l'information la plus demandée de la page : la période de
    chaque concours. */
-.fz-legend{display:flex;flex-wrap:wrap;gap:8px 22px;list-style:none;margin:0 0 16px;
+.fz-legend{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 22px;
+  list-style:none;margin:0 0 16px;
   padding:0;max-width:none;font-size:.8rem;color:var(--ink-2)}
 .fz-legend li{display:flex;align-items:center;gap:8px}
 .fz-legend .k{width:22px;height:9px;border-radius:5px;background:var(--accent);
@@ -267,7 +440,7 @@ main{padding-bottom:72px;scroll-margin-top:110px}
 .fz-mark{flex:0 0 auto;width:14px;height:14px;border-radius:50%;background:var(--bg);
   border:2px solid var(--accent);
   /* Le halo de la couleur de fond détache deux points voisins là où l'échelle
-     les serre — 1990 et 1991 ne sont séparés que d'un pouce de règle. */
+     les serre, 1990 et 1991 ne sont séparés que d'un pouce de règle. */
   box-shadow:0 0 0 3px var(--bg);
   transition:transform .2s var(--ease),box-shadow .2s var(--ease)}
 /* La marque dit la nature du jalon : pleine pour une naissance, creuse pour une
@@ -295,7 +468,8 @@ main{padding-bottom:72px;scroll-margin-top:110px}
 .fz-p:focus-visible + .fz-card,
 .fz-p.is-open + .fz-card,
 .fz-card:target{opacity:1;visibility:visible;transform:none;transition-delay:0s}
-.fz-top{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0 0 6px}
+.fz-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
+  gap:10px;margin:0 0 6px}
 .fz-year{font-size:1.5rem;font-weight:800;letter-spacing:-.035em;line-height:1;
   color:var(--accent);font-variant-numeric:tabular-nums}
 .fz-card h3{margin:0 0 5px;font-size:1.05rem}
@@ -303,7 +477,7 @@ main{padding-bottom:72px;scroll-margin-top:110px}
 
 /* L'invitation occupe la bande tant qu'aucun jalon n'est choisi. Elle est le
    dernier élément de la fratrie : un simple `~` suffit à l'effacer, sans
-   `:has()` — qui ne sert que pour le cas `:target`, c'est-à-dire sans script. */
+   `:has()`, qui ne sert que pour le cas `:target`, c'est-à-dire sans script. */
 .fz-idle{position:absolute;left:0;right:0;bottom:0;height:var(--fz-band);margin:0;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   gap:10px;text-align:center;padding:16px;border-radius:var(--r-lg);
@@ -318,13 +492,19 @@ main{padding-bottom:72px;scroll-margin-top:110px}
 
 /* Sous 900 px, les points passent en colonne et portent leur année : sur une
    échelle de temps réduite à la largeur d'un téléphone, deux jalons voisins ne
-   se visent pas au doigt. L'échelle, elle, reste horizontale — elle est déjà
+   se visent pas au doigt. L'échelle, elle, reste horizontale, elle est déjà
    compacte, et c'est elle qui porte la vue d'ensemble. */
 @media (max-width:899px){
   .frieze{--fz-band:206px}
-  .fz-marks{padding-bottom:calc(var(--fz-band) + 16px)}
+  /* Les jalons redeviennent une liste verticale, avec leur année : deux points
+     voisins ne se visent pas au doigt sur une échelle réduite. La liste est
+     alors **le bloc** qu'on centre, pas chaque ligne : le filet vertical et les
+     points doivent rester alignés entre eux. */
+  .fz-marks{padding-bottom:calc(var(--fz-band) + 16px);max-width:520px;
+    margin-inline:auto;text-align:left}
   .fz-marks::before{content:"";position:absolute;left:6px;top:12px;
     bottom:calc(var(--fz-band) + 28px);width:2px;border-radius:2px;background:var(--line)}
+  .fz-card,.fz-idle{text-align:center}
 }
 @media (min-width:900px){
   .frieze{--fz-band:158px}
@@ -347,8 +527,18 @@ main{padding-bottom:72px;scroll-margin-top:110px}
 .grid--bento{grid-template-columns:1fr}
 @media (min-width:560px){.grid--bento{grid-template-columns:repeat(2,1fr)}}
 @media (min-width:1120px){.grid--bento{grid-template-columns:repeat(4,1fr)}}
-.grid--games{grid-template-columns:repeat(auto-fill,minmax(152px,1fr));gap:16px}
-.grid--games-lg{grid-template-columns:repeat(auto-fill,minmax(186px,1fr));gap:22px}
+/* **Les jeux sont toujours centrés, y compris sur la dernière rangée.**
+   Une grille ne sait pas le faire : `justify-content` centre les *colonnes*,
+   pas les cellules d'une rangée incomplète, et quatre jaquettes sur trois
+   colonnes laissaient la quatrième plaquée à gauche, sous la première. C'est
+   pour cette seule raison que ces grilles-là sont en `flex` : une rangée
+   incomplète s'y centre d'elle-même. Le couple `flex:1 1 <min>` + `max-width`
+   reproduit exactement le `minmax(min,max)` de la grille, donc ni le nombre de
+   colonnes ni la largeur des vignettes ne changent. */
+.grid--games{display:flex;flex-wrap:wrap;justify-content:center;gap:16px}
+.grid--games > li{flex:1 1 152px;max-width:190px;min-width:0}
+.grid--games-lg{display:flex;flex-wrap:wrap;justify-content:center;gap:22px}
+.grid--games-lg > li{flex:1 1 186px;max-width:225px;min-width:0}
 /* Trois par rangée, jamais un remplissage automatique : six décennies tombent
    exactement en 3 × 2, et des tuiles deux fois plus larges laissent enfin la
    place à une phrase sur ce qui s'est joué pendant ces dix ans. */
@@ -357,7 +547,8 @@ main{padding-bottom:72px;scroll-margin-top:110px}
 @media (min-width:900px){.grid--decades{grid-template-columns:repeat(3,1fr)}}
 
 /* --- Tuile d'un prix ----------------------------------------------------- */
-.tile{position:relative;display:flex;flex-direction:column;gap:11px;overflow:hidden;
+.tile{position:relative;display:flex;flex-direction:column;align-items:center;
+  gap:11px;overflow:hidden;
   padding:22px;border-radius:var(--r-lg);background:var(--surface);
   border:1px solid var(--line);box-shadow:var(--shadow-1);
   transition:transform .24s var(--ease),box-shadow .24s var(--ease),
@@ -377,12 +568,12 @@ main{padding-bottom:72px;scroll-margin-top:110px}
 /* --- Bloc d'un prix (derniers lauréats) ----------------------------------
    Un concours, une année, un bloc. Regrouper plusieurs éditions dans une
    même grille laissait croire que tous ces jeux avaient gagné la même
-   année — c'est précisément ce qu'on ne veut pas. */
+   année, c'est précisément ce qu'on ne veut pas. */
 .awardblock{margin-top:22px;padding:20px;border-radius:var(--r-lg);
   background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);
   border-top:4px solid var(--accent,var(--brand))}
-.awardblock-head{display:flex;flex-wrap:wrap;align-items:center;gap:12px;
-  margin-bottom:18px}
+.awardblock-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
+  gap:12px;margin-bottom:18px}
 .awardblock-head img{width:40px;height:40px;object-fit:contain;flex:0 0 auto;
   border-radius:10px;background:var(--surface-2);padding:4px;border:1px solid var(--line)}
 .awardblock-head h3{margin:0;font-size:1.12rem}
@@ -390,11 +581,22 @@ main{padding-bottom:72px;scroll-margin-top:110px}
 .awardblock-head h3 a:hover{color:var(--brand)}
 
 /* Regroupement à l'intérieur d'une année de la frise : une catégorie (ou un
-   prix, sur la frise transversale) et ses lauréats. */
-.tl-cat{padding-left:14px;border-left:3px solid var(--accent,var(--brand))}
-.tl-cat + .tl-cat{margin-top:14px}
-.tl-cat-name{margin:0 0 8px;font-size:.78rem;font-weight:750;letter-spacing:.06em;
+   prix, sur la frise transversale) et ses lauréats. Le liseré qui tenait la
+   gauche est devenu un filet **sous le nom**, centré comme lui : un trait
+   vertical à gauche d'un bloc centré tirait tout l'œil de ce côté.
+
+   Le trait de séparation entre deux blocs ne subsiste **qu'empilés** : posé sur
+   un voisin de rangée, il aurait dessiné un trait au-dessus du deuxième bloc
+   d'une même ligne, ce qui ne sépare rien. Côte à côte, l'écart et le nom
+   souligné suffisent. */
+@media (max-width:759px){
+  .tl-cat + .tl-cat{margin-top:2px;padding-top:16px;border-top:1px solid var(--line)}
+}
+.tl-cat-name{display:flex;flex-direction:column;align-items:center;gap:7px;
+  margin:0 0 10px;font-size:.78rem;font-weight:750;letter-spacing:.06em;
   text-transform:uppercase;color:var(--accent-ink,var(--ink-2))}
+.tl-cat-name::after{content:"";width:28px;height:3px;border-radius:3px;
+  background:var(--accent,var(--brand))}
 .tl-cat-name a{color:inherit;text-decoration:none}
 .tl-cat-name a:hover{text-decoration:underline}
 
@@ -427,27 +629,40 @@ main{padding-bottom:72px;scroll-margin-top:110px}
 .timeline{list-style:none;margin:0;padding:0;max-width:none;display:grid;gap:14px}
 .tl-year{position:relative;display:grid;gap:14px;padding:16px;border-radius:var(--r-lg);
   background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1)}
-.tl-year > .mark{display:flex;align-items:center;gap:12px}
+/* L'année coiffe ses lauréats au lieu de leur faire face en colonne : c'est ce
+   qui permet de centrer la carte entière, et l'année reste de toute façon
+   visible puisque chaque année a sa propre carte. */
+.tl-year > .mark{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
+  gap:12px;padding-bottom:12px;border-bottom:1px solid var(--line)}
 .tl-year .y{font-size:clamp(1.5rem,1.25rem + 1vw,2.05rem);font-weight:800;
   letter-spacing:-.035em;color:var(--brand);font-variant-numeric:tabular-nums;
   line-height:1}
 .tl-year .y a{color:inherit;text-decoration:none}
 .tl-year .y a:hover{text-decoration:underline}
 .tl-year .sub{font-size:.78rem;color:var(--ink-2)}
-.tl-year .rows{display:grid;gap:10px;min-width:0}
+/* Les blocs d'une année (une catégorie sur une page de prix, un concours sur
+   une page transversale) se rangent **côte à côte**, exactement comme les
+   cartes de catégorie d'une page d'édition, et pour la même raison : une
+   catégorie à lauréat unique par rangée pleine largeur, c'est une bande vide de
+   plus par catégorie. Dernière rangée centrée, ici aussi. */
+.tl-year .rows{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;min-width:0}
+.tl-year .rows > *{flex:1 1 320px;min-width:0;max-width:560px}
+/* Quatre blocs : un carré de deux sur deux plutôt qu'une rangée de trois et un
+   orphelin. C'est le cas de l'As d'Or, qui a quatre catégories. */
+@media (min-width:1040px){
+  .tl-year .rows[data-n="4"] > *{flex-basis:calc(50% - 8px);max-width:none}
+}
 @media (min-width:760px){
-  .tl-year{grid-template-columns:minmax(132px,150px) minmax(0,1fr);gap:22px;
-    align-items:start;padding:18px 20px}
-  .tl-year > .mark{flex-direction:column;align-items:flex-start;gap:4px;
-    position:sticky;top:86px}
+  .tl-year{gap:18px;padding:20px 24px}
 }
 /* Une année hors norme (édition annulée, prix pas encore né, année de
    transition) : elle se voit, et elle explique pourquoi. */
 .tl-year--flag{border-style:dashed;background:var(--surface-2)}
 .tl-year--flag .y{color:var(--ink-2)}
-.tl-note{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;
-  border-radius:var(--r);background:var(--surface-3);border-left:3px solid var(--outline)}
-.tl-note.is-cancelled{border-left-color:var(--danger)}
+.tl-note{display:flex;gap:10px;justify-content:center;padding:14px;
+  border-radius:var(--r);background:var(--surface-3);
+  border-top:3px solid var(--outline)}
+.tl-note.is-cancelled{border-top-color:var(--danger)}
 .tl-note b{display:block;font-size:.92rem;margin-bottom:2px}
 .tl-note p{margin:0;font-size:.86rem;color:var(--ink-2);max-width:none}
 
@@ -475,8 +690,8 @@ main{padding-bottom:72px;scroll-margin-top:110px}
 .gcard a{text-decoration:none;color:inherit}
 .gcard a::after{content:"";position:absolute;inset:0;border-radius:var(--r)}
 .gcard a:hover .name{color:var(--brand)}
-.gcard .awards{display:flex;flex-wrap:wrap;gap:4px;list-style:none;margin:0;padding:0;
-  max-width:none}
+.gcard .awards{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;
+  list-style:none;margin:0;padding:0;max-width:none}
 .gcard .count{position:absolute;top:9px;right:9px;z-index:2;min-width:28px;height:28px;
   padding:0 9px;border-radius:var(--r-pill);display:grid;place-items:center;
   background:var(--brand);color:var(--on-brand);font-size:.78rem;font-weight:750}
@@ -488,29 +703,58 @@ main{padding-bottom:72px;scroll-margin-top:110px}
 .badge--award{background:var(--accent-bg,var(--surface-3));
   color:var(--accent-ink,var(--ink-2))}
 .badge--flag{background:var(--surface-4);color:var(--ink)}
-.badges{display:flex;flex-wrap:wrap;gap:6px;list-style:none;padding:0;margin:0;max-width:none}
+.badges{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;list-style:none;
+  padding:0;margin:0;max-width:none}
 
-/* --- Palmarès : une carte par catégorie ---------------------------------- */
+/* --- Palmarès : une carte par catégorie ----------------------------------
+   **Plusieurs catégories par rangée.** Sur 270 catégories du site, 212 n'ont
+   qu'un seul lauréat : empilées sur toute la largeur, elles donnaient autant de
+   bandes presque vides, un titre, une ligne, du blanc. Côte à côte, une
+   édition tient dans un écran et chaque rangée est pleine.
+
+   La règle vaut pour les quatre concours, sans exception : c'est le nombre de
+   catégories qui décide du nombre de colonnes, pas le concours. Trois
+   catégories (Spiel des Jahres, Golden Geek) font une rangée de trois ; quatre
+   (As d'Or) font un carré de deux sur deux, jamais trois plus un ; deux font
+   une paire ; une seule reste seule, mais bornée, pas étirée. */
+.cats{display:flex;flex-wrap:wrap;justify-content:center;align-items:stretch;
+  gap:18px;margin-top:22px}
+.cats > .cat{flex:1 1 320px;max-width:560px;margin-top:0}
+/* Quatre catégories : deux colonnes exactes, à partir de la largeur où trois
+   tiendraient : c'est là, et seulement là, qu'il faut refuser le 3 + 1. */
+@media (min-width:1040px){
+  .cats[data-n="4"] > .cat{flex-basis:calc(50% - 9px);max-width:none}
+}
 .cat{margin-top:22px;padding:20px;border-radius:var(--r-lg);background:var(--surface);
-  border:1px solid var(--line);box-shadow:var(--shadow-1);scroll-margin-top:96px}
-.cat > h2,.cat > h3{display:flex;align-items:center;gap:9px;margin:0 0 15px}
+  border:1px solid var(--line);box-shadow:var(--shadow-1);
+  scroll-margin-top:calc(var(--head-h) + 20px)}
+.cat > h2,.cat > h3{display:flex;align-items:center;justify-content:center;gap:9px;
+  margin:0 0 15px}
 .cat > h2::before,.cat > h3::before{content:"";width:4px;height:1.05em;border-radius:3px;
   background:var(--accent,var(--brand));flex:0 0 auto}
 .cat:target{border-color:var(--accent,var(--brand));box-shadow:var(--shadow-2)}
-.cat .anchor{margin-left:auto;font-size:.8rem;font-weight:500;color:var(--ink-2);
+/* L'ancre suit le titre au lieu d'être repoussée au bord : avec un titre
+   centré, un `#` collé à droite du bloc n'appartenait plus à rien. */
+.cat .anchor{font-size:.8rem;font-weight:500;color:var(--ink-2);
   text-decoration:none;opacity:0;transition:opacity .18s var(--ease)}
 .cat:hover .anchor,.cat .anchor:focus{opacity:1}
 
-/* `auto-fit` et non `auto-fill` : une catégorie à lauréat unique — il y en a
-   beaucoup — laissait sinon quatre colonnes vides à sa droite. Les colonnes
-   sans contenu sont repliées, et la ligne occupe la largeur. */
-.podium{list-style:none;margin:0;padding:0;display:grid;gap:10px;max-width:none;
-  grid-template-columns:repeat(auto-fit,minmax(290px,1fr))}
-.podium li{position:relative;display:flex;gap:13px;align-items:center;padding:10px;
+/* Même raison qu'au-dessus, et le cas où le défaut se voyait le plus : les
+   quatre lauréats d'un prix sur une page de décennie tombaient en trois plus
+   un, l'orphelin collé à gauche. En `flex`, la dernière rangée se centre, et la
+   borne haute empêche un lauréat unique de s'étirer sur toute la largeur. */
+.podium{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;
+  justify-content:center;gap:10px;max-width:none}
+.podium > li{flex:1 1 290px;max-width:440px}
+.podium li{position:relative;display:flex;gap:13px;align-items:center;
+  justify-content:center;padding:10px;
   border-radius:var(--r);background:var(--surface-2);border:1px solid transparent;
   transition:border-color .2s var(--ease),background .2s var(--ease)}
 .podium li:hover{border-color:var(--line);background:var(--surface-3)}
-.podium li > a{display:flex;gap:13px;align-items:center;flex:1;min-width:0;
+/* La jaquette et le texte forment **un groupe centré** dans la cellule, au lieu
+   d'un texte poussé au bord droit : c'est ce qui fait tenir la ligne dans une
+   page centrée sans avoir à empiler l'image au-dessus du titre. */
+.podium li > a{display:flex;gap:13px;align-items:center;min-width:0;
   text-decoration:none;color:inherit;min-height:44px}
 .podium .shot{position:relative;flex:0 0 auto}
 .podium .rank{position:absolute;top:-5px;left:-5px;z-index:2;width:23px;height:23px;
@@ -518,17 +762,19 @@ main{padding-bottom:72px;scroll-margin-top:110px}
   background:var(--surface);color:var(--ink-2);border:1px solid var(--line)}
 .podium .rank[data-rank="1"]{background:var(--brand-container);
   color:var(--on-brand-container);border-color:transparent}
-.podium .body{min-width:0;flex:1}
+.podium .body{min-width:0}
 .podium .name{display:block;font-weight:650;line-height:1.3;letter-spacing:-.008em}
 .podium li:hover .name{color:var(--brand)}
-.podium .meta{display:flex;flex-wrap:wrap;align-items:center;gap:4px 9px;margin-top:4px;
+.podium .meta{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
+  gap:4px 9px;margin-top:4px;
   font-size:.78rem;color:var(--ink-2)}
 .podium .meta > span + span::before{content:"·";margin-right:9px;color:var(--outline)}
 
 /* --- Bloc à la une ------------------------------------------------------- */
-.feature{position:relative;display:grid;gap:20px;padding:20px;border-radius:var(--r-lg);
+.feature{position:relative;display:grid;justify-items:center;gap:20px;padding:20px;
+  border-radius:var(--r-lg);
   background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1)}
-.feature .art{position:relative;max-width:220px}
+.feature .art{position:relative;max-width:220px;width:100%}
 .feature .art .count{position:absolute;top:9px;right:9px;z-index:2;min-width:30px;
   height:30px;padding:0 9px;border-radius:var(--r-pill);display:grid;place-items:center;
   background:var(--brand);color:var(--on-brand);font-size:.82rem;font-weight:750}
@@ -536,52 +782,52 @@ main{padding-bottom:72px;scroll-margin-top:110px}
 .feature h3{font-size:clamp(1.25rem,1.05rem + 1vw,1.7rem);margin-bottom:.35em}
 .feature h3 a{color:inherit;text-decoration:none}
 .feature h3 a:hover{color:var(--brand)}
-.feature .why{font-size:.9rem;color:var(--ink-2);margin:14px 0 0;max-width:var(--measure)}
-@media (min-width:700px){
-  .feature{grid-template-columns:minmax(0,220px) minmax(0,1fr);gap:26px;align-items:center;
-    padding:24px}
-}
+.feature .why{font-size:.9rem;color:var(--ink-2);margin:14px auto 0;max-width:62ch}
+@media (min-width:700px){.feature{gap:24px;padding:28px}}
 
 /* --- Fiche de jeu --------------------------------------------------------
-   Sur téléphone, le même enchaînement vertical que l'écran de l'app : le
-   visuel, les métadonnées, les caractéristiques. Sur grand écran ce serait une
-   colonne de 820 px collée à gauche, avec le reste de la page vide : le visuel
-   passe donc à gauche et tout le reste lui fait face. */
+   Le même enchaînement vertical que l'écran de l'application, à toutes les
+   largeurs : le visuel, les métadonnées, les caractéristiques. La colonne à
+   deux volets qui existait au-delà de 1000 px a été abandonnée avec le passage
+   au centrage : une image collée à gauche et un texte centré à sa droite ne
+   forment pas une page, ils forment deux moitiés qui s'ignorent. Le visuel est
+   donc borné à 720 px et centré, et tout suit sous lui. */
+.gamehero{display:grid;justify-items:center;gap:0}
+.gamehero > *{width:100%;max-width:820px}
 .gamehero .art{position:relative;border-radius:var(--r-lg);overflow:hidden;
   border:1px solid var(--line);background:var(--surface-3);box-shadow:var(--shadow-2);
-  aspect-ratio:3/2}
+  aspect-ratio:3/2;max-width:720px}
 .gamehero .art img{width:100%;height:100%;object-fit:cover;display:block}
 .gamehero .art .veil{position:absolute;inset:auto 0 0;padding:46px 16px 14px;
-  display:flex;flex-wrap:wrap;gap:6px;
+  display:flex;flex-wrap:wrap;justify-content:center;gap:6px;
   background:linear-gradient(transparent,rgba(10,18,20,.88))}
 .gamehero .art .veil .badge{background:rgba(255,255,255,.2);color:#fff}
-.gamehero .meta{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;
-  margin:18px 0 16px;font-size:.94rem;color:var(--ink-2)}
+.gamehero .meta{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
+  gap:6px 12px;margin:18px 0 16px;font-size:.94rem;color:var(--ink-2)}
 .gamehero .meta > span + span::before{content:"·";margin-right:12px;color:var(--outline)}
 .gamehero .meta > span:first-child{font-weight:700;color:var(--ink)}
 .gamehero .specs{margin-bottom:16px}
-@media (min-width:1000px){
-  .gamehero{display:grid;grid-template-columns:minmax(0,36%) minmax(0,1fr);
-    column-gap:34px;align-items:start}
-  .gamehero .art{grid-column:1;grid-row:1 / span 4}
-  .gamehero > :not(.art){grid-column:2}
-  .gamehero .meta{margin-top:0}
-}
 
 /* --- Caractéristiques d'un jeu -------------------------------------------
    La note n'est plus un gros chiffre posé à côté de petites lignes écrasées :
    elle est dans un anneau qui la situe sur l'échelle de 10 de BoardGameGeek
    (7,8 tout seul ne dit pas si c'est bon), et les autres mesures deviennent
-   des cellules de même facture — étiquette, valeur, précision. */
-.specs{display:grid;gap:18px;padding:18px;border-radius:var(--r-lg);
+   des cellules de même facture, étiquette, valeur, précision. */
+.specs{display:grid;justify-items:center;gap:18px;padding:18px;border-radius:var(--r-lg);
   border:1px solid var(--line);background:var(--surface);box-shadow:var(--shadow-1);
   grid-template-columns:minmax(0,1fr)}
+/* Dès qu'il y a la place : **la note à gauche, les mesures à droite**, en carré
+   de deux sur deux. L'anneau et les quatre cellules ont alors la même hauteur
+   et se lisent d'un seul regard, au lieu d'un anneau posé au-dessus d'une
+   rangée de quatre cases écrasées. Sans note (BoardGameGeek n'en donne pas
+   toujours), la colonne de gauche disparaît au lieu de laisser un vide. */
 @media (min-width:620px){
-  .specs{grid-template-columns:auto minmax(0,1fr);gap:26px;padding:22px 24px;
-    align-items:center}
-  .specs .rating{border-right:1px solid var(--line);padding-right:26px}
+  .specs{gap:22px;padding:24px;align-items:center;
+    grid-template-columns:auto minmax(0,1fr)}
+  .specs .rating{width:210px}
+  .specs--norating{grid-template-columns:minmax(0,1fr)}
 }
-.specs--norating{grid-template-columns:minmax(0,1fr)}
+.specs > *{width:100%}
 .specs .rating{display:grid;justify-items:center;gap:7px;text-align:center}
 .specs .dial{position:relative;display:grid;place-items:center;width:112px;height:112px;
   border-radius:50%;
@@ -596,7 +842,10 @@ main{padding-bottom:72px;scroll-margin-top:110px}
 .specs .who{margin:0;font-size:.68rem;font-weight:750;letter-spacing:.07em;
   text-transform:uppercase;color:var(--ink-2)}
 .specs .n{margin:0;font-size:.76rem;color:var(--ink-2)}
-.specs dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(108px,1fr));
+/* Deux colonnes, à toutes les largeurs : c'est ce qui fait le carré des quatre
+   mesures à droite de la note, et sur téléphone deux cellules de 130 px valent
+   mieux que quatre colonnes de 65. */
+.specs dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
   gap:10px;margin:0;padding:0}
 .specs dl > div{padding:12px 14px;min-width:0;border-radius:var(--r);
   background:var(--surface-2);border:1px solid var(--line)}
@@ -607,27 +856,58 @@ main{padding-bottom:72px;scroll-margin-top:110px}
 .specs dd small{display:block;font-weight:450;font-size:.75rem;color:var(--ink-2);
   letter-spacing:0;margin-top:2px}
 
-.facts{display:grid;gap:0;margin:0;border-radius:var(--r-lg);overflow:hidden;
-  border:1px solid var(--line);background:var(--surface);box-shadow:var(--shadow-1)}
-.facts > div{display:grid;grid-template-columns:minmax(120px,32%) 1fr;gap:16px;
-  padding:14px 18px;border-top:1px solid var(--line);font-size:.94rem}
-.facts > div:first-child{border-top:0}
-.facts dt{color:var(--ink-2);margin:0;font-size:.86rem}
-.facts dd{margin:0;font-weight:550}
+/* --- Fiche d'identité d'un prix ------------------------------------------
+   Deux colonnes « intitulé | valeur » ne se centrent pas : la valeur cherchait
+   la gauche, l'intitulé la droite, et rien ne tombait au milieu. Les faits
+   deviennent donc des **cellules** dans une grille, chacune avec son intitulé
+   au-dessus de sa valeur. Le fond couleur liseré et l'espacement d'un pixel
+   dessinent les séparations sans une bordure à gérer par cellule. */
+.facts{display:grid;gap:1px;margin:0;border-radius:var(--r-lg);overflow:hidden;
+  border:1px solid var(--line);background:var(--line);box-shadow:var(--shadow-1);
+  grid-template-columns:minmax(0,1fr)}
+@media (min-width:640px){.facts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1040px){.facts{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.facts > div{padding:16px 18px;background:var(--surface);font-size:.94rem}
+.facts dt{color:var(--ink-2);margin:0 0 5px;font-size:.7rem;font-weight:750;
+  letter-spacing:.07em;text-transform:uppercase}
+.facts dd{margin:0;font-weight:600}
 
-.pager{display:flex;justify-content:space-between;gap:14px;margin-top:24px}
+.pager{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-top:24px}
+/* Le remplisseur qui poussait le lien « suivant » à droite n'a plus d'objet
+   quand les deux liens sont centrés : il ajouterait un blanc au milieu. */
+.pager span:empty{display:none}
 .pager a{display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:0 18px;
   border:1px solid var(--line);border-radius:var(--r-pill);text-decoration:none;
   font-size:.89rem;font-weight:600;color:var(--ink-2);background:var(--surface);
   transition:transform .18s var(--ease),border-color .18s var(--ease),color .18s var(--ease)}
 .pager a:hover{transform:translateY(-2px);border-color:var(--brand);color:var(--brand)}
 
+/* --- Retour en haut ------------------------------------------------------
+   Les pages de décennie font quarante écrans : sans ce rond, remonter au menu
+   demande un geste de trop. Il ne se montre qu'une fois un écran défilé (le
+   script pose `is-on`), reste dans l'angle, et libère la place au clavier comme
+   à la souris. La cible fait 48 px, la taille minimale d'une cible tactile.
+   `visibility` en plus de l'opacité : un rond transparent mais présent
+   intercepterait les clics destinés à ce qu'il recouvre. */
+.to-top{position:fixed;z-index:35;
+  right:clamp(14px,3vw,28px);
+  /* Au-dessus de la barre de gestes iOS, et non dessous. */
+  bottom:calc(clamp(14px,3vw,28px) + env(safe-area-inset-bottom,0px));
+  display:grid;place-items:center;width:48px;height:48px;border-radius:50%;
+  border:1px solid var(--line);background:var(--surface);color:var(--ink-2);
+  box-shadow:var(--shadow-2);text-decoration:none;
+  opacity:0;visibility:hidden;transform:translateY(10px) scale(.94);
+  transition:opacity .22s var(--ease),transform .22s var(--ease),
+    visibility .22s var(--ease),color .16s var(--ease),border-color .16s var(--ease)}
+.to-top.is-on,.to-top:focus-visible{opacity:1;visibility:visible;transform:none}
+.to-top:hover{color:var(--brand);border-color:var(--brand);transform:translateY(-2px)}
+
 /* --- Sélecteur d'année contextuel (décennie courante) -------------------- */
 .yearpick{margin-top:22px;padding:14px;border-radius:var(--r-lg);background:var(--surface);
   border:1px solid var(--line);box-shadow:var(--shadow-1)}
 .yearpick .label{margin:0 2px 10px;font-size:.75rem;font-weight:750;letter-spacing:.09em;
   text-transform:uppercase;color:var(--ink-2)}
-.yearpick .row{display:flex;flex-wrap:wrap;gap:7px}
+.yearpick .row{display:flex;flex-wrap:wrap;justify-content:center;gap:7px}
 .yearpick a{min-width:64px;font-variant-numeric:tabular-nums}
 .yearpick .row--decades{margin-bottom:12px;padding-bottom:12px;
   border-bottom:1px solid var(--line)}
@@ -636,7 +916,7 @@ main{padding-bottom:72px;scroll-margin-top:110px}
 .table-scroll{overflow-x:auto;margin-top:18px;border-radius:var(--r-lg);
   border:1px solid var(--line);background:var(--surface);box-shadow:var(--shadow-1)}
 table{border-collapse:collapse;width:100%;font-size:.93rem}
-th,td{text-align:left;padding:12px 15px;border-bottom:1px solid var(--line);
+th,td{text-align:center;padding:12px 15px;border-bottom:1px solid var(--line);
   vertical-align:middle}
 tbody tr:last-child td{border-bottom:0}
 tbody tr:hover{background:var(--surface-2)}
@@ -645,10 +925,11 @@ th{color:var(--ink-2);font-weight:700;white-space:nowrap;font-size:.75rem;
 td a{font-weight:600;text-decoration:none}
 td a:hover{text-decoration:underline}
 
-/* --- Recherche : le champ occupe toute la largeur disponible ------------- */
-.search-box{display:flex;gap:10px;margin-top:20px;width:100%}
+/* --- Recherche : un champ large, centré ---------------------------------- */
+.search-box{display:flex;gap:10px;margin:20px auto 0;width:100%;max-width:680px}
 .search-box input{flex:1 1 auto;width:100%;min-height:60px;padding:0 24px;font:inherit;
-  font-size:1.06rem;border:1px solid var(--line-strong);border-radius:var(--r-pill);
+  font-size:1.06rem;text-align:center;border:1px solid var(--line-strong);
+  border-radius:var(--r-pill);
   background:var(--surface);color:var(--ink);box-shadow:var(--shadow-1);
   transition:border-color .18s var(--ease),box-shadow .18s var(--ease)}
 .search-box input:focus{outline:none;border-color:var(--brand);box-shadow:var(--shadow-2)}
@@ -659,16 +940,17 @@ td a:hover{text-decoration:underline}
 .dicea{position:relative;overflow:hidden;margin-top:clamp(48px,6vw,80px);
   padding:clamp(22px,3.2vw,34px);border-radius:var(--r-lg);background:var(--surface);
   border:1px solid var(--line);box-shadow:var(--shadow-1);display:grid;gap:24px;
-  align-items:center}
+  justify-items:center}
 .dicea::before{content:"";position:absolute;inset:0 0 auto;height:4px;background:var(--brand)}
-.dicea .mark{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.dicea > div{max-width:62ch}
+.dicea .mark{display:flex;align-items:center;justify-content:center;gap:12px;
+  margin-bottom:14px}
 .dicea .mark img.dice{width:44px;height:auto}
 .dicea .mark img.wordmark{height:28px;width:auto}
 .dicea h2{margin:0 0 .35em;font-size:clamp(1.15rem,1.05rem + .6vw,1.45rem)}
 .dicea p{margin:0 0 16px;color:var(--ink-2);font-size:.96rem}
-.dicea .shot{justify-self:center;max-width:200px;border-radius:var(--r);
+.dicea .shot{max-width:200px;border-radius:var(--r);
   border:1px solid var(--line);box-shadow:var(--shadow-2)}
-@media (min-width:760px){.dicea{grid-template-columns:minmax(0,1fr) auto;gap:36px}}
 
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:50px;
   padding:0 24px;border-radius:var(--r-pill);text-decoration:none;font-weight:650;
@@ -677,32 +959,39 @@ td a:hover{text-decoration:underline}
   transition:transform .18s var(--ease),box-shadow .18s var(--ease)}
 .btn:hover{transform:translateY(-2px);box-shadow:var(--shadow-2)}
 .btn--ghost{background:var(--surface);color:var(--brand);border-color:var(--line-strong)}
-.store-links{display:flex;flex-wrap:wrap;gap:11px}
+.store-links{display:flex;flex-wrap:wrap;justify-content:center;gap:11px}
 
-.site-foot{margin-top:64px;padding-block:34px;border-top:1px solid var(--line);
+/* --- Pied de page : le strict nécessaire, centré -------------------------
+   La marque, la mention de source BoardGameGeek, les mentions légales. Le
+   double du menu principal et la liste des prix qui vivaient ici n'ouvraient
+   aucun chemin que la navigation du haut n'ouvre déjà. */
+.site-foot{margin-top:64px;padding-block:36px;border-top:1px solid var(--line);
   background:var(--surface-2);font-size:.87rem;color:var(--ink-2)}
-.site-foot ul{display:flex;flex-wrap:wrap;gap:8px 20px;list-style:none;padding:0;
-  margin:0 0 18px;max-width:none}
+.site-foot .wrap{display:flex;flex-direction:column;align-items:center;gap:16px}
 .site-foot a{color:var(--ink-2);text-decoration:none;font-weight:600}
 .site-foot a:hover{color:var(--brand);text-decoration:underline}
-.site-foot p{max-width:var(--measure);margin:0 0 .5em}
-.site-foot .powered{margin-top:14px}
-.site-foot .powered a{display:inline-flex;align-items:center;gap:7px;padding:5px 13px;
+.site-foot p{margin:0}
+.foot-mark{display:inline-flex}
+.foot-mark .mark{display:flex;align-items:center;gap:10px}
+.foot-mark img.dice{width:32px;height:auto}
+.foot-mark img.wordmark{height:22px;width:auto}
+.site-foot .powered a{display:inline-flex;align-items:center;gap:7px;padding:6px 14px;
   border:1px solid var(--line);border-radius:var(--r-pill);background:var(--surface);
   font-size:.78rem;letter-spacing:.02em;text-decoration:none}
 .site-foot .powered a::before{content:"";width:7px;height:7px;border-radius:50%;
   background:var(--brand)}
 .site-foot .powered a:hover{border-color:var(--brand);text-decoration:none}
+.site-foot .legal{font-size:.82rem}
 
 /* --- Jaquette en grand ---------------------------------------------------
    Bâti sur l'API `popover` : c'est le navigateur qui place la couche au-dessus
    du reste, donc **aucun positionnement figé à écrire ici** et aucun piège de
-   focus à gérer à la main. Ce n'est pas une fenêtre qui s'invite — elle
+   focus à gérer à la main. Ce n'est pas une fenêtre qui s'invite, elle
    n'existe que si on clique une image, et `Échap` la referme. */
 /* **`display` n'est posé que sur l'état ouvert.** Une règle d'auteur qui donne
    un `display` à la couche l'emporte sur le `display:none` du navigateur :
    refermée, elle restait alors étendue sur tout l'écran, invisible mais captant
-   chaque clic — la page paraissait gelée. C'est le sens de `:popover-open` ici,
+   chaque clic, la page paraissait gelée. C'est le sens de `:popover-open` ici,
    et il ne faut pas le retirer.
    Le bouton de fermeture, lui, fait partie du flux, au-dessus de l'image : posé
    en décalage négatif, il sortait de l'écran sur un écran bas. */
@@ -738,12 +1027,12 @@ td a:hover{text-decoration:underline}
   overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 [hidden]{display:none !important}
 .prose p,.prose li{color:var(--ink-2)}
-.prose ul{padding-left:1.15em}
+.prose ul,.prose ol{padding-left:1.15em}
 .prose li{margin-bottom:.4em}
 
 /* --- Apparition progressive ----------------------------------------------
    L'état initial n'est posé que sous `.anim`, classe ajoutée par le script.
-   Sans JavaScript — ou sous `prefers-reduced-motion` — la classe est absente et
+   Sans JavaScript, ou sous `prefers-reduced-motion`, la classe est absente et
    tout le contenu est visible d'emblée : une animation ne peut jamais
    escamoter une information. Le décalage entre tuiles voisines est porté par
    une variable posée à la volée, ce qui donne l'effet de cascade sans une
@@ -760,9 +1049,11 @@ td a:hover{text-decoration:underline}
   .anim .reveal{opacity:1 !important;transform:none !important}
 }
 @media print{
-  .site-nav,.head-actions,.dicea,.yearpick,.search-box,.pager,.rail,
-  .fz-nav{display:none}
+  .site-nav,.head-actions,.get-app,.dicea,.yearpick,.search-box,.pager,.rail,
+  .fz-nav,.to-top{display:none}
   body{background:#fff;color:#000}
+  /* Rien ne colle sur du papier : un titre figé y laisserait un blanc. */
+  .site-head,.section > .head{position:static}
   .page{display:block}
   /* La frise s'imprime dépliée : à l'impression, il n'y a pas de défilement
      horizontal, donc pas de jalon atteignable hors de la page. */
@@ -786,11 +1077,23 @@ document.documentElement.classList.add("anim")}catch(e){}
 <a class="skip" href="#main">Skip to content</a>
 <header class="site-head">
 <div class="wrap">
-<a class="brand" href="/en/"><img class="dice" src="/assets/dicea-logo.png" alt="" aria-hidden="true" width="38" height="40" decoding="async"><img class="wordmark" src="/assets/dicea-wordmark.png" alt="Dicea" width="170" height="44" decoding="async"><span class="rule" aria-hidden="true"></span><span class="site"><b>Board Game Awards Archive</b><span>The four major international awards, year by year.</span></span></a>
+<div class="brand-block">
+<div class="brand-stack">
+<a class="brand" href="/en/"><img class="dice" src="/assets/dicea-logo.png" alt="" aria-hidden="true" width="38" height="40" decoding="async"><img class="wordmark" src="/assets/dicea-wordmark.png" alt="Dicea" width="170" height="44" decoding="async"></a>
+<details class="get-app">
+<summary><svg class="i" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" focusable="false"><path d="M12 3v11m0 0 4-4m-4 4-4-4" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 19h16" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/></svg>Get the app</summary>
+<div class="get-app-menu">
+<a href="https://play.google.com/store/apps/details?id=com.dicea.app&amp;referrer=utm_source%3Dpalmares%26utm_medium%3Den-tete%26utm_campaign%3Dsite-palmares" rel="noopener">Get it on Google Play</a>
+<a href="https://apps.apple.com/app/id6784171421?ct=palmares-en-tete&amp;mt=8" rel="noopener">Download on the App Store</a>
+</div>
+</details>
+</div>
+<span class="rule" aria-hidden="true"></span>
+<a class="site" href="/en/about/#dicea" title="Discover Dicea"><b>Awards</b><span>There is much more in the app</span></a>
+</div>
 <div class="head-actions">
-<a class="dicea-head" href="/en/about/">Dicea</a>
-<a class="chip" href="/fr/prix/deutscher-spiele-preis/1994/" hreflang="fr" lang="fr" rel="alternate">Français</a>
-<button class="chip" type="button" id="theme-toggle" hidden aria-pressed="false" title="Light or dark theme"><span class="visually-hidden">Light or dark theme</span><span aria-hidden="true">◐</span></button>
+<a class="chip chip--lang" href="/fr/prix/deutscher-spiele-preis/1994/" hreflang="fr" lang="fr" rel="alternate" title="Language"><svg class="flag" viewBox="0 0 3 2" width="21" height="14" aria-hidden="true" focusable="false"><rect width="3" height="2" fill="#ED2939"/><rect width="2" height="2" fill="#fff"/><rect width="1" height="2" fill="#002395"/></svg><span>Français</span></a>
+<button class="chip chip--theme" type="button" id="theme-toggle" hidden aria-pressed="false" title="Light or dark theme"><span class="visually-hidden">Light or dark theme</span><svg class="i i--sun" viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4.4" fill="currentColor"/><path d="M12 1.6v3M12 19.4v3M22.4 12h-3M4.6 12h-3M19.35 4.65l-2.1 2.1M6.75 17.25l-2.1 2.1M19.35 19.35l-2.1-2.1M6.75 6.75l-2.1-2.1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><svg class="i i--moon" viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" focusable="false"><path d="M20.4 14.6A8.6 8.6 0 0 1 9.4 3.6a8.8 8.8 0 1 0 11 11z" fill="currentColor"/></svg></button>
 </div>
 </div>
 </header>
@@ -798,8 +1101,8 @@ document.documentElement.classList.add("anim")}catch(e){}
 <div class="wrap">
 <ul>
 <li><a href="/en/">Home</a></li>
-<li><a href="/en/awards/as-dor/">As d&#39;Or</a></li>
 <li><a href="/en/awards/spiel-des-jahres/">Spiel des Jahres</a></li>
+<li><a href="/en/awards/as-dor/">As d&#39;Or</a></li>
 <li><a href="/en/awards/deutscher-spiele-preis/">Deutscher Spiele Preis</a></li>
 <li><a href="/en/awards/golden-geek/">Golden Geek Awards</a></li>
 <li><a href="/en/search/">Search</a></li>
@@ -816,10 +1119,15 @@ document.documentElement.classList.add("anim")}catch(e){}
 </ol>
 </nav>
 <main id="main">
+<section class="award-hero" style="--accent:var(--deutscher-spiele-preis);--accent-bg:var(--deutscher-spiele-preis-bg);--accent-ink:var(--deutscher-spiele-preis-ink)">
+<img class="award-hero-logo" src="/assets/deutscher_spiele_preis.png" alt="Deutscher Spiele Preis award logo" width="96" height="96" fetchpriority="high" decoding="async">
+<p class="eyebrow">Deutscher Spiele Preis</p>
 <h1>Deutscher Spiele Preis 1994: the winning games</h1>
 <p class="lede">The benchmark award for expert and strategy games.</p>
+</section>
+<div class="cats" data-n="2">
 <section class="cat reveal" id="dsp_main" style="--accent:var(--deutscher-spiele-preis);--accent-bg:var(--deutscher-spiele-preis-bg);--accent-ink:var(--deutscher-spiele-preis-ink)">
-<h2>Ranking<a class="anchor" href="#dsp_main" aria-label="Ranking — 1994">#</a></h2>
+<h2>Ranking<a class="anchor" href="#dsp_main" aria-label="Ranking 1994">#</a></h2>
 <ul class="podium">
 <li>
 <a href="/en/game/take-5/">
@@ -860,7 +1168,7 @@ document.documentElement.classList.add("anim")}catch(e){}
 </ul>
 </section>
 <section class="cat reveal" id="dsp_children" style="--accent:var(--deutscher-spiele-preis);--accent-bg:var(--deutscher-spiele-preis-bg);--accent-ink:var(--deutscher-spiele-preis-ink)">
-<h2>Children&#39;s Game Award<a class="anchor" href="#dsp_children" aria-label="Children&#39;s Game Award — 1994">#</a></h2>
+<h2>Children&#39;s Game Award<a class="anchor" href="#dsp_children" aria-label="Children&#39;s Game Award 1994">#</a></h2>
 <ul class="podium">
 <li>
 <a href="/en/game/husch-husch-kleine-hexe/">
@@ -876,6 +1184,7 @@ document.documentElement.classList.add("anim")}catch(e){}
 </li>
 </ul>
 </section>
+</div>
 
 <section class="section">
 <div class="head reveal">
@@ -883,17 +1192,17 @@ document.documentElement.classList.add("anim")}catch(e){}
 <h2>The other awards that year</h2>
 </div>
 <ul class="grid grid--bento">
-<li class="tile reveal" style="--accent:var(--as-dor);--accent-bg:var(--as-dor-bg);--accent-ink:var(--as-dor-ink)">
-<img class="logo" src="/assets/as_dor.png" alt="As d&#39;Or award logo" width="52" height="52" loading="lazy" decoding="async">
-<h3><a href="/en/awards/as-dor/1994/">As d&#39;Or</a></h3>
-<p>The major French-speaking award of the Cannes festival.</p>
-<p class="foot"><span class="dot"></span>Pusher</p>
-</li>
 <li class="tile reveal" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">
 <img class="logo" src="/assets/spiel_des_jahres.png" alt="Spiel des Jahres award logo" width="52" height="52" loading="lazy" decoding="async">
 <h3><a href="/en/awards/spiel-des-jahres/1994/">Spiel des Jahres</a></h3>
 <p>The ultimate worldwide award for the best family game.</p>
 <p class="foot"><span class="dot"></span>Manhattan</p>
+</li>
+<li class="tile reveal" style="--accent:var(--as-dor);--accent-bg:var(--as-dor-bg);--accent-ink:var(--as-dor-ink)">
+<img class="logo" src="/assets/as_dor.png" alt="As d&#39;Or award logo" width="52" height="52" loading="lazy" decoding="async">
+<h3><a href="/en/awards/as-dor/1994/">As d&#39;Or</a></h3>
+<p>The major French-speaking award of the Cannes festival.</p>
+<p class="foot"><span class="dot"></span>Pusher</p>
 </li>
 <li class="tile reveal" style="--accent:var(--golden-geek);--accent-bg:var(--golden-geek-bg);--accent-ink:var(--golden-geek-ink)">
 <img class="logo" src="/assets/golden_geek.png" alt="Golden Geek Awards award logo" width="52" height="52" loading="lazy" decoding="async">
@@ -946,26 +1255,18 @@ document.documentElement.classList.add("anim")}catch(e){}
 </ul>
 <div class="store-links">
 <a class="btn" href="https://play.google.com/store/apps/details?id=com.dicea.app&amp;referrer=utm_source%3Dpalmares%26utm_medium%3Dencart-palmares%26utm_campaign%3Dsite-palmares" rel="noopener">Get it on Google Play</a>
+<a class="btn btn--ghost" href="https://apps.apple.com/app/id6784171421?ct=palmares-encart-palmares&amp;mt=8" rel="noopener">Download on the App Store</a>
 </div>
 </div>
 </aside>
 </main>
 </div>
+<a class="to-top" href="#top" hidden title="Back to top"><span class="visually-hidden">Back to top</span><svg class="i" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12 20V6m0 0 5 5m-5-5-5 5" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
 <footer class="site-foot">
 <div class="wrap">
-<ul>
-<li><a href="/en/">Home</a></li>
-<li><a href="/en/awards/as-dor/">As d&#39;Or</a></li>
-<li><a href="/en/awards/spiel-des-jahres/">Spiel des Jahres</a></li>
-<li><a href="/en/awards/deutscher-spiele-preis/">Deutscher Spiele Preis</a></li>
-<li><a href="/en/awards/golden-geek/">Golden Geek Awards</a></li>
-<li><a href="/en/search/">Search</a></li>
-<li><a href="/en/about/">About</a></li>
-<li><a href="/fr/prix/deutscher-spiele-preis/1994/" hreflang="fr" lang="fr" rel="alternate">Français</a></li>
-</ul>
-<p>Published by Savinien Godineau, who also builds the Dicea app. <a href="/en/about/">About</a></p>
-<p>Game data and box art: BoardGameGeek. <a href="https://boardgamegeek.com" rel="noopener">BoardGameGeek</a>. No trackers, no cookies.</p>
+<a class="foot-mark" href="/en/"><span class="mark"><img class="dice" src="/assets/dicea-logo.png" alt="" aria-hidden="true" width="44" height="46" loading="lazy" decoding="async"><img class="wordmark" src="/assets/dicea-wordmark.png" alt="Dicea" width="170" height="44" loading="lazy" decoding="async"></span></a>
 <p class="powered"><a href="https://boardgamegeek.com" rel="noopener">Powered by BGG</a></p>
+<p class="legal"><a href="/en/about/">Legal notice</a></p>
 </div>
 </footer>
 <script>(function(){
@@ -1037,12 +1338,53 @@ document.documentElement.classList.add("anim")}catch(e){}
     new IntersectionObserver(function(e){
       head.classList.toggle("is-stuck",!e[0].isIntersecting);
     }).observe(sentinel);
+
+    // --- Hauteur réelle de la barre collante -------------------------------
+    // `--head-h` a une valeur juste en CSS, mais elle ne peut pas suivre une
+    // marque qui passe sur deux lignes ni un zoom texte : c'est cette variable
+    // qui donne le `top` des titres de section collants et la marge de
+    // défilement des ancres, donc elle est recalée sur la hauteur mesurée.
+    // Sans JavaScript, la valeur CSS reste bonne à quelques pixels près.
+    //
+    // La variable ne doit **jamais** décider de la hauteur de la barre, sous
+    // peine de boucle : la mesure grandirait la barre, qui redéclencherait la
+    // mesure. L'écriture est en plus conditionnelle, pour ne pas réveiller le
+    // moteur de style à chaque redimensionnement pour la même valeur.
+    var lastHead=0;
+    var syncHead=function(){
+      var h=Math.round(head.offsetHeight);
+      if(h===lastHead)return;
+      lastHead=h;
+      root.style.setProperty("--head-h",h+"px");
+    };
+    syncHead();
+    if("ResizeObserver" in window)new ResizeObserver(syncHead).observe(head);
+    else window.addEventListener("resize",syncHead);
+  }
+
+  // --- Retour en haut ------------------------------------------------------
+  // Même mécanique que l'ombre de l'en-tête, avec un témoin plus grand : tant
+  // qu'un écran de haut reste visible, on est encore en haut de la page et le
+  // rond n'a rien à faire là. 90vh et pas 100 : un témoin absolu plus haut que
+  // la fenêtre rallongerait la zone défilable d'une page courte, qui se
+  // mettrait à défiler pour rien.
+  var upLink=document.querySelector(".to-top");
+  if(upLink&&"IntersectionObserver" in window){
+    var far=document.createElement("div");
+    far.setAttribute("aria-hidden","true");
+    far.style.cssText="position:absolute;top:0;left:0;height:90vh;width:1px;"+
+      "pointer-events:none";
+    document.body.prepend(far);
+    upLink.hidden=false;
+    new IntersectionObserver(function(e){
+      upLink.classList.toggle("is-on",!e[0].isIntersecting);
+    }).observe(far);
   }
 
   // --- Frise historique ----------------------------------------------------
   // Le CSS fait déjà tout le travail : `:hover`, `:focus-visible` et `:target`
-  // ouvrent la carte d'un jalon. Le script n'ajoute que le clic « propre » —
-  // sans saut de page ni entrée d'historique — et sa contrepartie : de quoi
+  // ouvrent la carte d'un jalon. Le script n'ajoute que le clic « propre »,
+  // sans saut de page ni entrée d'historique, et sa contrepartie : de quoi
   // refermer.
   var marks=document.querySelector("[data-frieze] .fz-marks");
   if(marks){
@@ -1072,7 +1414,7 @@ document.documentElement.classList.add("anim")}catch(e){}
   // --- Jaquette en grand ---------------------------------------------------
   // Sur l'API `popover` : c'est le navigateur qui gère la couche supérieure,
   // le clic à côté et la touche Échap. Les navigateurs qui ne la connaissent
-  // pas n'héritent d'aucun demi-comportement — l'image reste une image.
+  // pas n'héritent d'aucun demi-comportement, l'image reste une image.
   var zoomables=document.querySelectorAll("img[data-zoom]");
   if(zoomables.length&&"popover" in HTMLElement.prototype){
     var pop=document.createElement("div");
