@@ -52,10 +52,11 @@
      étrangères. Contraste vérifié sur le fond de puce des deux thèmes. */
   --sun:#b06a00;--moon:#4c51a8;
 
-  /* Hauteur de la barre collante. C'est **elle** qui donne le `top` des titres
-     de section collants et la marge de défilement des ancres : une seule valeur
-     à corriger si l'en-tête change de gabarit. Le script l'affine avec la
-     hauteur réelle, mais la valeur ci-dessous doit rester juste sans JS. */
+  /* Hauteur de la barre collante. C'est **elle** qui donne la marge de
+     défilement des ancres, faute de quoi une cible atteinte par un lien se
+     rangerait sous la barre : une seule valeur à corriger si l'en-tête change
+     de gabarit. Le script l'affine avec la hauteur réelle, mais la valeur
+     ci-dessous doit rester juste sans JS. */
   --head-h:92px;
 
   --r-lg:20px;--r:14px;--r-sm:10px;--r-pill:999px;
@@ -155,30 +156,19 @@ p{margin:0 0 1em}
   color:var(--on-brand);padding:14px 20px;border-radius:0 0 var(--r-sm) 0;font-weight:600}
 .skip:focus{left:0}
 
-/* --- Titres de section collants (« sticky section headers ») --------------
-   Quand on quitte une section, le titre de la suivante vient se poser sous la
-   barre du haut et y reste tant qu'on parcourt son contenu, puis se fait
-   pousser par le titre d'après. On sait donc en permanence ce qu'on est en
-   train de lire, sans rien avoir à remonter.
+/* --- Titres de section ----------------------------------------------------
+   Le titre défile avec son contenu : **rien ne se fige** sous la barre du haut.
+   Un titre collant tenait en permanence une bande d'écran (sur-titre, titre et
+   chapô), au prix d'une bonne part de la hauteur utile sur un téléphone, pour
+   une information que le titre donne déjà en passant. Seule la barre de marque
+   reste collante (voir `.site-head`).
 
-   Trois conditions, toutes nécessaires : `position:sticky` sur l'en-tête et non
-   sur la section (sinon c'est la section entière qui se fige), un `top` égal à
-   la hauteur de la barre du haut, et un fond opaque, faute de quoi le contenu
-   défilerait visiblement derrière le titre. Le `z-index` reste sous celui de la
-   barre (40), qui doit toujours passer par-dessus. */
+   Les retraits verticaux, eux, sont conservés : ils dessinent l'écart entre la
+   fin d'une section et le titre de la suivante, ce qui ne dépend pas du
+   défilement. */
 .section{margin-top:clamp(44px,6vw,80px);scroll-margin-top:calc(var(--head-h) + 20px)}
-.section > .head{position:sticky;top:var(--head-h);z-index:20;
-  margin-bottom:20px;padding-block:14px 12px;background:var(--bg)}
+.section > .head{margin-bottom:20px;padding-block:14px 12px}
 .section > .head p{color:var(--ink-2);margin:0;max-width:72ch;margin-inline:auto}
-/* Un liseré n'apparaît qu'une fois le titre réellement collé, sinon il traîne
-   sous chaque titre au repos. `animation-timeline` n'est pas encore partout :
-   le repli est simplement l'absence de liseré, ce qui ne coûte rien. */
-@supports (animation-timeline:view()){
-  .section > .head{border-bottom:1px solid transparent;
-    animation:stuck-line linear both;animation-timeline:view();
-    animation-range:contain calc(100% - 1px) contain 100%}
-  @keyframes stuck-line{to{border-bottom-color:var(--line)}}
-}
 .section-link{margin:22px 0 0;font-size:.92rem;font-weight:600}
 .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.75rem;font-weight:750;
   letter-spacing:.11em;text-transform:uppercase;color:var(--brand);margin:0 0 9px}
@@ -1051,8 +1041,8 @@ td a:hover{text-decoration:underline}
   .site-nav,.head-actions,.get-app,.dicea,.yearpick,.search-box,.pager,.rail,
   .fz-nav,.to-top{display:none}
   body{background:#fff;color:#000}
-  /* Rien ne colle sur du papier : un titre figé y laisserait un blanc. */
-  .site-head,.section > .head{position:static}
+  /* Rien ne colle sur du papier : une barre figée y laisserait un blanc. */
+  .site-head{position:static}
   .page{display:block}
   /* La frise s'imprime dépliée : à l'impression, il n'y a pas de défilement
      horizontal, donc pas de jalon atteignable hors de la page. */
@@ -1348,8 +1338,8 @@ document.documentElement.classList.add("anim")}catch(e){}
     // --- Hauteur réelle de la barre collante -------------------------------
     // `--head-h` a une valeur juste en CSS, mais elle ne peut pas suivre une
     // marque qui passe sur deux lignes ni un zoom texte : c'est cette variable
-    // qui donne le `top` des titres de section collants et la marge de
-    // défilement des ancres, donc elle est recalée sur la hauteur mesurée.
+    // qui donne la marge de défilement des ancres, donc elle est recalée sur la
+    // hauteur mesurée.
     // Sans JavaScript, la valeur CSS reste bonne à quelques pixels près.
     //
     // La variable ne doit **jamais** décider de la hauteur de la barre, sous
