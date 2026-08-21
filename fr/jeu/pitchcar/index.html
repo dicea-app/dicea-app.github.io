@@ -92,6 +92,13 @@
   }
 }
 :root[data-theme="dark"]{
+  /* Le thème forcé doit aussi être annoncé au **navigateur**, pas seulement
+     appliqué en variables : c'est `color-scheme` qui teinte la toile peinte
+     avant le premier pixel d'un document, les barres de défilement et les
+     contrôles natifs. Sans cette ligne, quelqu'un qui choisit le sombre sur une
+     machine en clair voyait un éclair blanc à chaque changement de page :
+     le fond du navigateur, avant que le nôtre ne soit peint. */
+  color-scheme:dark;
   --brand:#86d1ea;--on-brand:#003642;
   --brand-container:#004e5f;--on-brand-container:#b3ebff;
   --bg:#0f1416;
@@ -109,6 +116,8 @@
   --shadow-1:0 1px 2px rgba(0,0,0,.5);
   --shadow-2:0 2px 8px rgba(0,0,0,.5),0 16px 34px rgba(0,0,0,.42);
 }
+
+:root[data-theme="light"]{color-scheme:light}
 
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
@@ -773,6 +782,74 @@ main{padding-bottom:72px;scroll-margin-top:calc(var(--head-h) + 20px)}
 .feature .why{font-size:.9rem;color:var(--ink-2);margin:14px auto 0;max-width:62ch}
 @media (min-width:700px){.feature{gap:24px;padding:28px}}
 
+/* --- Classement « Meilleurs jeux » ---------------------------------------
+   Une liste ordonnée où **le rang est l'information** : il est donc écrit en
+   grand, à part, et prend la couleur d'une médaille pour les trois premiers,
+   exactement les mêmes teintes que les podiums de palmarès. Le reste de la
+   rangée est une carte ordinaire du site.
+
+   La rangée est en `flex` avec passage à la ligne : sous ~560 px, le texte
+   descend sous la jaquette au lieu de se comprimer. À 320 px, la pastille de
+   rang et la jaquette tiennent côte à côte et le corps prend la ligne
+   suivante ; rien ne déborde jamais. */
+/* La colonne est **bornée puis centrée** : étalée sur 1500 px, la rangée
+   laissait la jaquette collée au bord gauche et son texte au milieu de la page,
+   les deux ne formaient plus une ligne. */
+.picks{list-style:none;margin-inline:auto;padding:0;display:flex;
+  flex-direction:column;gap:14px;max-width:900px}
+.pick{position:relative;display:flex;flex-wrap:wrap;align-items:center;
+  justify-content:center;
+  gap:14px 18px;padding:16px;border-radius:var(--r-lg);background:var(--surface);
+  border:1px solid var(--line);box-shadow:var(--shadow-1);
+  transition:transform .24s var(--ease),box-shadow .24s var(--ease),
+    border-color .24s var(--ease)}
+.pick:hover{transform:translateY(-2px);box-shadow:var(--shadow-2);
+  border-color:var(--brand)}
+.pick .n{flex:0 0 auto;display:grid;place-items:center;width:48px;height:48px;
+  border-radius:50%;background:var(--surface-3);color:var(--ink-2);
+  font-size:1.3rem;font-weight:800;letter-spacing:-.03em}
+/* Or, argent, bronze : l'encre est la surface du thème, donc le contraste tient
+   dans les deux sens quand les deux variables s'inversent en thème sombre. */
+.pick .n[data-rank="1"]{background:var(--gold);color:var(--surface)}
+.pick .n[data-rank="2"]{background:var(--silver);color:var(--surface)}
+.pick .n[data-rank="3"]{background:var(--bronze);color:var(--surface)}
+.pick .art{flex:0 0 auto;width:112px}
+.pick .body{flex:1 1 300px;min-width:0}
+.pick h3{margin:0 0 8px}
+.pick h3 a{color:inherit;text-decoration:none}
+.pick:hover h3 a{color:var(--brand)}
+/* **Toute la rangée mène à la fiche du jeu**, jaquette comprise : un calque
+   étendu depuis le lien du titre, comme sur `.tile` et `.gcard`. Un seul lien
+   dans le HTML, donc une seule tabulation au clavier et une seule annonce au
+   lecteur d'écran. */
+.pick h3 a::after{content:"";position:absolute;inset:0;border-radius:var(--r-lg)}
+.pick .why{margin:10px auto 0;font-size:.9rem;color:var(--ink-2);max-width:62ch}
+@media (min-width:700px){.pick{padding:18px 22px}}
+
+/* Les dauphins : **une seule rangée**, côte à côte, en nettement plus petit et
+   sans pastille de rang. Empilés au gabarit du top 5, ils pesaient autant à
+   l'œil que les jeux classés, ce qui annulait le classement. Le passage en
+   `row` suffit à les remettre à leur place : deux cartes basses sur une ligne,
+   qui se replient l'une sous l'autre en dessous de ~700 px. */
+.picks--sm{flex-direction:row;flex-wrap:wrap;justify-content:center;
+  max-width:880px;gap:12px}
+.picks--sm .pick{flex:1 1 320px;max-width:430px;padding:12px 14px;gap:9px 12px}
+.picks--sm .art{width:56px}
+.picks--sm .body{flex:1 1 150px}
+.picks--sm h3{font-size:.92rem;margin-bottom:5px}
+.picks--sm .badge{font-size:.64rem;padding:1px 7px}
+.picks--sm .badges{gap:4px}
+.picks--sm .why{margin-top:7px;font-size:.78rem;line-height:1.5}
+
+/* Les trois règles de la méthode : trois cartes de même poids, jamais une
+   colonne de puces. Une règle par carte se lit d'un coup d'œil. */
+.crits{display:flex;flex-wrap:wrap;justify-content:center;align-items:stretch;
+  gap:16px;list-style:none;margin:0;padding:0;max-width:none}
+.crits > li{flex:1 1 250px;max-width:400px;padding:20px;border-radius:var(--r-lg);
+  background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1)}
+.crits b{display:block;font-weight:750;margin-bottom:6px}
+.crits span{font-size:.9rem;color:var(--ink-2)}
+
 /* --- Fiche de jeu --------------------------------------------------------
    Le même enchaînement vertical que l'écran de l'application, à toutes les
    largeurs : le visuel, les métadonnées, les caractéristiques. La colonne à
@@ -782,14 +859,28 @@ main{padding-bottom:72px;scroll-margin-top:calc(var(--head-h) + 20px)}
    donc borné à 720 px et centré, et tout suit sous lui. */
 .gamehero{display:grid;justify-items:center;gap:0}
 .gamehero > *{width:100%;max-width:820px}
-.gamehero .art{position:relative;border-radius:var(--r-lg);overflow:hidden;
-  border:1px solid var(--line);background:var(--surface-3);box-shadow:var(--shadow-2);
-  aspect-ratio:3/2;max-width:720px}
-.gamehero .art img{width:100%;height:100%;object-fit:cover;display:block}
-.gamehero .art .veil{position:absolute;inset:auto 0 0;padding:46px 16px 14px;
-  display:flex;flex-wrap:wrap;justify-content:center;gap:6px;
-  background:linear-gradient(transparent,rgba(10,18,20,.88))}
-.gamehero .art .veil .badge{background:rgba(255,255,255,.2);color:#fff}
+/* **Rien autour de la jaquette** : ni liseré, ni fond, ni ombre, ni coin
+   arrondi, ni bande d'étiquettes posée dessus. On voit la boîte du jeu, et
+   c'est tout.
+   La zone qui l'accueille, elle, ne bouge pas : même forme (3/2) et même
+   largeur pour tous les jeux, à chaque taille d'écran. C'est ce qui empêche la
+   page de changer de hauteur d'une fiche à l'autre, et c'est la jaquette qui
+   s'y inscrit plus ou moins grande selon la sienne : une boîte tout en hauteur
+   laisse deux marges, une boîte au format de la zone la remplit.
+   La jaquette n'est donc jamais rognée. */
+.gamehero .art{position:relative;display:flex;align-items:center;
+  justify-content:center;aspect-ratio:3/2;max-width:720px}
+/* Elle se dimensionne d'elle-même dans la zone (`max-width`/`max-height`
+   plutôt qu'`object-fit:contain`) : la boîte de l'image épouse alors
+   exactement l'image affichée, et l'arrondi tombe sur les vrais coins de la
+   jaquette. Avec `contain`, il serait tombé sur les marges vides laissées
+   autour d'elle, donc invisible. Même rayon que les vignettes du site. */
+.gamehero .art img{max-width:100%;max-height:100%;width:auto;height:auto;
+  border-radius:var(--r);display:block}
+/* Les concours remportés, sous la jaquette : même rangée d'étiquettes que sur
+   les vignettes du site. */
+.gamehero .awards{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;
+  list-style:none;margin:16px 0 0;padding:0;max-width:none}
 .gamehero .meta{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
   gap:6px 12px;margin:18px 0 16px;font-size:.94rem;color:var(--ink-2)}
 .gamehero .meta > span + span::before{content:"·";margin-right:12px;color:var(--outline)}
@@ -1030,12 +1121,56 @@ td a:hover{text-decoration:underline}
   transition:opacity .45s var(--ease),transform .45s var(--ease);
   transition-delay:var(--d,0ms)}
 
+/* --- Transitions entre pages ----------------------------------------------
+   Le site est fait de **documents séparés** : chaque lien est une vraie
+   navigation, et le navigateur la marquait comme telle (page vidée, blanc de
+   la toile, onglet qui recharge) avant de peindre la suivante. La transition
+   de vue inter-documents supprime ce blanc : le navigateur garde à l'écran
+   l'image de la page quittée et lui substitue la suivante en un fondu.
+
+   Rien n'en dépend. Un navigateur qui ignore `@view-transition` navigue
+   exactement comme avant, au pixel près : c'est un embellissement, jamais un
+   mécanisme. Et il ne s'applique qu'entre deux pages **de ce site** qui
+   portent toutes deux la règle, donc jamais en quittant le site.
+
+   L'en-tête est **nommé**, donc sorti de l'instantané de la page : la marque,
+   le sélecteur de langue et la bascule de thème ne participent pas au fondu,
+   ils restent immobiles pendant que le contenu se remplace. C'est toute la
+   différence entre une transition et un fondu au blanc de l'écran entier. */
+@view-transition{navigation:auto}
+.site-head{view-transition-name:site-head}
+
+/* La page quittée reste **opaque** dessous, la nouvelle se fond par-dessus.
+   Le fondu croisé par défaut, lui, rend les deux images translucides en même
+   temps : au milieu de l'échange, on voit à travers les deux, ce qui est
+   précisément le clignotement qu'on cherche à supprimer. */
+::view-transition-old(root){animation:none;mix-blend-mode:normal}
+::view-transition-new(root){mix-blend-mode:normal;
+  animation:vt-in .28s cubic-bezier(.22,.61,.36,1) both}
+/* Huit pixels, pas davantage : de quoi donner un sens de lecture à l'arrivée
+   sans que la page ait l'air de glisser. */
+@keyframes vt-in{from{opacity:0;transform:translateY(8px)}}
+/* L'en-tête se contente de suivre son propre changement de hauteur, à la même
+   durée que le contenu : deux durées différentes se voient. */
+::view-transition-group(site-head){animation-duration:.28s}
+/* Pendant la transition, un bloc que l'observateur vient de révéler doit
+   apparaître **d'un coup** : sa propre animation d'entrée ferait doublon avec
+   celle de la page. La classe est posée à l'arrivée et retirée à la fin, donc
+   les blocs révélés plus tard, au défilement, gardent leur cascade. */
+.anim.vt .reveal.is-in{transition:none}
+
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;
     transition-duration:.01ms !important}
   .anim .reveal{opacity:1 !important;transform:none !important}
+  /* Les pseudo-éléments de transition ne sont pas atteints par la règle
+     universelle ci-dessus : le glissement est donc retiré ici, nommément. Le
+     fondu, lui, reste : ce n'est pas un mouvement, et c'est lui qui supprime
+     le blanc entre deux pages. */
+  ::view-transition-new(root){animation-name:vt-fade}
 }
+@keyframes vt-fade{from{opacity:0}}
 @media print{
   .site-nav,.head-actions,.get-app,.dicea,.yearpick,.search-box,.pager,.rail,
   .fz-nav,.to-top{display:none}
@@ -1050,7 +1185,8 @@ td a:hover{text-decoration:underline}
   .fz-line{left:11px;right:auto;top:10px;bottom:0;width:2px;height:auto}
   .fz-line::after{transform:none}
   .fz-dot{left:4px;top:3px}
-  .hero,.tile,.cat,.specs,.facts,.table-scroll,.tl-year,.fz-card{box-shadow:none;
+  .hero,.tile,.cat,.specs,.facts,.table-scroll,.tl-year,.fz-card,.pick,
+  .crits > li{box-shadow:none;
     border-color:#ccc}
 }
 </style>
@@ -1059,6 +1195,7 @@ try{if(!matchMedia("(prefers-reduced-motion: reduce)").matches)
 document.documentElement.classList.add("anim")}catch(e){}
 </script>
 <script type="application/json" id="ui-i18n">{"close":"Fermer l'image"}</script>
+<script type="speculationrules">{"prefetch":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/assets/*"}}]},"eagerness":"moderate"}]}</script>
 <script type="application/ld+json">[{"@context":"https://schema.org","@type":"Game","name":"PitchCar","url":"https://dicea-app.com/fr/jeu/pitchcar/","image":"https://cf.geekdo-images.com/lvC1qJo4-RQ_zqudi_oRmA__original/img/6hC5NG-_7acG1lMzMfrAnou4Fb8=/0x0/filters:format(jpeg)/pic215555.jpg","description":"Cette entrée de jeu fait référence à deux jeux presque identiques qui ne sont pas compatibles entre eux. À partir de 6 ans. PitchCar et Carabande sont des jeux d'adresse où de grandes pièces en bois semblables à un puzzle sont utilisées pour construire un circuit de course qui ressemble beaucoup à un circuit de voitures électriques une fois terminé. Mais au lieu de l'électricité, les joueurs utilisent des pichenettes pour propulser de petits palets sur la piste, à la manière du Carrom. Contenu…","datePublished":"1995","author":[{"@type":"Person","name":"Jean du Poël"}],"numberOfPlayers":{"@type":"QuantitativeValue","minValue":2,"maxValue":8},"award":["Deutscher Spiele Preis 1996 · Classement"],"sameAs":"https://boardgamegeek.com/boardgame/150"},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Accueil","item":"https://dicea-app.com/fr/"},{"@type":"ListItem","position":2,"name":"Rechercher","item":"https://dicea-app.com/fr/recherche/"},{"@type":"ListItem","position":3,"name":"PitchCar"}]}]</script>
 </head>
 <body>
@@ -1093,6 +1230,7 @@ document.documentElement.classList.add("anim")}catch(e){}
 <li><a href="/fr/prix/as-dor/">As d&#39;Or</a></li>
 <li><a href="/fr/prix/deutscher-spiele-preis/">Deutscher Spiele Preis</a></li>
 <li><a href="/fr/prix/golden-geek/">Golden Geek Awards</a></li>
+<li><a href="/fr/meilleurs-jeux/">Meilleurs jeux</a></li>
 <li><a href="/fr/recherche/">Rechercher</a></li>
 </ul>
 </div>
@@ -1106,10 +1244,10 @@ document.documentElement.classList.add("anim")}catch(e){}
 </ol>
 </nav>
 <main id="main">
-<h1>PitchCar : tous ses prix et récompenses</h1>
-<p class="lede">Deutscher Spiele Preis 1996</p>
+<h1>PitchCar</h1>
 <div class="gamehero">
-<figure class="art" style="margin:0"><img src="https://cf.geekdo-images.com/lvC1qJo4-RQ_zqudi_oRmA__original/img/6hC5NG-_7acG1lMzMfrAnou4Fb8=/0x0/filters:format(jpeg)/pic215555.jpg" alt="Jaquette du jeu PitchCar" width="820" height="547" fetchpriority="high" decoding="async" data-zoom="Afficher la jaquette de PitchCar en grand" referrerpolicy="no-referrer-when-downgrade"><figcaption class="veil"><span class="badge badge--award" style="--accent:var(--deutscher-spiele-preis);--accent-bg:var(--deutscher-spiele-preis-bg);--accent-ink:var(--deutscher-spiele-preis-ink)">Deutscher Spiele Preis</span></figcaption></figure>
+<figure class="art" style="margin:0"><img src="https://cf.geekdo-images.com/lvC1qJo4-RQ_zqudi_oRmA__original/img/6hC5NG-_7acG1lMzMfrAnou4Fb8=/0x0/filters:format(jpeg)/pic215555.jpg" alt="Jaquette du jeu PitchCar" width="820" height="547" fetchpriority="high" decoding="async" data-zoom="Afficher la jaquette de PitchCar en grand" referrerpolicy="no-referrer-when-downgrade"></figure>
+<ul class="awards"><li><span class="badge badge--award" style="--accent:var(--deutscher-spiele-preis);--accent-bg:var(--deutscher-spiele-preis-bg);--accent-ink:var(--deutscher-spiele-preis-ink)">Deutscher Spiele Preis</span></li></ul>
 <p class="meta"><span>1995</span><span>Jean du Poël</span></p>
 <div class="specs">
 <div class="rating">
@@ -1236,6 +1374,27 @@ document.documentElement.classList.add("anim")}catch(e){}
       });
     },{rootMargin:"0px 0px -8% 0px",threshold:.06});
     revealables.forEach(function(el){io.observe(el)});
+
+    // Arrivée par une transition de page : le navigateur capture la nouvelle
+    // page **avant** que l'observateur ait eu l'occasion de se prononcer. Sans
+    // ce rattrapage, le fondu arriverait sur un haut de page vide, que le
+    // contenu viendrait remplir après coup, soit deux animations là où il
+    // n'en faut qu'une. Les blocs déjà à l'écran sont donc montrés tout de
+    // suite, et sans transition propre (classe `vt`, retirée à la fin) ; ceux
+    // d'en dessous gardent leur cascade au défilement.
+    window.addEventListener("pagereveal",function(e){
+      if(!e.viewTransition)return;
+      root.classList.add("vt");
+      var vh=window.innerHeight;
+      revealables.forEach(function(el){
+        if(el.getBoundingClientRect().top<vh){
+          el.classList.add("is-in");
+          io.unobserve(el);
+        }
+      });
+      var done=function(){root.classList.remove("vt")};
+      e.viewTransition.finished.then(done,done);
+    });
   }else{
     // Pas d'IntersectionObserver (navigateur ancien) : on montre tout plutôt
     // que de laisser des blocs invisibles.

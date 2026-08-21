@@ -93,6 +93,13 @@
   }
 }
 :root[data-theme="dark"]{
+  /* Le thème forcé doit aussi être annoncé au **navigateur**, pas seulement
+     appliqué en variables : c'est `color-scheme` qui teinte la toile peinte
+     avant le premier pixel d'un document, les barres de défilement et les
+     contrôles natifs. Sans cette ligne, quelqu'un qui choisit le sombre sur une
+     machine en clair voyait un éclair blanc à chaque changement de page :
+     le fond du navigateur, avant que le nôtre ne soit peint. */
+  color-scheme:dark;
   --brand:#86d1ea;--on-brand:#003642;
   --brand-container:#004e5f;--on-brand-container:#b3ebff;
   --bg:#0f1416;
@@ -110,6 +117,8 @@
   --shadow-1:0 1px 2px rgba(0,0,0,.5);
   --shadow-2:0 2px 8px rgba(0,0,0,.5),0 16px 34px rgba(0,0,0,.42);
 }
+
+:root[data-theme="light"]{color-scheme:light}
 
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
@@ -774,6 +783,74 @@ main{padding-bottom:72px;scroll-margin-top:calc(var(--head-h) + 20px)}
 .feature .why{font-size:.9rem;color:var(--ink-2);margin:14px auto 0;max-width:62ch}
 @media (min-width:700px){.feature{gap:24px;padding:28px}}
 
+/* --- Classement « Meilleurs jeux » ---------------------------------------
+   Une liste ordonnée où **le rang est l'information** : il est donc écrit en
+   grand, à part, et prend la couleur d'une médaille pour les trois premiers,
+   exactement les mêmes teintes que les podiums de palmarès. Le reste de la
+   rangée est une carte ordinaire du site.
+
+   La rangée est en `flex` avec passage à la ligne : sous ~560 px, le texte
+   descend sous la jaquette au lieu de se comprimer. À 320 px, la pastille de
+   rang et la jaquette tiennent côte à côte et le corps prend la ligne
+   suivante ; rien ne déborde jamais. */
+/* La colonne est **bornée puis centrée** : étalée sur 1500 px, la rangée
+   laissait la jaquette collée au bord gauche et son texte au milieu de la page,
+   les deux ne formaient plus une ligne. */
+.picks{list-style:none;margin-inline:auto;padding:0;display:flex;
+  flex-direction:column;gap:14px;max-width:900px}
+.pick{position:relative;display:flex;flex-wrap:wrap;align-items:center;
+  justify-content:center;
+  gap:14px 18px;padding:16px;border-radius:var(--r-lg);background:var(--surface);
+  border:1px solid var(--line);box-shadow:var(--shadow-1);
+  transition:transform .24s var(--ease),box-shadow .24s var(--ease),
+    border-color .24s var(--ease)}
+.pick:hover{transform:translateY(-2px);box-shadow:var(--shadow-2);
+  border-color:var(--brand)}
+.pick .n{flex:0 0 auto;display:grid;place-items:center;width:48px;height:48px;
+  border-radius:50%;background:var(--surface-3);color:var(--ink-2);
+  font-size:1.3rem;font-weight:800;letter-spacing:-.03em}
+/* Or, argent, bronze : l'encre est la surface du thème, donc le contraste tient
+   dans les deux sens quand les deux variables s'inversent en thème sombre. */
+.pick .n[data-rank="1"]{background:var(--gold);color:var(--surface)}
+.pick .n[data-rank="2"]{background:var(--silver);color:var(--surface)}
+.pick .n[data-rank="3"]{background:var(--bronze);color:var(--surface)}
+.pick .art{flex:0 0 auto;width:112px}
+.pick .body{flex:1 1 300px;min-width:0}
+.pick h3{margin:0 0 8px}
+.pick h3 a{color:inherit;text-decoration:none}
+.pick:hover h3 a{color:var(--brand)}
+/* **Toute la rangée mène à la fiche du jeu**, jaquette comprise : un calque
+   étendu depuis le lien du titre, comme sur `.tile` et `.gcard`. Un seul lien
+   dans le HTML, donc une seule tabulation au clavier et une seule annonce au
+   lecteur d'écran. */
+.pick h3 a::after{content:"";position:absolute;inset:0;border-radius:var(--r-lg)}
+.pick .why{margin:10px auto 0;font-size:.9rem;color:var(--ink-2);max-width:62ch}
+@media (min-width:700px){.pick{padding:18px 22px}}
+
+/* Les dauphins : **une seule rangée**, côte à côte, en nettement plus petit et
+   sans pastille de rang. Empilés au gabarit du top 5, ils pesaient autant à
+   l'œil que les jeux classés, ce qui annulait le classement. Le passage en
+   `row` suffit à les remettre à leur place : deux cartes basses sur une ligne,
+   qui se replient l'une sous l'autre en dessous de ~700 px. */
+.picks--sm{flex-direction:row;flex-wrap:wrap;justify-content:center;
+  max-width:880px;gap:12px}
+.picks--sm .pick{flex:1 1 320px;max-width:430px;padding:12px 14px;gap:9px 12px}
+.picks--sm .art{width:56px}
+.picks--sm .body{flex:1 1 150px}
+.picks--sm h3{font-size:.92rem;margin-bottom:5px}
+.picks--sm .badge{font-size:.64rem;padding:1px 7px}
+.picks--sm .badges{gap:4px}
+.picks--sm .why{margin-top:7px;font-size:.78rem;line-height:1.5}
+
+/* Les trois règles de la méthode : trois cartes de même poids, jamais une
+   colonne de puces. Une règle par carte se lit d'un coup d'œil. */
+.crits{display:flex;flex-wrap:wrap;justify-content:center;align-items:stretch;
+  gap:16px;list-style:none;margin:0;padding:0;max-width:none}
+.crits > li{flex:1 1 250px;max-width:400px;padding:20px;border-radius:var(--r-lg);
+  background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1)}
+.crits b{display:block;font-weight:750;margin-bottom:6px}
+.crits span{font-size:.9rem;color:var(--ink-2)}
+
 /* --- Fiche de jeu --------------------------------------------------------
    Le même enchaînement vertical que l'écran de l'application, à toutes les
    largeurs : le visuel, les métadonnées, les caractéristiques. La colonne à
@@ -783,14 +860,28 @@ main{padding-bottom:72px;scroll-margin-top:calc(var(--head-h) + 20px)}
    donc borné à 720 px et centré, et tout suit sous lui. */
 .gamehero{display:grid;justify-items:center;gap:0}
 .gamehero > *{width:100%;max-width:820px}
-.gamehero .art{position:relative;border-radius:var(--r-lg);overflow:hidden;
-  border:1px solid var(--line);background:var(--surface-3);box-shadow:var(--shadow-2);
-  aspect-ratio:3/2;max-width:720px}
-.gamehero .art img{width:100%;height:100%;object-fit:cover;display:block}
-.gamehero .art .veil{position:absolute;inset:auto 0 0;padding:46px 16px 14px;
-  display:flex;flex-wrap:wrap;justify-content:center;gap:6px;
-  background:linear-gradient(transparent,rgba(10,18,20,.88))}
-.gamehero .art .veil .badge{background:rgba(255,255,255,.2);color:#fff}
+/* **Rien autour de la jaquette** : ni liseré, ni fond, ni ombre, ni coin
+   arrondi, ni bande d'étiquettes posée dessus. On voit la boîte du jeu, et
+   c'est tout.
+   La zone qui l'accueille, elle, ne bouge pas : même forme (3/2) et même
+   largeur pour tous les jeux, à chaque taille d'écran. C'est ce qui empêche la
+   page de changer de hauteur d'une fiche à l'autre, et c'est la jaquette qui
+   s'y inscrit plus ou moins grande selon la sienne : une boîte tout en hauteur
+   laisse deux marges, une boîte au format de la zone la remplit.
+   La jaquette n'est donc jamais rognée. */
+.gamehero .art{position:relative;display:flex;align-items:center;
+  justify-content:center;aspect-ratio:3/2;max-width:720px}
+/* Elle se dimensionne d'elle-même dans la zone (`max-width`/`max-height`
+   plutôt qu'`object-fit:contain`) : la boîte de l'image épouse alors
+   exactement l'image affichée, et l'arrondi tombe sur les vrais coins de la
+   jaquette. Avec `contain`, il serait tombé sur les marges vides laissées
+   autour d'elle, donc invisible. Même rayon que les vignettes du site. */
+.gamehero .art img{max-width:100%;max-height:100%;width:auto;height:auto;
+  border-radius:var(--r);display:block}
+/* Les concours remportés, sous la jaquette : même rangée d'étiquettes que sur
+   les vignettes du site. */
+.gamehero .awards{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;
+  list-style:none;margin:16px 0 0;padding:0;max-width:none}
 .gamehero .meta{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
   gap:6px 12px;margin:18px 0 16px;font-size:.94rem;color:var(--ink-2)}
 .gamehero .meta > span + span::before{content:"·";margin-right:12px;color:var(--outline)}
@@ -1031,12 +1122,56 @@ td a:hover{text-decoration:underline}
   transition:opacity .45s var(--ease),transform .45s var(--ease);
   transition-delay:var(--d,0ms)}
 
+/* --- Transitions entre pages ----------------------------------------------
+   Le site est fait de **documents séparés** : chaque lien est une vraie
+   navigation, et le navigateur la marquait comme telle (page vidée, blanc de
+   la toile, onglet qui recharge) avant de peindre la suivante. La transition
+   de vue inter-documents supprime ce blanc : le navigateur garde à l'écran
+   l'image de la page quittée et lui substitue la suivante en un fondu.
+
+   Rien n'en dépend. Un navigateur qui ignore `@view-transition` navigue
+   exactement comme avant, au pixel près : c'est un embellissement, jamais un
+   mécanisme. Et il ne s'applique qu'entre deux pages **de ce site** qui
+   portent toutes deux la règle, donc jamais en quittant le site.
+
+   L'en-tête est **nommé**, donc sorti de l'instantané de la page : la marque,
+   le sélecteur de langue et la bascule de thème ne participent pas au fondu,
+   ils restent immobiles pendant que le contenu se remplace. C'est toute la
+   différence entre une transition et un fondu au blanc de l'écran entier. */
+@view-transition{navigation:auto}
+.site-head{view-transition-name:site-head}
+
+/* La page quittée reste **opaque** dessous, la nouvelle se fond par-dessus.
+   Le fondu croisé par défaut, lui, rend les deux images translucides en même
+   temps : au milieu de l'échange, on voit à travers les deux, ce qui est
+   précisément le clignotement qu'on cherche à supprimer. */
+::view-transition-old(root){animation:none;mix-blend-mode:normal}
+::view-transition-new(root){mix-blend-mode:normal;
+  animation:vt-in .28s cubic-bezier(.22,.61,.36,1) both}
+/* Huit pixels, pas davantage : de quoi donner un sens de lecture à l'arrivée
+   sans que la page ait l'air de glisser. */
+@keyframes vt-in{from{opacity:0;transform:translateY(8px)}}
+/* L'en-tête se contente de suivre son propre changement de hauteur, à la même
+   durée que le contenu : deux durées différentes se voient. */
+::view-transition-group(site-head){animation-duration:.28s}
+/* Pendant la transition, un bloc que l'observateur vient de révéler doit
+   apparaître **d'un coup** : sa propre animation d'entrée ferait doublon avec
+   celle de la page. La classe est posée à l'arrivée et retirée à la fin, donc
+   les blocs révélés plus tard, au défilement, gardent leur cascade. */
+.anim.vt .reveal.is-in{transition:none}
+
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;
     transition-duration:.01ms !important}
   .anim .reveal{opacity:1 !important;transform:none !important}
+  /* Les pseudo-éléments de transition ne sont pas atteints par la règle
+     universelle ci-dessus : le glissement est donc retiré ici, nommément. Le
+     fondu, lui, reste : ce n'est pas un mouvement, et c'est lui qui supprime
+     le blanc entre deux pages. */
+  ::view-transition-new(root){animation-name:vt-fade}
 }
+@keyframes vt-fade{from{opacity:0}}
 @media print{
   .site-nav,.head-actions,.get-app,.dicea,.yearpick,.search-box,.pager,.rail,
   .fz-nav,.to-top{display:none}
@@ -1051,7 +1186,8 @@ td a:hover{text-decoration:underline}
   .fz-line{left:11px;right:auto;top:10px;bottom:0;width:2px;height:auto}
   .fz-line::after{transform:none}
   .fz-dot{left:4px;top:3px}
-  .hero,.tile,.cat,.specs,.facts,.table-scroll,.tl-year,.fz-card{box-shadow:none;
+  .hero,.tile,.cat,.specs,.facts,.table-scroll,.tl-year,.fz-card,.pick,
+  .crits > li{box-shadow:none;
     border-color:#ccc}
 }
 </style>
@@ -1060,7 +1196,8 @@ try{if(!matchMedia("(prefers-reduced-motion: reduce)").matches)
 document.documentElement.classList.add("anim")}catch(e){}
 </script>
 <script type="application/json" id="ui-i18n">{"close":"Fermer l'image"}</script>
-<script type="application/ld+json">[{"@context":"https://schema.org","@type":"ItemList","name":"Les jeux primés des années 2020","numberOfItems":125,"itemListOrder":"https://schema.org/ItemListOrderDescending","itemListElement":[{"@type":"ListItem","position":1,"url":"https://dicea-app.com/fr/jeu/jinxo/","name":"JinxO"},{"@type":"ListItem","position":2,"url":"https://dicea-app.com/fr/jeu/rebirth/","name":"Rebirth"},{"@type":"ListItem","position":3,"url":"https://dicea-app.com/fr/jeu/mooki-island/","name":"Mooki Island"},{"@type":"ListItem","position":4,"url":"https://dicea-app.com/fr/jeu/toy-battle/","name":"Toy Battle"},{"@type":"ListItem","position":5,"url":"https://dicea-app.com/fr/jeu/zenith/","name":"Zenith"},{"@type":"ListItem","position":6,"url":"https://dicea-app.com/fr/jeu/civolution/","name":"Civolution"},{"@type":"ListItem","position":7,"url":"https://dicea-app.com/fr/jeu/mooki-island/","name":"Mooki Island"},{"@type":"ListItem","position":8,"url":"https://dicea-app.com/fr/jeu/bomb-busters/","name":"Bomb Busters"},{"@type":"ListItem","position":9,"url":"https://dicea-app.com/fr/jeu/endeavor-deep-sea/","name":"Endeavor: Deep Sea"},{"@type":"ListItem","position":10,"url":"https://dicea-app.com/fr/jeu/cherry-on-the-cake/","name":"Cherry on the Cake"},{"@type":"ListItem","position":11,"url":"https://dicea-app.com/fr/jeu/odin/","name":"Odin"},{"@type":"ListItem","position":12,"url":"https://dicea-app.com/fr/jeu/behind/","name":"Behind"},{"@type":"ListItem","position":13,"url":"https://dicea-app.com/fr/jeu/kutna-hora-the-city-of-silver/","name":"Kutná Hora: The City of Silver"},{"@type":"ListItem","position":14,"url":"https://dicea-app.com/fr/jeu/operation-noisettes/","name":"Opération Noisettes"},{"@type":"ListItem","position":15,"url":"https://dicea-app.com/fr/jeu/seti-search-for-extraterrestrial-intelligence/","name":"SETI: Search for Extraterrestrial Intelligence"},{"@type":"ListItem","position":16,"url":"https://dicea-app.com/fr/jeu/endeavor-deep-sea/","name":"Endeavor: Deep Sea"},{"@type":"ListItem","position":17,"url":"https://dicea-app.com/fr/jeu/bomb-busters/","name":"Bomb Busters"},{"@type":"ListItem","position":18,"url":"https://dicea-app.com/fr/jeu/little-alchemists/","name":"Little Alchemists"},{"@type":"ListItem","position":19,"url":"https://dicea-app.com/fr/jeu/hot-streak/","name":"Hot Streak"},{"@type":"ListItem","position":20,"url":"https://dicea-app.com/fr/jeu/magical-athlete/","name":"Magical Athlete"},{"@type":"ListItem","position":21,"url":"https://dicea-app.com/fr/jeu/toy-battle/","name":"Toy Battle"},{"@type":"ListItem","position":22,"url":"https://dicea-app.com/fr/jeu/the-lord-of-the-rings-fate-of-the-fellowship/","name":"The Lord of the Rings: Fate of the Fellowship"},{"@type":"ListItem","position":23,"url":"https://dicea-app.com/fr/jeu/moon-colony-bloodbath/","name":"Moon Colony Bloodbath"},{"@type":"ListItem","position":24,"url":"https://dicea-app.com/fr/jeu/vantage/","name":"Vantage"},{"@type":"ListItem","position":25,"url":"https://dicea-app.com/fr/jeu/galactic-cruise/","name":"Galactic Cruise"},{"@type":"ListItem","position":26,"url":"https://dicea-app.com/fr/jeu/speakeasy/","name":"Speakeasy"},{"@type":"ListItem","position":27,"url":"https://dicea-app.com/fr/jeu/luthier/","name":"Luthier"},{"@type":"ListItem","position":28,"url":"https://dicea-app.com/fr/jeu/sky-team/","name":"Sky Team"},{"@type":"ListItem","position":29,"url":"https://dicea-app.com/fr/jeu/daybreak/","name":"Daybreak"},{"@type":"ListItem","position":30,"url":"https://dicea-app.com/fr/jeu/magic-keys/","name":"Magic Keys"},{"@type":"ListItem","position":31,"url":"https://dicea-app.com/fr/jeu/trio/","name":"Trio"},{"@type":"ListItem","position":32,"url":"https://dicea-app.com/fr/jeu/faraway/","name":"Faraway"},{"@type":"ListItem","position":33,"url":"https://dicea-app.com/fr/jeu/la-famiglia-the-great-mafia-war/","name":"La Famiglia: The Great Mafia War"},{"@type":"ListItem","position":34,"url":"https://dicea-app.com/fr/jeu/my-puzzle-adventure-dragon/","name":"My Puzzle Adventure: Dragon"},{"@type":"ListItem","position":35,"url":"https://dicea-app.com/fr/jeu/forest-shuffle/","name":"Forest Shuffle"},{"@type":"ListItem","position":36,"url":"https://dicea-app.com/fr/jeu/sky-team/","name":"Sky Team"},{"@type":"ListItem","position":37,"url":"https://dicea-app.com/fr/jeu/the-white-castle/","name":"The White Castle"},{"@type":"ListItem","position":38,"url":"https://dicea-app.com/fr/jeu/magic-keys/","name":"Magic Keys"},{"@type":"ListItem","position":39,"url":"https://dicea-app.com/fr/jeu/castle-combo/","name":"Castle Combo"},{"@type":"ListItem","position":40,"url":"https://dicea-app.com/fr/jeu/flip-7/","name":"Flip 7"},{"@type":"ListItem","position":41,"url":"https://dicea-app.com/fr/jeu/captain-flip/","name":"Captain Flip"},{"@type":"ListItem","position":42,"url":"https://dicea-app.com/fr/jeu/harmonies/","name":"Harmonies"},{"@type":"ListItem","position":43,"url":"https://dicea-app.com/fr/jeu/the-lord-of-the-rings-duel-for-middle-earth/","name":"The Lord of the Rings: Duel for Middle-earth"},{"@type":"ListItem","position":44,"url":"https://dicea-app.com/fr/jeu/endeavor-deep-sea/","name":"Endeavor: Deep Sea"},{"@type":"ListItem","position":45,"url":"https://dicea-app.com/fr/jeu/seti-search-for-extraterrestrial-intelligence/","name":"SETI: Search for Extraterrestrial Intelligence"},{"@type":"ListItem","position":46,"url":"https://dicea-app.com/fr/jeu/arcs/","name":"Arcs"},{"@type":"ListItem","position":47,"url":"https://dicea-app.com/fr/jeu/civolution/","name":"Civolution"},{"@type":"ListItem","position":48,"url":"https://dicea-app.com/fr/jeu/dorfromantik-the-board-game/","name":"Dorfromantik: The Board Game"},{"@type":"ListItem","position":49,"url":"https://dicea-app.com/fr/jeu/challengers/","name":"Challengers!"},{"@type":"ListItem","position":50,"url":"https://dicea-app.com/fr/jeu/mysterium-kids-captain-echo-s-treasure/","name":"Mysterium Kids: Captain Echo's Treasure"},{"@type":"ListItem","position":51,"url":"https://dicea-app.com/fr/jeu/akropolis/","name":"Akropolis"},{"@type":"ListItem","position":52,"url":"https://dicea-app.com/fr/jeu/challengers/","name":"Challengers!"},{"@type":"ListItem","position":53,"url":"https://dicea-app.com/fr/jeu/ark-nova/","name":"Ark Nova"},{"@type":"ListItem","position":54,"url":"https://dicea-app.com/fr/jeu/flashback-zombie-kidz/","name":"Flashback: Zombie Kidz"},{"@type":"ListItem","position":55,"url":"https://dicea-app.com/fr/jeu/planet-unknown/","name":"Planet Unknown"},{"@type":"ListItem","position":56,"url":"https://dicea-app.com/fr/jeu/dorfromantik-the-board-game/","name":"Dorfromantik: The Board Game"},{"@type":"ListItem","position":57,"url":"https://dicea-app.com/fr/jeu/heat-pedal-to-the-metal/","name":"Heat: Pedal to the Metal"},{"@type":"ListItem","position":58,"url":"https://dicea-app.com/fr/jeu/mysterium-kids-captain-echo-s-treasure/","name":"Mysterium Kids: Captain Echo's Treasure"},{"@type":"ListItem","position":59,"url":"https://dicea-app.com/fr/jeu/thunder-road-vendetta/","name":"Thunder Road: Vendetta"},{"@type":"ListItem","position":60,"url":"https://dicea-app.com/fr/jeu/knarr/","name":"Knarr"},{"@type":"ListItem","position":61,"url":"https://dicea-app.com/fr/jeu/faraway/","name":"Faraway"},{"@type":"ListItem","position":62,"url":"https://dicea-app.com/fr/jeu/earth/","name":"Earth"},{"@type":"ListItem","position":63,"url":"https://dicea-app.com/fr/jeu/the-castles-of-burgundy-special-edition/","name":"The Castles of Burgundy: Special Edition"},{"@type":"ListItem","position":64,"url":"https://dicea-app.com/fr/jeu/the-white-castle/","name":"The White Castle"},{"@type":"ListItem","position":65,"url":"https://dicea-app.com/fr/jeu/hegemony-lead-your-class-to-victory/","name":"Hegemony: Lead Your Class to Victory"},{"@type":"ListItem","position":66,"url":"https://dicea-app.com/fr/jeu/dune-imperium-uprising/","name":"Dune: Imperium – Uprising"},{"@type":"ListItem","position":67,"url":"https://dicea-app.com/fr/jeu/darwin-s-journey/","name":"Darwin's Journey"},{"@type":"ListItem","position":68,"url":"https://dicea-app.com/fr/jeu/cascadia/","name":"Cascadia"},{"@type":"ListItem","position":69,"url":"https://dicea-app.com/fr/jeu/living-forest/","name":"Living Forest"},{"@type":"ListItem","position":70,"url":"https://dicea-app.com/fr/jeu/magic-mountain/","name":"Magic Mountain"},{"@type":"ListItem","position":71,"url":"https://dicea-app.com/fr/jeu/7-wonders-architects/","name":"7 Wonders: Architects"},{"@type":"ListItem","position":72,"url":"https://dicea-app.com/fr/jeu/living-forest/","name":"Living Forest"},{"@type":"ListItem","position":73,"url":"https://dicea-app.com/fr/jeu/dune-imperium/","name":"Dune: Imperium"},{"@type":"ListItem","position":74,"url":"https://dicea-app.com/fr/jeu/bubble-stories/","name":"Bubble Stories"},{"@type":"ListItem","position":75,"url":"https://dicea-app.com/fr/jeu/ark-nova/","name":"Ark Nova"},{"@type":"ListItem","position":76,"url":"https://dicea-app.com/fr/jeu/cascadia/","name":"Cascadia"},{"@type":"ListItem","position":77,"url":"https://dicea-app.com/fr/jeu/dune-imperium/","name":"Dune: Imperium"},{"@type":"ListItem","position":78,"url":"https://dicea-app.com/fr/jeu/quacks-co-quedlinburg-dash/","name":"Quacks & Co.: Quedlinburg Dash"},{"@type":"ListItem","position":79,"url":"https://dicea-app.com/fr/jeu/cat-in-the-box-deluxe-edition/","name":"Cat in the Box: Deluxe Edition"},{"@type":"ListItem","position":80,"url":"https://dicea-app.com/fr/jeu/splendor-duel/","name":"Splendor Duel"},{"@type":"ListItem","position":81,"url":"https://dicea-app.com/fr/jeu/long-shot-the-dice-game/","name":"Long Shot: The Dice Game"},{"@type":"ListItem","position":82,"url":"https://dicea-app.com/fr/jeu/heat-pedal-to-the-metal/","name":"Heat: Pedal to the Metal"},{"@type":"ListItem","position":83,"url":"https://dicea-app.com/fr/jeu/wonderland-s-war/","name":"Wonderland's War"},{"@type":"ListItem","position":84,"url":"https://dicea-app.com/fr/jeu/flamecraft/","name":"Flamecraft"},{"@type":"ListItem","position":85,"url":"https://dicea-app.com/fr/jeu/carnegie/","name":"Carnegie"},{"@type":"ListItem","position":86,"url":"https://dicea-app.com/fr/jeu/endless-winter-paleoamericans/","name":"Endless Winter: Paleoamericans"},{"@type":"ListItem","position":87,"url":"https://dicea-app.com/fr/jeu/john-company-second-edition/","name":"John Company: Second Edition"},{"@type":"ListItem","position":88,"url":"https://dicea-app.com/fr/jeu/micromacro-crime-city/","name":"MicroMacro: Crime City"},{"@type":"ListItem","position":89,"url":"https://dicea-app.com/fr/jeu/paleo/","name":"Paleo"},{"@type":"ListItem","position":90,"url":"https://dicea-app.com/fr/jeu/dragomino/","name":"Dragomino"},{"@type":"ListItem","position":91,"url":"https://dicea-app.com/fr/jeu/micromacro-crime-city/","name":"MicroMacro: Crime City"},{"@type":"ListItem","position":92,"url":"https://dicea-app.com/fr/jeu/the-crew-the-quest-for-planet-nine/","name":"The Crew: The Quest for Planet Nine"},{"@type":"ListItem","position":93,"url":"https://dicea-app.com/fr/jeu/dragomino/","name":"Dragomino"},{"@type":"ListItem","position":94,"url":"https://dicea-app.com/fr/jeu/lost-ruins-of-arnak/","name":"Lost Ruins of Arnak"},{"@type":"ListItem","position":95,"url":"https://dicea-app.com/fr/jeu/micromacro-crime-city/","name":"MicroMacro: Crime City"},{"@type":"ListItem","position":96,"url":"https://dicea-app.com/fr/jeu/the-adventures-of-robin-hood/","name":"The Adventures of Robin Hood"},{"@type":"ListItem","position":97,"url":"https://dicea-app.com/fr/jeu/dodo/","name":"Dodo"},{"@type":"ListItem","position":98,"url":"https://dicea-app.com/fr/jeu/cascadia/","name":"Cascadia"},{"@type":"ListItem","position":99,"url":"https://dicea-app.com/fr/jeu/canvas/","name":"Canvas"},{"@type":"ListItem","position":100,"url":"https://dicea-app.com/fr/jeu/7-wonders-architects/","name":"7 Wonders: Architects"},{"@type":"ListItem","position":101,"url":"https://dicea-app.com/fr/jeu/the-crew-mission-deep-sea/","name":"The Crew: Mission Deep Sea"},{"@type":"ListItem","position":102,"url":"https://dicea-app.com/fr/jeu/sleeping-gods/","name":"Sleeping Gods"},{"@type":"ListItem","position":103,"url":"https://dicea-app.com/fr/jeu/terraforming-mars-ares-expedition/","name":"Terraforming Mars: Ares Expedition"},{"@type":"ListItem","position":104,"url":"https://dicea-app.com/fr/jeu/ark-nova/","name":"Ark Nova"},{"@type":"ListItem","position":105,"url":"https://dicea-app.com/fr/jeu/oath/","name":"Oath"},{"@type":"ListItem","position":106,"url":"https://dicea-app.com/fr/jeu/imperium-classics/","name":"Imperium: Classics"},{"@type":"ListItem","position":107,"url":"https://dicea-app.com/fr/jeu/pictures/","name":"Pictures"},{"@type":"ListItem","position":108,"url":"https://dicea-app.com/fr/jeu/the-crew-the-quest-for-planet-nine/","name":"The Crew: The Quest for Planet Nine"},{"@type":"ListItem","position":109,"url":"https://dicea-app.com/fr/jeu/hedgehog-roll/","name":"Hedgehog Roll"},{"@type":"ListItem","position":110,"url":"https://dicea-app.com/fr/jeu/oriflamme/","name":"Oriflamme"},{"@type":"ListItem","position":111,"url":"https://dicea-app.com/fr/jeu/res-arcana/","name":"Res Arcana"},{"@type":"ListItem","position":112,"url":"https://dicea-app.com/fr/jeu/dream-catcher/","name":"Dream Catcher"},{"@type":"ListItem","position":113,"url":"https://dicea-app.com/fr/jeu/the-crew-the-quest-for-planet-nine/","name":"The Crew: The Quest for Planet Nine"},{"@type":"ListItem","position":114,"url":"https://dicea-app.com/fr/jeu/cartographers/","name":"Cartographers"},{"@type":"ListItem","position":115,"url":"https://dicea-app.com/fr/jeu/maracaibo/","name":"Maracaibo"},{"@type":"ListItem","position":116,"url":"https://dicea-app.com/fr/jeu/andor-the-family-fantasy-game/","name":"Andor: The Family Fantasy Game"},{"@type":"ListItem","position":117,"url":"https://dicea-app.com/fr/jeu/micromacro-crime-city/","name":"MicroMacro: Crime City"},{"@type":"ListItem","position":118,"url":"https://dicea-app.com/fr/jeu/project-l/","name":"Project L"},{"@type":"ListItem","position":119,"url":"https://dicea-app.com/fr/jeu/santa-monica/","name":"Santa Monica"},{"@type":"ListItem","position":120,"url":"https://dicea-app.com/fr/jeu/lost-ruins-of-arnak/","name":"Lost Ruins of Arnak"},{"@type":"ListItem","position":121,"url":"https://dicea-app.com/fr/jeu/dune-imperium/","name":"Dune: Imperium"},{"@type":"ListItem","position":122,"url":"https://dicea-app.com/fr/jeu/calico/","name":"Calico"},{"@type":"ListItem","position":123,"url":"https://dicea-app.com/fr/jeu/gloomhaven-jaws-of-the-lion/","name":"Gloomhaven: Jaws of the Lion"},{"@type":"ListItem","position":124,"url":"https://dicea-app.com/fr/jeu/on-mars/","name":"On Mars"},{"@type":"ListItem","position":125,"url":"https://dicea-app.com/fr/jeu/viscounts-of-the-west-kingdom/","name":"Viscounts of the West Kingdom"}]},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Accueil","item":"https://dicea-app.com/fr/"},{"@type":"ListItem","position":2,"name":"Par année"},{"@type":"ListItem","position":3,"name":"Années 2020"}]}]</script>
+<script type="speculationrules">{"prefetch":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/assets/*"}}]},"eagerness":"moderate"}]}</script>
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"ItemList","name":"Les jeux primés des années 2020","numberOfItems":125,"itemListOrder":"https://schema.org/ItemListOrderDescending","itemListElement":[{"@type":"ListItem","position":1,"url":"https://dicea-app.com/fr/jeu/jinxo/","name":"JinxO"},{"@type":"ListItem","position":2,"url":"https://dicea-app.com/fr/jeu/rebirth/","name":"Rebirth"},{"@type":"ListItem","position":3,"url":"https://dicea-app.com/fr/jeu/mooki-island/","name":"L'île des Mookies"},{"@type":"ListItem","position":4,"url":"https://dicea-app.com/fr/jeu/toy-battle/","name":"Toy Battle"},{"@type":"ListItem","position":5,"url":"https://dicea-app.com/fr/jeu/zenith/","name":"Zenith"},{"@type":"ListItem","position":6,"url":"https://dicea-app.com/fr/jeu/civolution/","name":"Civolution"},{"@type":"ListItem","position":7,"url":"https://dicea-app.com/fr/jeu/mooki-island/","name":"L'île des Mookies"},{"@type":"ListItem","position":8,"url":"https://dicea-app.com/fr/jeu/bomb-busters/","name":"Bomb Busters"},{"@type":"ListItem","position":9,"url":"https://dicea-app.com/fr/jeu/endeavor-deep-sea/","name":"Endeavor : Eaux profondes"},{"@type":"ListItem","position":10,"url":"https://dicea-app.com/fr/jeu/cherry-on-the-cake/","name":"La Cerise sur le Gâteau"},{"@type":"ListItem","position":11,"url":"https://dicea-app.com/fr/jeu/odin/","name":"Odin"},{"@type":"ListItem","position":12,"url":"https://dicea-app.com/fr/jeu/behind/","name":"Behind"},{"@type":"ListItem","position":13,"url":"https://dicea-app.com/fr/jeu/kutna-hora-the-city-of-silver/","name":"Kutná Hora : La cité de l'argent"},{"@type":"ListItem","position":14,"url":"https://dicea-app.com/fr/jeu/operation-noisettes/","name":"Opération Noisettes"},{"@type":"ListItem","position":15,"url":"https://dicea-app.com/fr/jeu/seti-search-for-extraterrestrial-intelligence/","name":"SETI : Recherche d'intelligence extraterrestre"},{"@type":"ListItem","position":16,"url":"https://dicea-app.com/fr/jeu/endeavor-deep-sea/","name":"Endeavor : Eaux profondes"},{"@type":"ListItem","position":17,"url":"https://dicea-app.com/fr/jeu/bomb-busters/","name":"Bomb Busters"},{"@type":"ListItem","position":18,"url":"https://dicea-app.com/fr/jeu/little-alchemists/","name":"Les Petits Alchimistes"},{"@type":"ListItem","position":19,"url":"https://dicea-app.com/fr/jeu/hot-streak/","name":"Hot Streak"},{"@type":"ListItem","position":20,"url":"https://dicea-app.com/fr/jeu/magical-athlete/","name":"Magical Athlete"},{"@type":"ListItem","position":21,"url":"https://dicea-app.com/fr/jeu/toy-battle/","name":"Toy Battle"},{"@type":"ListItem","position":22,"url":"https://dicea-app.com/fr/jeu/the-lord-of-the-rings-fate-of-the-fellowship/","name":"Le Seigneur des Anneaux : Le Destin de la Communauté"},{"@type":"ListItem","position":23,"url":"https://dicea-app.com/fr/jeu/moon-colony-bloodbath/","name":"Moon Colony Bloodbath"},{"@type":"ListItem","position":24,"url":"https://dicea-app.com/fr/jeu/vantage/","name":"Vantage"},{"@type":"ListItem","position":25,"url":"https://dicea-app.com/fr/jeu/galactic-cruise/","name":"Galactic Cruise"},{"@type":"ListItem","position":26,"url":"https://dicea-app.com/fr/jeu/speakeasy/","name":"Speakeasy"},{"@type":"ListItem","position":27,"url":"https://dicea-app.com/fr/jeu/luthier/","name":"Luthier"},{"@type":"ListItem","position":28,"url":"https://dicea-app.com/fr/jeu/sky-team/","name":"Sky Team"},{"@type":"ListItem","position":29,"url":"https://dicea-app.com/fr/jeu/daybreak/","name":"Daybreak"},{"@type":"ListItem","position":30,"url":"https://dicea-app.com/fr/jeu/magic-keys/","name":"Clefs Magiques"},{"@type":"ListItem","position":31,"url":"https://dicea-app.com/fr/jeu/trio/","name":"Trio"},{"@type":"ListItem","position":32,"url":"https://dicea-app.com/fr/jeu/faraway/","name":"Faraway"},{"@type":"ListItem","position":33,"url":"https://dicea-app.com/fr/jeu/la-famiglia-the-great-mafia-war/","name":"La Famiglia : La Grande Guerre de la Mafia"},{"@type":"ListItem","position":34,"url":"https://dicea-app.com/fr/jeu/my-puzzle-adventure-dragon/","name":"Mon Puzzle Aventure : Dragon"},{"@type":"ListItem","position":35,"url":"https://dicea-app.com/fr/jeu/forest-shuffle/","name":"Forêt mixte"},{"@type":"ListItem","position":36,"url":"https://dicea-app.com/fr/jeu/sky-team/","name":"Sky Team"},{"@type":"ListItem","position":37,"url":"https://dicea-app.com/fr/jeu/the-white-castle/","name":"Le Château Blanc"},{"@type":"ListItem","position":38,"url":"https://dicea-app.com/fr/jeu/magic-keys/","name":"Clefs Magiques"},{"@type":"ListItem","position":39,"url":"https://dicea-app.com/fr/jeu/castle-combo/","name":"Château Combo"},{"@type":"ListItem","position":40,"url":"https://dicea-app.com/fr/jeu/flip-7/","name":"Flip 7"},{"@type":"ListItem","position":41,"url":"https://dicea-app.com/fr/jeu/captain-flip/","name":"Captain Flip"},{"@type":"ListItem","position":42,"url":"https://dicea-app.com/fr/jeu/harmonies/","name":"Harmonies"},{"@type":"ListItem","position":43,"url":"https://dicea-app.com/fr/jeu/the-lord-of-the-rings-duel-for-middle-earth/","name":"Le Seigneur des Anneaux : Duel pour la Terre du Milieu"},{"@type":"ListItem","position":44,"url":"https://dicea-app.com/fr/jeu/endeavor-deep-sea/","name":"Endeavor : Eaux profondes"},{"@type":"ListItem","position":45,"url":"https://dicea-app.com/fr/jeu/seti-search-for-extraterrestrial-intelligence/","name":"SETI : Recherche d'intelligence extraterrestre"},{"@type":"ListItem","position":46,"url":"https://dicea-app.com/fr/jeu/arcs/","name":"Arcs"},{"@type":"ListItem","position":47,"url":"https://dicea-app.com/fr/jeu/civolution/","name":"Civolution"},{"@type":"ListItem","position":48,"url":"https://dicea-app.com/fr/jeu/dorfromantik-the-board-game/","name":"Dorfromantik : Le Jeu de Société"},{"@type":"ListItem","position":49,"url":"https://dicea-app.com/fr/jeu/challengers/","name":"Challengers!"},{"@type":"ListItem","position":50,"url":"https://dicea-app.com/fr/jeu/mysterium-kids-captain-echo-s-treasure/","name":"Mysterium Kids : Le Trésor du Capitaine Bouh"},{"@type":"ListItem","position":51,"url":"https://dicea-app.com/fr/jeu/akropolis/","name":"Akropolis"},{"@type":"ListItem","position":52,"url":"https://dicea-app.com/fr/jeu/challengers/","name":"Challengers!"},{"@type":"ListItem","position":53,"url":"https://dicea-app.com/fr/jeu/ark-nova/","name":"Ark Nova"},{"@type":"ListItem","position":54,"url":"https://dicea-app.com/fr/jeu/flashback-zombie-kidz/","name":"Flashback: Zombie Kidz"},{"@type":"ListItem","position":55,"url":"https://dicea-app.com/fr/jeu/planet-unknown/","name":"Planet Unknown"},{"@type":"ListItem","position":56,"url":"https://dicea-app.com/fr/jeu/dorfromantik-the-board-game/","name":"Dorfromantik : Le Jeu de Société"},{"@type":"ListItem","position":57,"url":"https://dicea-app.com/fr/jeu/heat-pedal-to-the-metal/","name":"Heat: Pedal to the Metal"},{"@type":"ListItem","position":58,"url":"https://dicea-app.com/fr/jeu/mysterium-kids-captain-echo-s-treasure/","name":"Mysterium Kids : Le Trésor du Capitaine Bouh"},{"@type":"ListItem","position":59,"url":"https://dicea-app.com/fr/jeu/thunder-road-vendetta/","name":"Thunder Road: Vendetta"},{"@type":"ListItem","position":60,"url":"https://dicea-app.com/fr/jeu/knarr/","name":"Knarr"},{"@type":"ListItem","position":61,"url":"https://dicea-app.com/fr/jeu/faraway/","name":"Faraway"},{"@type":"ListItem","position":62,"url":"https://dicea-app.com/fr/jeu/earth/","name":"Earth"},{"@type":"ListItem","position":63,"url":"https://dicea-app.com/fr/jeu/the-castles-of-burgundy-special-edition/","name":"The Castles of Burgundy: Special Edition"},{"@type":"ListItem","position":64,"url":"https://dicea-app.com/fr/jeu/the-white-castle/","name":"Le Château Blanc"},{"@type":"ListItem","position":65,"url":"https://dicea-app.com/fr/jeu/hegemony-lead-your-class-to-victory/","name":"Hegemony: Lead Your Class to Victory"},{"@type":"ListItem","position":66,"url":"https://dicea-app.com/fr/jeu/dune-imperium-uprising/","name":"Dune : Imperium – Insurrection"},{"@type":"ListItem","position":67,"url":"https://dicea-app.com/fr/jeu/darwin-s-journey/","name":"Darwin's Journey"},{"@type":"ListItem","position":68,"url":"https://dicea-app.com/fr/jeu/cascadia/","name":"Cascadia"},{"@type":"ListItem","position":69,"url":"https://dicea-app.com/fr/jeu/living-forest/","name":"Living Forest"},{"@type":"ListItem","position":70,"url":"https://dicea-app.com/fr/jeu/magic-mountain/","name":"La Colline aux Feux Follets"},{"@type":"ListItem","position":71,"url":"https://dicea-app.com/fr/jeu/7-wonders-architects/","name":"7 Wonders: Architects"},{"@type":"ListItem","position":72,"url":"https://dicea-app.com/fr/jeu/living-forest/","name":"Living Forest"},{"@type":"ListItem","position":73,"url":"https://dicea-app.com/fr/jeu/dune-imperium/","name":"Dune: Imperium"},{"@type":"ListItem","position":74,"url":"https://dicea-app.com/fr/jeu/bubble-stories/","name":"Bubble Stories"},{"@type":"ListItem","position":75,"url":"https://dicea-app.com/fr/jeu/ark-nova/","name":"Ark Nova"},{"@type":"ListItem","position":76,"url":"https://dicea-app.com/fr/jeu/cascadia/","name":"Cascadia"},{"@type":"ListItem","position":77,"url":"https://dicea-app.com/fr/jeu/dune-imperium/","name":"Dune: Imperium"},{"@type":"ListItem","position":78,"url":"https://dicea-app.com/fr/jeu/quacks-co-quedlinburg-dash/","name":"Le Grand Prix de Belcastel"},{"@type":"ListItem","position":79,"url":"https://dicea-app.com/fr/jeu/cat-in-the-box-deluxe-edition/","name":"Cat in the Box: Deluxe Edition"},{"@type":"ListItem","position":80,"url":"https://dicea-app.com/fr/jeu/splendor-duel/","name":"Splendor Duel"},{"@type":"ListItem","position":81,"url":"https://dicea-app.com/fr/jeu/long-shot-the-dice-game/","name":"Long Shot : Le Jeu de Dés"},{"@type":"ListItem","position":82,"url":"https://dicea-app.com/fr/jeu/heat-pedal-to-the-metal/","name":"Heat: Pedal to the Metal"},{"@type":"ListItem","position":83,"url":"https://dicea-app.com/fr/jeu/wonderland-s-war/","name":"Wonderland's War"},{"@type":"ListItem","position":84,"url":"https://dicea-app.com/fr/jeu/flamecraft/","name":"Flamecraft"},{"@type":"ListItem","position":85,"url":"https://dicea-app.com/fr/jeu/carnegie/","name":"Carnegie"},{"@type":"ListItem","position":86,"url":"https://dicea-app.com/fr/jeu/endless-winter-paleoamericans/","name":"Endless Winter: Paleoamericans"},{"@type":"ListItem","position":87,"url":"https://dicea-app.com/fr/jeu/john-company-second-edition/","name":"John Company: Second Edition"},{"@type":"ListItem","position":88,"url":"https://dicea-app.com/fr/jeu/micromacro-crime-city/","name":"MicroMacro: Crime City"},{"@type":"ListItem","position":89,"url":"https://dicea-app.com/fr/jeu/paleo/","name":"Paleo"},{"@type":"ListItem","position":90,"url":"https://dicea-app.com/fr/jeu/dragomino/","name":"Dragomino"},{"@type":"ListItem","position":91,"url":"https://dicea-app.com/fr/jeu/micromacro-crime-city/","name":"MicroMacro: Crime City"},{"@type":"ListItem","position":92,"url":"https://dicea-app.com/fr/jeu/the-crew-the-quest-for-planet-nine/","name":"The Crew : en quête de la neuvième planète"},{"@type":"ListItem","position":93,"url":"https://dicea-app.com/fr/jeu/dragomino/","name":"Dragomino"},{"@type":"ListItem","position":94,"url":"https://dicea-app.com/fr/jeu/lost-ruins-of-arnak/","name":"Les Ruines Perdues de Narak"},{"@type":"ListItem","position":95,"url":"https://dicea-app.com/fr/jeu/micromacro-crime-city/","name":"MicroMacro: Crime City"},{"@type":"ListItem","position":96,"url":"https://dicea-app.com/fr/jeu/the-adventures-of-robin-hood/","name":"Les Aventures de Robin des Bois"},{"@type":"ListItem","position":97,"url":"https://dicea-app.com/fr/jeu/dodo/","name":"Dodo"},{"@type":"ListItem","position":98,"url":"https://dicea-app.com/fr/jeu/cascadia/","name":"Cascadia"},{"@type":"ListItem","position":99,"url":"https://dicea-app.com/fr/jeu/canvas/","name":"Canvas"},{"@type":"ListItem","position":100,"url":"https://dicea-app.com/fr/jeu/7-wonders-architects/","name":"7 Wonders: Architects"},{"@type":"ListItem","position":101,"url":"https://dicea-app.com/fr/jeu/the-crew-mission-deep-sea/","name":"The Crew : Mission Sous-Marine"},{"@type":"ListItem","position":102,"url":"https://dicea-app.com/fr/jeu/sleeping-gods/","name":"Sleeping Gods"},{"@type":"ListItem","position":103,"url":"https://dicea-app.com/fr/jeu/terraforming-mars-ares-expedition/","name":"Terraforming Mars : Expédition Arès"},{"@type":"ListItem","position":104,"url":"https://dicea-app.com/fr/jeu/ark-nova/","name":"Ark Nova"},{"@type":"ListItem","position":105,"url":"https://dicea-app.com/fr/jeu/oath/","name":"Oath"},{"@type":"ListItem","position":106,"url":"https://dicea-app.com/fr/jeu/imperium-classics/","name":"Imperium: Classics"},{"@type":"ListItem","position":107,"url":"https://dicea-app.com/fr/jeu/pictures/","name":"Pictures"},{"@type":"ListItem","position":108,"url":"https://dicea-app.com/fr/jeu/the-crew-the-quest-for-planet-nine/","name":"The Crew : en quête de la neuvième planète"},{"@type":"ListItem","position":109,"url":"https://dicea-app.com/fr/jeu/hedgehog-roll/","name":"Roulapik"},{"@type":"ListItem","position":110,"url":"https://dicea-app.com/fr/jeu/oriflamme/","name":"Oriflamme"},{"@type":"ListItem","position":111,"url":"https://dicea-app.com/fr/jeu/res-arcana/","name":"Res Arcana"},{"@type":"ListItem","position":112,"url":"https://dicea-app.com/fr/jeu/dream-catcher/","name":"Dream Catcher"},{"@type":"ListItem","position":113,"url":"https://dicea-app.com/fr/jeu/the-crew-the-quest-for-planet-nine/","name":"The Crew : en quête de la neuvième planète"},{"@type":"ListItem","position":114,"url":"https://dicea-app.com/fr/jeu/cartographers/","name":"Cartographers"},{"@type":"ListItem","position":115,"url":"https://dicea-app.com/fr/jeu/maracaibo/","name":"Maracaibo"},{"@type":"ListItem","position":116,"url":"https://dicea-app.com/fr/jeu/andor-the-family-fantasy-game/","name":"Andor Junior"},{"@type":"ListItem","position":117,"url":"https://dicea-app.com/fr/jeu/micromacro-crime-city/","name":"MicroMacro: Crime City"},{"@type":"ListItem","position":118,"url":"https://dicea-app.com/fr/jeu/project-l/","name":"Project L"},{"@type":"ListItem","position":119,"url":"https://dicea-app.com/fr/jeu/santa-monica/","name":"Santa Monica"},{"@type":"ListItem","position":120,"url":"https://dicea-app.com/fr/jeu/lost-ruins-of-arnak/","name":"Les Ruines Perdues de Narak"},{"@type":"ListItem","position":121,"url":"https://dicea-app.com/fr/jeu/dune-imperium/","name":"Dune: Imperium"},{"@type":"ListItem","position":122,"url":"https://dicea-app.com/fr/jeu/calico/","name":"Calico"},{"@type":"ListItem","position":123,"url":"https://dicea-app.com/fr/jeu/gloomhaven-jaws-of-the-lion/","name":"Gloomhaven : Les Mâchoires du lion"},{"@type":"ListItem","position":124,"url":"https://dicea-app.com/fr/jeu/on-mars/","name":"On Mars"},{"@type":"ListItem","position":125,"url":"https://dicea-app.com/fr/jeu/viscounts-of-the-west-kingdom/","name":"Vicomtes du Royaume de l'Ouest"}]},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Accueil","item":"https://dicea-app.com/fr/"},{"@type":"ListItem","position":2,"name":"Par année"},{"@type":"ListItem","position":3,"name":"Années 2020"}]}]</script>
 </head>
 <body>
 <a class="skip" href="#main">Aller au contenu</a>
@@ -1094,6 +1231,7 @@ document.documentElement.classList.add("anim")}catch(e){}
 <li><a href="/fr/prix/as-dor/">As d&#39;Or</a></li>
 <li><a href="/fr/prix/deutscher-spiele-preis/">Deutscher Spiele Preis</a></li>
 <li><a href="/fr/prix/golden-geek/">Golden Geek Awards</a></li>
+<li><a href="/fr/meilleurs-jeux/">Meilleurs jeux</a></li>
 <li><a href="/fr/recherche/">Rechercher</a></li>
 </ul>
 </div>
@@ -1145,11 +1283,11 @@ document.documentElement.classList.add("anim")}catch(e){}
 <li>
 <a href="/fr/jeu/mooki-island/">
 <span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/ZW3tDJsRWJK5ONSDOWm34g__small/img/wwyKTZU3xZiUYSCns-RdzNVoqPg=/fit-in/200x150/filters:strip_icc()/pic8679533.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/ZW3tDJsRWJK5ONSDOWm34g__small/img/wwyKTZU3xZiUYSCns-RdzNVoqPg=/fit-in/200x150/filters:strip_icc()/pic8679533.jpg" alt="Jaquette du jeu Mooki Island" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/ZW3tDJsRWJK5ONSDOWm34g__small/img/wwyKTZU3xZiUYSCns-RdzNVoqPg=/fit-in/200x150/filters:strip_icc()/pic8679533.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/ZW3tDJsRWJK5ONSDOWm34g__small/img/wwyKTZU3xZiUYSCns-RdzNVoqPg=/fit-in/200x150/filters:strip_icc()/pic8679533.jpg" alt="Jaquette du jeu L&#39;île des Mookies" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
 <span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
 </span>
 <span class="body">
-<span class="name">Mooki Island</span>
+<span class="name">L&#39;île des Mookies</span>
 <span class="meta"><span>2025</span><span>Florian Sirieix</span><span>★ 7.4</span></span>
 </span>
 </a>
@@ -1198,11 +1336,11 @@ document.documentElement.classList.add("anim")}catch(e){}
 <li>
 <a href="/fr/jeu/mooki-island/">
 <span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/ZW3tDJsRWJK5ONSDOWm34g__small/img/wwyKTZU3xZiUYSCns-RdzNVoqPg=/fit-in/200x150/filters:strip_icc()/pic8679533.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/ZW3tDJsRWJK5ONSDOWm34g__small/img/wwyKTZU3xZiUYSCns-RdzNVoqPg=/fit-in/200x150/filters:strip_icc()/pic8679533.jpg" alt="Jaquette du jeu Mooki Island" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/ZW3tDJsRWJK5ONSDOWm34g__small/img/wwyKTZU3xZiUYSCns-RdzNVoqPg=/fit-in/200x150/filters:strip_icc()/pic8679533.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/ZW3tDJsRWJK5ONSDOWm34g__small/img/wwyKTZU3xZiUYSCns-RdzNVoqPg=/fit-in/200x150/filters:strip_icc()/pic8679533.jpg" alt="Jaquette du jeu L&#39;île des Mookies" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
 <span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
 </span>
 <span class="body">
-<span class="name">Mooki Island</span>
+<span class="name">L&#39;île des Mookies</span>
 <span class="meta"><span>2025</span><span>Florian Sirieix</span><span>★ 7.4</span></span>
 </span>
 </a>
@@ -1234,11 +1372,11 @@ document.documentElement.classList.add("anim")}catch(e){}
 <li>
 <a href="/fr/jeu/endeavor-deep-sea/">
 <span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/wIbevITv9W79ELP8rEZoKA__small/img/7_DqsUgdrpbeLfkA2ko8bXhgpGw=/fit-in/200x150/filters:strip_icc()/pic6996584.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/wIbevITv9W79ELP8rEZoKA__small/img/7_DqsUgdrpbeLfkA2ko8bXhgpGw=/fit-in/200x150/filters:strip_icc()/pic6996584.jpg" alt="Jaquette du jeu Endeavor: Deep Sea" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/wIbevITv9W79ELP8rEZoKA__small/img/7_DqsUgdrpbeLfkA2ko8bXhgpGw=/fit-in/200x150/filters:strip_icc()/pic6996584.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/wIbevITv9W79ELP8rEZoKA__small/img/7_DqsUgdrpbeLfkA2ko8bXhgpGw=/fit-in/200x150/filters:strip_icc()/pic6996584.jpg" alt="Jaquette du jeu Endeavor : Eaux profondes" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
 <span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
 </span>
 <span class="body">
-<span class="name">Endeavor: Deep Sea</span>
+<span class="name">Endeavor : Eaux profondes</span>
 <span class="meta"><span>2024</span><span>Carl de Visser</span><span>★ 8.2</span></span>
 </span>
 </a>
@@ -1246,11 +1384,11 @@ document.documentElement.classList.add("anim")}catch(e){}
 <li>
 <a href="/fr/jeu/cherry-on-the-cake/">
 <span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/dIHh1q19kHUJnAeCdANNvg__small/img/Ib6bqyhdhzO7OmmGlYVeJ13sQw4=/fit-in/200x150/filters:strip_icc()/pic9482179.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/dIHh1q19kHUJnAeCdANNvg__small/img/Ib6bqyhdhzO7OmmGlYVeJ13sQw4=/fit-in/200x150/filters:strip_icc()/pic9482179.jpg" alt="Jaquette du jeu Cherry on the Cake" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/dIHh1q19kHUJnAeCdANNvg__small/img/Ib6bqyhdhzO7OmmGlYVeJ13sQw4=/fit-in/200x150/filters:strip_icc()/pic9482179.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/dIHh1q19kHUJnAeCdANNvg__small/img/Ib6bqyhdhzO7OmmGlYVeJ13sQw4=/fit-in/200x150/filters:strip_icc()/pic9482179.jpg" alt="Jaquette du jeu La Cerise sur le Gâteau" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
 <span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
 </span>
 <span class="body">
-<span class="name">Cherry on the Cake</span>
+<span class="name">La Cerise sur le Gâteau</span>
 <span class="meta"><span>2024</span><span>Wolfgang Warsch</span><span>★ 6.8</span></span>
 </span>
 </a>
@@ -1287,11 +1425,11 @@ document.documentElement.classList.add("anim")}catch(e){}
 <li>
 <a href="/fr/jeu/kutna-hora-the-city-of-silver/">
 <span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/ar_YhktX6VcXBLcEfnu_dw__small/img/XlZo63iHoNfh7yKZdJiJj2Wfglo=/fit-in/200x150/filters:strip_icc()/pic7464921.png" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/ar_YhktX6VcXBLcEfnu_dw__small/img/XlZo63iHoNfh7yKZdJiJj2Wfglo=/fit-in/200x150/filters:strip_icc()/pic7464921.png" alt="Jaquette du jeu Kutná Hora: The City of Silver" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/ar_YhktX6VcXBLcEfnu_dw__small/img/XlZo63iHoNfh7yKZdJiJj2Wfglo=/fit-in/200x150/filters:strip_icc()/pic7464921.png" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/ar_YhktX6VcXBLcEfnu_dw__small/img/XlZo63iHoNfh7yKZdJiJj2Wfglo=/fit-in/200x150/filters:strip_icc()/pic7464921.png" alt="Jaquette du jeu Kutná Hora : La cité de l&#39;argent" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
 <span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
 </span>
 <span class="body">
-<span class="name">Kutná Hora: The City of Silver</span>
+<span class="name">Kutná Hora : La cité de l&#39;argent</span>
 <span class="meta"><span>2023</span><span>Ondřej Bystroň</span><span>★ 7.7</span></span>
 </span>
 </a>
@@ -1316,11 +1454,11 @@ document.documentElement.classList.add("anim")}catch(e){}
 <li>
 <a href="/fr/jeu/seti-search-for-extraterrestrial-intelligence/">
 <span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/_BUXOVRDU9g_eRwgpR5ZZw__small/img/icamIZ4nP3HHH3vczZqTr1hQgKY=/fit-in/200x150/filters:strip_icc()/pic8160466.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/_BUXOVRDU9g_eRwgpR5ZZw__small/img/icamIZ4nP3HHH3vczZqTr1hQgKY=/fit-in/200x150/filters:strip_icc()/pic8160466.jpg" alt="Jaquette du jeu SETI: Search for Extraterrestrial Intelligence" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/_BUXOVRDU9g_eRwgpR5ZZw__small/img/icamIZ4nP3HHH3vczZqTr1hQgKY=/fit-in/200x150/filters:strip_icc()/pic8160466.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/_BUXOVRDU9g_eRwgpR5ZZw__small/img/icamIZ4nP3HHH3vczZqTr1hQgKY=/fit-in/200x150/filters:strip_icc()/pic8160466.jpg" alt="Jaquette du jeu SETI : Recherche d&#39;intelligence extraterrestre" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
 <span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
 </span>
 <span class="body">
-<span class="name">SETI: Search for Extraterrestrial Intelligence</span>
+<span class="name">SETI : Recherche d&#39;intelligence extraterrestre</span>
 <span class="meta"><span>2024</span><span>Tomáš Holek</span><span>★ 8.4</span></span>
 </span>
 </a>
@@ -1328,11 +1466,11 @@ document.documentElement.classList.add("anim")}catch(e){}
 <li>
 <a href="/fr/jeu/little-alchemists/">
 <span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/5zNISBxg09aaJ_91L0BdQg__small/img/xCn9vU3ExsWvbboaRNVCpkYCnLg=/fit-in/200x150/filters:strip_icc()/pic8145504.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/5zNISBxg09aaJ_91L0BdQg__small/img/xCn9vU3ExsWvbboaRNVCpkYCnLg=/fit-in/200x150/filters:strip_icc()/pic8145504.jpg" alt="Jaquette du jeu Little Alchemists" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/5zNISBxg09aaJ_91L0BdQg__small/img/xCn9vU3ExsWvbboaRNVCpkYCnLg=/fit-in/200x150/filters:strip_icc()/pic8145504.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/5zNISBxg09aaJ_91L0BdQg__small/img/xCn9vU3ExsWvbboaRNVCpkYCnLg=/fit-in/200x150/filters:strip_icc()/pic8145504.jpg" alt="Jaquette du jeu Les Petits Alchimistes" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
 <span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
 </span>
 <span class="body">
-<span class="name">Little Alchemists</span>
+<span class="name">Les Petits Alchimistes</span>
 <span class="meta"><span>2024</span><span>Matúš Kotry</span><span>★ 7.8</span></span>
 </span>
 </a>
@@ -1357,11 +1495,11 @@ document.documentElement.classList.add("anim")}catch(e){}
 <li>
 <a href="/fr/jeu/the-lord-of-the-rings-fate-of-the-fellowship/">
 <span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/scw36iBIad7l-rGzxPGcGg__small/img/dyMBa6SBkPwpWfA4FINqbX8RNDQ=/fit-in/200x150/filters:strip_icc()/pic8662670.png" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/scw36iBIad7l-rGzxPGcGg__small/img/dyMBa6SBkPwpWfA4FINqbX8RNDQ=/fit-in/200x150/filters:strip_icc()/pic8662670.png" alt="Jaquette du jeu The Lord of the Rings: Fate of the Fellowship" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/scw36iBIad7l-rGzxPGcGg__small/img/dyMBa6SBkPwpWfA4FINqbX8RNDQ=/fit-in/200x150/filters:strip_icc()/pic8662670.png" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/scw36iBIad7l-rGzxPGcGg__small/img/dyMBa6SBkPwpWfA4FINqbX8RNDQ=/fit-in/200x150/filters:strip_icc()/pic8662670.png" alt="Jaquette du jeu Le Seigneur des Anneaux : Le Destin de la Communauté" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
 <span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
 </span>
 <span class="body">
-<span class="name">The Lord of the Rings: Fate of the Fellowship</span>
+<span class="name">Le Seigneur des Anneaux : Le Destin de la Communauté</span>
 <span class="meta"><span>2025</span><span>Matt Leacock</span><span>★ 8.3</span></span>
 </span>
 </a>
@@ -1417,11 +1555,11 @@ document.documentElement.classList.add("anim")}catch(e){}
 <li>
 <a href="/fr/jeu/magic-keys/">
 <span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/du6vq9YnLlsIqv2Zh4yXFQ__small/img/abAcYL9xUby986xwQD9Pbui4W1U=/fit-in/200x150/filters:strip_icc()/pic8256181.png" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/du6vq9YnLlsIqv2Zh4yXFQ__small/img/abAcYL9xUby986xwQD9Pbui4W1U=/fit-in/200x150/filters:strip_icc()/pic8256181.png" alt="Jaquette du jeu Magic Keys" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/du6vq9YnLlsIqv2Zh4yXFQ__small/img/abAcYL9xUby986xwQD9Pbui4W1U=/fit-in/200x150/filters:strip_icc()/pic8256181.png" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/du6vq9YnLlsIqv2Zh4yXFQ__small/img/abAcYL9xUby986xwQD9Pbui4W1U=/fit-in/200x150/filters:strip_icc()/pic8256181.png" alt="Jaquette du jeu Clefs Magiques" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
 <span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
 </span>
 <span class="body">
-<span class="name">Magic Keys</span>
+<span class="name">Clefs Magiques</span>
 <span class="meta"><span>2022</span><span>Markus Slawitscheck</span><span>★ 7.3</span></span>
 </span>
 </a>
@@ -1458,11 +1596,11 @@ document.documentElement.classList.add("anim")}catch(e){}
 <li>
 <a href="/fr/jeu/la-famiglia-the-great-mafia-war/">
 <span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/zM3cPLHv2smrTSDI565a3A__small/img/k2gvTqIvCffscucHD-uJ65dfQYA=/fit-in/200x150/filters:strip_icc()/pic7322524.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/zM3cPLHv2smrTSDI565a3A__small/img/k2gvTqIvCffscucHD-uJ65dfQYA=/fit-in/200x150/filters:strip_icc()/pic7322524.jpg" alt="Jaquette du jeu La Famiglia: The Great Mafia War" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/zM3cPLHv2smrTSDI565a3A__small/img/k2gvTqIvCffscucHD-uJ65dfQYA=/fit-in/200x150/filters:strip_icc()/pic7322524.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/zM3cPLHv2smrTSDI565a3A__small/img/k2gvTqIvCffscucHD-uJ65dfQYA=/fit-in/200x150/filters:strip_icc()/pic7322524.jpg" alt="Jaquette du jeu La Famiglia : La Grande Guerre de la Mafia" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
 <span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
 </span>
 <span class="body">
-<span class="name">La Famiglia: The Great Mafia War</span>
+<span class="name">La Famiglia : La Grande Guerre de la Mafia</span>
 <span class="meta"><span>2023</span><span>Maximilian Maria Thiel</span><span>★ 8.0</span></span>
 </span>
 </a>
@@ -1470,11 +1608,11 @@ document.documentElement.classList.add("anim")}catch(e){}
 <li>
 <a href="/fr/jeu/my-puzzle-adventure-dragon/">
 <span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/ZlSjV8b4LVmPt_g5bIfugA__small/img/Hs23JUb1ZXVf137LjTW_SdfJLqk=/fit-in/200x150/filters:strip_icc()/pic8012900.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/ZlSjV8b4LVmPt_g5bIfugA__small/img/Hs23JUb1ZXVf137LjTW_SdfJLqk=/fit-in/200x150/filters:strip_icc()/pic8012900.jpg" alt="Jaquette du jeu My Puzzle Adventure: Dragon" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/ZlSjV8b4LVmPt_g5bIfugA__small/img/Hs23JUb1ZXVf137LjTW_SdfJLqk=/fit-in/200x150/filters:strip_icc()/pic8012900.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/ZlSjV8b4LVmPt_g5bIfugA__small/img/Hs23JUb1ZXVf137LjTW_SdfJLqk=/fit-in/200x150/filters:strip_icc()/pic8012900.jpg" alt="Jaquette du jeu Mon Puzzle Aventure : Dragon" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
 <span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
 </span>
 <span class="body">
-<span class="name">My Puzzle Adventure: Dragon</span>
+<span class="name">Mon Puzzle Aventure : Dragon</span>
 <span class="meta"><span>2023</span><span>Antonin Boccara</span><span>★ 7.4</span></span>
 </span>
 </a>
@@ -1487,11 +1625,11 @@ document.documentElement.classList.add("anim")}catch(e){}
 <li>
 <a href="/fr/jeu/forest-shuffle/">
 <span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/08bC8NviSTNc4Zvur4pueA__small/img/Xq8TNBmMl3Z7DoynvbUXchFAztc=/fit-in/200x150/filters:strip_icc()/pic7578350.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/08bC8NviSTNc4Zvur4pueA__small/img/Xq8TNBmMl3Z7DoynvbUXchFAztc=/fit-in/200x150/filters:strip_icc()/pic7578350.jpg" alt="Jaquette du jeu Forest Shuffle" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/08bC8NviSTNc4Zvur4pueA__small/img/Xq8TNBmMl3Z7DoynvbUXchFAztc=/fit-in/200x150/filters:strip_icc()/pic7578350.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/08bC8NviSTNc4Zvur4pueA__small/img/Xq8TNBmMl3Z7DoynvbUXchFAztc=/fit-in/200x150/filters:strip_icc()/pic7578350.jpg" alt="Jaquette du jeu Forêt mixte" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
 <span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
 </span>
 <span class="body">
-<span class="name">Forest Shuffle</span>
+<span class="name">Forêt mixte</span>
 <span class="meta"><span>2023</span><span>Kosch</span><span>★ 7.7</span></span>
 </span>
 </a>
@@ -1499,11 +1637,11 @@ document.documentElement.classList.add("anim")}catch(e){}
 <li>
 <a href="/fr/jeu/magic-keys/">
 <span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/du6vq9YnLlsIqv2Zh4yXFQ__small/img/abAcYL9xUby986xwQD9Pbui4W1U=/fit-in/200x150/filters:strip_icc()/pic8256181.png" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/du6vq9YnLlsIqv2Zh4yXFQ__small/img/abAcYL9xUby986xwQD9Pbui4W1U=/fit-in/200x150/filters:strip_icc()/pic8256181.png" alt="Jaquette du jeu Magic Keys" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/du6vq9YnLlsIqv2Zh4yXFQ__small/img/abAcYL9xUby986xwQD9Pbui4W1U=/fit-in/200x150/filters:strip_icc()/pic8256181.png" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/du6vq9YnLlsIqv2Zh4yXFQ__small/img/abAcYL9xUby986xwQD9Pbui4W1U=/fit-in/200x150/filters:strip_icc()/pic8256181.png" alt="Jaquette du jeu Clefs Magiques" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
 <span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
 </span>
 <span class="body">
-<span class="name">Magic Keys</span>
+<span class="name">Clefs Magiques</span>
 <span class="meta"><span>2022</span><span>Markus Slawitscheck</span><span>★ 7.3</span></span>
 </span>
 </a>
@@ -1516,11 +1654,11 @@ document.documentElement.classList.add("anim")}catch(e){}
 <li>
 <a href="/fr/jeu/castle-combo/">
 <span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/rGomBfj0FGrZM-w3h5HFWQ__small/img/DnptKBxT6l_W2B3jGXdnEDEkDM0=/fit-in/200x150/filters:strip_icc()/pic8250341.png" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/rGomBfj0FGrZM-w3h5HFWQ__small/img/DnptKBxT6l_W2B3jGXdnEDEkDM0=/fit-in/200x150/filters:strip_icc()/pic8250341.png" alt="Jaquette du jeu Castle Combo" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/rGomBfj0FGrZM-w3h5HFWQ__small/img/DnptKBxT6l_W2B3jGXdnEDEkDM0=/fit-in/200x150/filters:strip_icc()/pic8250341.png" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/rGomBfj0FGrZM-w3h5HFWQ__small/img/DnptKBxT6l_W2B3jGXdnEDEkDM0=/fit-in/200x150/filters:strip_icc()/pic8250341.png" alt="Jaquette du jeu Château Combo" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
 <span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
 </span>
 <span class="body">
-<span class="name">Castle Combo</span>
+<span class="name">Château Combo</span>
 <span class="meta"><span>2024</span><span>Grégory Grard</span><span>★ 7.7</span></span>
 </span>
 </a>
@@ -1540,11 +1678,11 @@ document.documentElement.classList.add("anim")}catch(e){}
 <li>
 <a href="/fr/jeu/seti-search-for-extraterrestrial-intelligence/">
 <span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/_BUXOVRDU9g_eRwgpR5ZZw__small/img/icamIZ4nP3HHH3vczZqTr1hQgKY=/fit-in/200x150/filters:strip_icc()/pic8160466.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/_BUXOVRDU9g_eRwgpR5ZZw__small/img/icamIZ4nP3HHH3vczZqTr1hQgKY=/fit-in/200x150/filters:strip_icc()/pic8160466.jpg" alt="Jaquette du jeu SETI: Search for Extraterrestrial Intelligence" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/_BUXOVRDU9g_eRwgpR5ZZw__small/img/icamIZ4nP3HHH3vczZqTr1hQgKY=/fit-in/200x150/filters:strip_icc()/pic8160466.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/_BUXOVRDU9g_eRwgpR5ZZw__small/img/icamIZ4nP3HHH3vczZqTr1hQgKY=/fit-in/200x150/filters:strip_icc()/pic8160466.jpg" alt="Jaquette du jeu SETI : Recherche d&#39;intelligence extraterrestre" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
 <span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
 </span>
 <span class="body">
-<span class="name">SETI: Search for Extraterrestrial Intelligence</span>
+<span class="name">SETI : Recherche d&#39;intelligence extraterrestre</span>
 <span class="meta"><span>2024</span><span>Tomáš Holek</span><span>★ 8.4</span></span>
 </span>
 </a>
@@ -1564,11 +1702,11 @@ document.documentElement.classList.add("anim")}catch(e){}
 <li>
 <a href="/fr/jeu/dorfromantik-the-board-game/">
 <span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/Nqw3SzV4JDd64lcDgytPEg__small/img/SYowoPc4NsBcU6duKGUM93itzZY=/fit-in/200x150/filters:strip_icc()/pic7227691.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/Nqw3SzV4JDd64lcDgytPEg__small/img/SYowoPc4NsBcU6duKGUM93itzZY=/fit-in/200x150/filters:strip_icc()/pic7227691.jpg" alt="Jaquette du jeu Dorfromantik: The Board Game" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/Nqw3SzV4JDd64lcDgytPEg__small/img/SYowoPc4NsBcU6duKGUM93itzZY=/fit-in/200x150/filters:strip_icc()/pic7227691.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/Nqw3SzV4JDd64lcDgytPEg__small/img/SYowoPc4NsBcU6duKGUM93itzZY=/fit-in/200x150/filters:strip_icc()/pic7227691.jpg" alt="Jaquette du jeu Dorfromantik : Le Jeu de Société" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
 <span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
 </span>
 <span class="body">
-<span class="name">Dorfromantik: The Board Game</span>
+<span class="name">Dorfromantik : Le Jeu de Société</span>
 <span class="meta"><span>2022</span><span>Michael Palm</span><span>★ 7.6</span></span>
 </span>
 </a>
@@ -1588,11 +1726,11 @@ document.documentElement.classList.add("anim")}catch(e){}
 <li>
 <a href="/fr/jeu/mysterium-kids-captain-echo-s-treasure/">
 <span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/3PLNZOg5ZEVf9u121faEbw__small/img/cRxQAJfpp54chQduFPedHYn245Q=/fit-in/200x150/filters:strip_icc()/pic7075722.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/3PLNZOg5ZEVf9u121faEbw__small/img/cRxQAJfpp54chQduFPedHYn245Q=/fit-in/200x150/filters:strip_icc()/pic7075722.jpg" alt="Jaquette du jeu Mysterium Kids: Captain Echo&#39;s Treasure" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/3PLNZOg5ZEVf9u121faEbw__small/img/cRxQAJfpp54chQduFPedHYn245Q=/fit-in/200x150/filters:strip_icc()/pic7075722.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/3PLNZOg5ZEVf9u121faEbw__small/img/cRxQAJfpp54chQduFPedHYn245Q=/fit-in/200x150/filters:strip_icc()/pic7075722.jpg" alt="Jaquette du jeu Mysterium Kids : Le Trésor du Capitaine Bouh" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
 <span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
 </span>
 <span class="body">
-<span class="name">Mysterium Kids: Captain Echo&#39;s Treasure</span>
+<span class="name">Mysterium Kids : Le Trésor du Capitaine Bouh</span>
 <span class="meta"><span>2022</span><span>Antonin Boccara</span><span>★ 6.7</span></span>
 </span>
 </a>
@@ -1670,11 +1808,11 @@ document.documentElement.classList.add("anim")}catch(e){}
 <li>
 <a href="/fr/jeu/mysterium-kids-captain-echo-s-treasure/">
 <span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/3PLNZOg5ZEVf9u121faEbw__small/img/cRxQAJfpp54chQduFPedHYn245Q=/fit-in/200x150/filters:strip_icc()/pic7075722.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/3PLNZOg5ZEVf9u121faEbw__small/img/cRxQAJfpp54chQduFPedHYn245Q=/fit-in/200x150/filters:strip_icc()/pic7075722.jpg" alt="Jaquette du jeu Mysterium Kids: Captain Echo&#39;s Treasure" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/3PLNZOg5ZEVf9u121faEbw__small/img/cRxQAJfpp54chQduFPedHYn245Q=/fit-in/200x150/filters:strip_icc()/pic7075722.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/3PLNZOg5ZEVf9u121faEbw__small/img/cRxQAJfpp54chQduFPedHYn245Q=/fit-in/200x150/filters:strip_icc()/pic7075722.jpg" alt="Jaquette du jeu Mysterium Kids : Le Trésor du Capitaine Bouh" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
 <span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
 </span>
 <span class="body">
-<span class="name">Mysterium Kids: Captain Echo&#39;s Treasure</span>
+<span class="name">Mysterium Kids : Le Trésor du Capitaine Bouh</span>
 <span class="meta"><span>2022</span><span>Antonin Boccara</span><span>★ 6.7</span></span>
 </span>
 </a>
@@ -1759,11 +1897,11 @@ document.documentElement.classList.add("anim")}catch(e){}
 <li>
 <a href="/fr/jeu/magic-mountain/">
 <span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/P44XaZ5uizRCH1gmodh9sg__small/img/kLmlis4JUj3QJiVdb3Mr4_fBh50=/fit-in/200x150/filters:strip_icc()/pic6348973.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/P44XaZ5uizRCH1gmodh9sg__small/img/kLmlis4JUj3QJiVdb3Mr4_fBh50=/fit-in/200x150/filters:strip_icc()/pic6348973.jpg" alt="Jaquette du jeu Magic Mountain" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/P44XaZ5uizRCH1gmodh9sg__small/img/kLmlis4JUj3QJiVdb3Mr4_fBh50=/fit-in/200x150/filters:strip_icc()/pic6348973.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/P44XaZ5uizRCH1gmodh9sg__small/img/kLmlis4JUj3QJiVdb3Mr4_fBh50=/fit-in/200x150/filters:strip_icc()/pic6348973.jpg" alt="Jaquette du jeu La Colline aux Feux Follets" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
 <span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
 </span>
 <span class="body">
-<span class="name">Magic Mountain</span>
+<span class="name">La Colline aux Feux Follets</span>
 <span class="meta"><span>2021</span><span>Jens-Peter Schliemann</span><span>★ 6.8</span></span>
 </span>
 </a>
@@ -1841,11 +1979,11 @@ document.documentElement.classList.add("anim")}catch(e){}
 <li>
 <a href="/fr/jeu/quacks-co-quedlinburg-dash/">
 <span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/EixCi-ILdeEnSdEOFYpQZA__small/img/QjzfX1Ov463XYgzB6xAIk-B0Fy8=/fit-in/200x150/filters:strip_icc()/pic6640480.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/EixCi-ILdeEnSdEOFYpQZA__small/img/QjzfX1Ov463XYgzB6xAIk-B0Fy8=/fit-in/200x150/filters:strip_icc()/pic6640480.jpg" alt="Jaquette du jeu Quacks &amp; Co.: Quedlinburg Dash" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/EixCi-ILdeEnSdEOFYpQZA__small/img/QjzfX1Ov463XYgzB6xAIk-B0Fy8=/fit-in/200x150/filters:strip_icc()/pic6640480.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/EixCi-ILdeEnSdEOFYpQZA__small/img/QjzfX1Ov463XYgzB6xAIk-B0Fy8=/fit-in/200x150/filters:strip_icc()/pic6640480.jpg" alt="Jaquette du jeu Le Grand Prix de Belcastel" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
 <span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
 </span>
 <span class="body">
-<span class="name">Quacks &amp; Co.: Quedlinburg Dash</span>
+<span class="name">Le Grand Prix de Belcastel</span>
 <span class="meta"><span>2022</span><span>Wolfgang Warsch</span><span>★ 7.3</span></span>
 </span>
 </a>
@@ -1959,11 +2097,11 @@ document.documentElement.classList.add("anim")}catch(e){}
 <li>
 <a href="/fr/jeu/the-crew-the-quest-for-planet-nine/">
 <span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/98LnQShydr11OBKS46xY-Q__small/img/et-fnuozyOdBOVL-5kSS3_7I8fw=/fit-in/200x150/filters:strip_icc()/pic5687013.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/98LnQShydr11OBKS46xY-Q__small/img/et-fnuozyOdBOVL-5kSS3_7I8fw=/fit-in/200x150/filters:strip_icc()/pic5687013.jpg" alt="Jaquette du jeu The Crew: The Quest for Planet Nine" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/98LnQShydr11OBKS46xY-Q__small/img/et-fnuozyOdBOVL-5kSS3_7I8fw=/fit-in/200x150/filters:strip_icc()/pic5687013.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/98LnQShydr11OBKS46xY-Q__small/img/et-fnuozyOdBOVL-5kSS3_7I8fw=/fit-in/200x150/filters:strip_icc()/pic5687013.jpg" alt="Jaquette du jeu The Crew : en quête de la neuvième planète" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
 <span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
 </span>
 <span class="body">
-<span class="name">The Crew: The Quest for Planet Nine</span>
+<span class="name">The Crew : en quête de la neuvième planète</span>
 <span class="meta"><span>2019</span><span>Thomas Sing</span><span>★ 7.8</span></span>
 </span>
 </a>
@@ -1988,11 +2126,11 @@ document.documentElement.classList.add("anim")}catch(e){}
 <li>
 <a href="/fr/jeu/lost-ruins-of-arnak/">
 <span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/6GqH14TJJhza86BX5HCLEQ__small/img/J8SVmGOJXZGxNjkT3xYNQU7Haxg=/fit-in/200x150/filters:strip_icc()/pic5674958.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/6GqH14TJJhza86BX5HCLEQ__small/img/J8SVmGOJXZGxNjkT3xYNQU7Haxg=/fit-in/200x150/filters:strip_icc()/pic5674958.jpg" alt="Jaquette du jeu Lost Ruins of Arnak" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/6GqH14TJJhza86BX5HCLEQ__small/img/J8SVmGOJXZGxNjkT3xYNQU7Haxg=/fit-in/200x150/filters:strip_icc()/pic5674958.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/6GqH14TJJhza86BX5HCLEQ__small/img/J8SVmGOJXZGxNjkT3xYNQU7Haxg=/fit-in/200x150/filters:strip_icc()/pic5674958.jpg" alt="Jaquette du jeu Les Ruines Perdues de Narak" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
 <span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
 </span>
 <span class="body">
-<span class="name">Lost Ruins of Arnak</span>
+<span class="name">Les Ruines Perdues de Narak</span>
 <span class="meta"><span>2020</span><span>Elwen</span><span>★ 8.1</span></span>
 </span>
 </a>
@@ -2029,11 +2167,11 @@ document.documentElement.classList.add("anim")}catch(e){}
 <li>
 <a href="/fr/jeu/the-crew-mission-deep-sea/">
 <span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/VuBqZ1sMaDAVVHF_OEJP4g__small/img/EdacXlcFZ06YK0-ZKa0oKwL4VCw=/fit-in/200x150/filters:strip_icc()/pic5988903.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/VuBqZ1sMaDAVVHF_OEJP4g__small/img/EdacXlcFZ06YK0-ZKa0oKwL4VCw=/fit-in/200x150/filters:strip_icc()/pic5988903.jpg" alt="Jaquette du jeu The Crew: Mission Deep Sea" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/VuBqZ1sMaDAVVHF_OEJP4g__small/img/EdacXlcFZ06YK0-ZKa0oKwL4VCw=/fit-in/200x150/filters:strip_icc()/pic5988903.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/VuBqZ1sMaDAVVHF_OEJP4g__small/img/EdacXlcFZ06YK0-ZKa0oKwL4VCw=/fit-in/200x150/filters:strip_icc()/pic5988903.jpg" alt="Jaquette du jeu The Crew : Mission Sous-Marine" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
 <span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
 </span>
 <span class="body">
-<span class="name">The Crew: Mission Deep Sea</span>
+<span class="name">The Crew : Mission Sous-Marine</span>
 <span class="meta"><span>2021</span><span>Thomas Sing</span><span>★ 8.0</span></span>
 </span>
 </a>
@@ -2077,11 +2215,11 @@ document.documentElement.classList.add("anim")}catch(e){}
 <li>
 <a href="/fr/jeu/the-crew-the-quest-for-planet-nine/">
 <span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/98LnQShydr11OBKS46xY-Q__small/img/et-fnuozyOdBOVL-5kSS3_7I8fw=/fit-in/200x150/filters:strip_icc()/pic5687013.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/98LnQShydr11OBKS46xY-Q__small/img/et-fnuozyOdBOVL-5kSS3_7I8fw=/fit-in/200x150/filters:strip_icc()/pic5687013.jpg" alt="Jaquette du jeu The Crew: The Quest for Planet Nine" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/98LnQShydr11OBKS46xY-Q__small/img/et-fnuozyOdBOVL-5kSS3_7I8fw=/fit-in/200x150/filters:strip_icc()/pic5687013.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/98LnQShydr11OBKS46xY-Q__small/img/et-fnuozyOdBOVL-5kSS3_7I8fw=/fit-in/200x150/filters:strip_icc()/pic5687013.jpg" alt="Jaquette du jeu The Crew : en quête de la neuvième planète" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
 <span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
 </span>
 <span class="body">
-<span class="name">The Crew: The Quest for Planet Nine</span>
+<span class="name">The Crew : en quête de la neuvième planète</span>
 <span class="meta"><span>2019</span><span>Thomas Sing</span><span>★ 7.8</span></span>
 </span>
 </a>
@@ -2089,11 +2227,11 @@ document.documentElement.classList.add("anim")}catch(e){}
 <li>
 <a href="/fr/jeu/hedgehog-roll/">
 <span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/RZCgOQ6m2ZX_ePy-op9Svw__small/img/f3glzZUNrlHfdxPb7slj9J_uT6g=/fit-in/200x150/filters:strip_icc()/pic4561739.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/RZCgOQ6m2ZX_ePy-op9Svw__small/img/f3glzZUNrlHfdxPb7slj9J_uT6g=/fit-in/200x150/filters:strip_icc()/pic4561739.jpg" alt="Jaquette du jeu Hedgehog Roll" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/RZCgOQ6m2ZX_ePy-op9Svw__small/img/f3glzZUNrlHfdxPb7slj9J_uT6g=/fit-in/200x150/filters:strip_icc()/pic4561739.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/RZCgOQ6m2ZX_ePy-op9Svw__small/img/f3glzZUNrlHfdxPb7slj9J_uT6g=/fit-in/200x150/filters:strip_icc()/pic4561739.jpg" alt="Jaquette du jeu Roulapik" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
 <span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
 </span>
 <span class="body">
-<span class="name">Hedgehog Roll</span>
+<span class="name">Roulapik</span>
 <span class="meta"><span>2019</span><span>Urtis Šulinskas</span><span>★ 6.3</span></span>
 </span>
 </a>
@@ -2147,11 +2285,11 @@ document.documentElement.classList.add("anim")}catch(e){}
 <li>
 <a href="/fr/jeu/the-crew-the-quest-for-planet-nine/">
 <span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/98LnQShydr11OBKS46xY-Q__small/img/et-fnuozyOdBOVL-5kSS3_7I8fw=/fit-in/200x150/filters:strip_icc()/pic5687013.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/98LnQShydr11OBKS46xY-Q__small/img/et-fnuozyOdBOVL-5kSS3_7I8fw=/fit-in/200x150/filters:strip_icc()/pic5687013.jpg" alt="Jaquette du jeu The Crew: The Quest for Planet Nine" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/98LnQShydr11OBKS46xY-Q__small/img/et-fnuozyOdBOVL-5kSS3_7I8fw=/fit-in/200x150/filters:strip_icc()/pic5687013.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/98LnQShydr11OBKS46xY-Q__small/img/et-fnuozyOdBOVL-5kSS3_7I8fw=/fit-in/200x150/filters:strip_icc()/pic5687013.jpg" alt="Jaquette du jeu The Crew : en quête de la neuvième planète" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
 <span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
 </span>
 <span class="body">
-<span class="name">The Crew: The Quest for Planet Nine</span>
+<span class="name">The Crew : en quête de la neuvième planète</span>
 <span class="meta"><span>2019</span><span>Thomas Sing</span><span>★ 7.8</span></span>
 </span>
 </a>
@@ -2159,11 +2297,11 @@ document.documentElement.classList.add("anim")}catch(e){}
 <li>
 <a href="/fr/jeu/andor-the-family-fantasy-game/">
 <span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/raNviCcChSPrruvDSAZf4g__small/img/20JvTf1nTJqMWN54hIrjZqmGxTQ=/fit-in/200x150/filters:strip_icc()/pic5988900.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/raNviCcChSPrruvDSAZf4g__small/img/20JvTf1nTJqMWN54hIrjZqmGxTQ=/fit-in/200x150/filters:strip_icc()/pic5988900.jpg" alt="Jaquette du jeu Andor: The Family Fantasy Game" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/raNviCcChSPrruvDSAZf4g__small/img/20JvTf1nTJqMWN54hIrjZqmGxTQ=/fit-in/200x150/filters:strip_icc()/pic5988900.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/raNviCcChSPrruvDSAZf4g__small/img/20JvTf1nTJqMWN54hIrjZqmGxTQ=/fit-in/200x150/filters:strip_icc()/pic5988900.jpg" alt="Jaquette du jeu Andor Junior" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
 <span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
 </span>
 <span class="body">
-<span class="name">Andor: The Family Fantasy Game</span>
+<span class="name">Andor Junior</span>
 <span class="meta"><span>2020</span><span>Inka Brand</span><span>★ 7.2</span></span>
 </span>
 </a>
@@ -2188,11 +2326,11 @@ document.documentElement.classList.add("anim")}catch(e){}
 <li>
 <a href="/fr/jeu/lost-ruins-of-arnak/">
 <span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/6GqH14TJJhza86BX5HCLEQ__small/img/J8SVmGOJXZGxNjkT3xYNQU7Haxg=/fit-in/200x150/filters:strip_icc()/pic5674958.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/6GqH14TJJhza86BX5HCLEQ__small/img/J8SVmGOJXZGxNjkT3xYNQU7Haxg=/fit-in/200x150/filters:strip_icc()/pic5674958.jpg" alt="Jaquette du jeu Lost Ruins of Arnak" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/6GqH14TJJhza86BX5HCLEQ__small/img/J8SVmGOJXZGxNjkT3xYNQU7Haxg=/fit-in/200x150/filters:strip_icc()/pic5674958.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/6GqH14TJJhza86BX5HCLEQ__small/img/J8SVmGOJXZGxNjkT3xYNQU7Haxg=/fit-in/200x150/filters:strip_icc()/pic5674958.jpg" alt="Jaquette du jeu Les Ruines Perdues de Narak" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
 <span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
 </span>
 <span class="body">
-<span class="name">Lost Ruins of Arnak</span>
+<span class="name">Les Ruines Perdues de Narak</span>
 <span class="meta"><span>2020</span><span>Elwen</span><span>★ 8.1</span></span>
 </span>
 </a>
@@ -2200,11 +2338,11 @@ document.documentElement.classList.add("anim")}catch(e){}
 <li>
 <a href="/fr/jeu/gloomhaven-jaws-of-the-lion/">
 <span class="shot">
-<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/_HhIdavYW-hid20Iq3hhmg__small/img/OMkN_E5eyWrkID_cHCnQEbIixGM=/fit-in/200x150/filters:strip_icc()/pic5055631.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/_HhIdavYW-hid20Iq3hhmg__small/img/OMkN_E5eyWrkID_cHCnQEbIixGM=/fit-in/200x150/filters:strip_icc()/pic5055631.jpg" alt="Jaquette du jeu Gloomhaven: Jaws of the Lion" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
+<span class="cover cover--sm"><img class="bg" src="https://cf.geekdo-images.com/_HhIdavYW-hid20Iq3hhmg__small/img/OMkN_E5eyWrkID_cHCnQEbIixGM=/fit-in/200x150/filters:strip_icc()/pic5055631.jpg" alt="" aria-hidden="true" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/_HhIdavYW-hid20Iq3hhmg__small/img/OMkN_E5eyWrkID_cHCnQEbIixGM=/fit-in/200x150/filters:strip_icc()/pic5055631.jpg" alt="Jaquette du jeu Gloomhaven : Les Mâchoires du lion" width="66" height="66" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
 <span class="rank" data-rank="1"><span class="visually-hidden">Vainqueur</span><span aria-hidden="true">1</span></span>
 </span>
 <span class="body">
-<span class="name">Gloomhaven: Jaws of the Lion</span>
+<span class="name">Gloomhaven : Les Mâchoires du lion</span>
 <span class="meta"><span>2020</span><span>Isaac Childres</span><span>★ 8.4</span></span>
 </span>
 </a>
@@ -2255,7 +2393,7 @@ document.documentElement.classList.add("anim")}catch(e){}
 </li>
 <li class="decade reveal">
 <span class="art">
-<img src="https://cf.geekdo-images.com/ptDZ2tJ6dSNiONAx3HH8Tw__original/img/iu21NR45DwHyFY-UPW0m7hwY_vw=/0x0/filters:format(jpeg)/pic3514298.jpg" alt="Années 1980, illustrées par la jaquette de Sherlock Holmes Consulting Detective: The Thames Murders &amp; Other Cases" width="560" height="420" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade">
+<img src="https://cf.geekdo-images.com/ptDZ2tJ6dSNiONAx3HH8Tw__original/img/iu21NR45DwHyFY-UPW0m7hwY_vw=/0x0/filters:format(jpeg)/pic3514298.jpg" alt="Années 1980, illustrées par la jaquette de Sherlock Holmes Détective Conseil : Les meurtres de la Tamise et autres enquêtes" width="560" height="420" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade">
 <span class="label"><b>Années 1980</b><span>12 jeux primés</span></span>
 </span>
 <span class="say">Le jury allemand règne sans rival, jusqu&#39;à ce que Cannes crée l&#39;As d&#39;Or en 1988.</span>
@@ -2356,6 +2494,27 @@ document.documentElement.classList.add("anim")}catch(e){}
       });
     },{rootMargin:"0px 0px -8% 0px",threshold:.06});
     revealables.forEach(function(el){io.observe(el)});
+
+    // Arrivée par une transition de page : le navigateur capture la nouvelle
+    // page **avant** que l'observateur ait eu l'occasion de se prononcer. Sans
+    // ce rattrapage, le fondu arriverait sur un haut de page vide, que le
+    // contenu viendrait remplir après coup, soit deux animations là où il
+    // n'en faut qu'une. Les blocs déjà à l'écran sont donc montrés tout de
+    // suite, et sans transition propre (classe `vt`, retirée à la fin) ; ceux
+    // d'en dessous gardent leur cascade au défilement.
+    window.addEventListener("pagereveal",function(e){
+      if(!e.viewTransition)return;
+      root.classList.add("vt");
+      var vh=window.innerHeight;
+      revealables.forEach(function(el){
+        if(el.getBoundingClientRect().top<vh){
+          el.classList.add("is-in");
+          io.unobserve(el);
+        }
+      });
+      var done=function(){root.classList.remove("vt")};
+      e.viewTransition.finished.then(done,done);
+    });
   }else{
     // Pas d'IntersectionObserver (navigateur ancien) : on montre tout plutôt
     // que de laisser des blocs invisibles.
