@@ -120,7 +120,7 @@
 :root[data-theme="light"]{color-scheme:light}
 
 *,*::before,*::after{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+html{background:var(--bg);-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 /* --- Tout est centré -----------------------------------------------------
    Le site est une archive, pas un article : chaque page est faite de titres
    courts, de listes et de grilles de jaquettes. Alignés à gauche sur un écran
@@ -163,6 +163,17 @@ p{margin:0 0 1em}
 .skip{position:absolute;left:-9999px;top:0;z-index:60;background:var(--brand);
   color:var(--on-brand);padding:14px 20px;border-radius:0 0 var(--r-sm) 0;font-weight:600}
 .skip:focus{left:0}
+
+/* Le changement de document passe par le dé Dicea. Le fond reprend celui du
+   thème courant : même si le navigateur tarde à peindre la page suivante, il
+   n'existe plus de toile blanche entre les deux écrans. */
+.page-loader{position:fixed;inset:0;z-index:100;display:grid;place-items:center;
+  background:var(--bg);opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .16s var(--ease),visibility 0s linear .16s}
+.page-loader img{width:56px;height:56px;object-fit:contain;
+  transform:rotate(var(--dicea-loader-angle,0deg));will-change:transform}
+.nav-leaving .page-loader,.nav-arriving .page-loader{opacity:1;visibility:visible;
+  pointer-events:auto;transition-delay:0s}
 
 /* --- Titres de section ----------------------------------------------------
    Le titre défile avec son contenu : **rien ne se fige** sous la barre du haut.
@@ -335,6 +346,19 @@ p{margin:0 0 1em}
 .site-nav a:hover::after{transform:scaleX(.4)}
 .site-nav a[aria-current="page"]{color:var(--brand)}
 .site-nav a[aria-current="page"]::after{transform:scaleX(1)}
+.nav-awards-mobile{display:none}
+.nav-label-compact{display:none}
+@media (max-width:559px){
+  .site-nav .wrap{padding-inline:8px}
+  .site-nav ul{overflow:visible}
+  .site-nav li{flex:1 1 0;min-width:0}
+  .site-nav .nav-award{display:none}
+  .site-nav .nav-awards-mobile{display:list-item}
+  .site-nav .nav-label-full{display:none}
+  .site-nav .nav-label-compact{display:inline}
+  .site-nav a{width:100%;justify-content:center;padding-inline:7px;font-size:.82rem}
+  .site-nav a::after{left:7px;right:7px}
+}
 
 /* --- Repère de position : fil d'Ariane sur toutes les pages, dernier
    maillon appuyé pour qu'on sache d'un coup d'œil où l'on est ------------- */
@@ -689,7 +713,7 @@ main{padding-bottom:72px;scroll-margin-top:calc(var(--head-h) + 20px)}
   font-size:.68rem;line-height:1.3;color:var(--ink-2);background:var(--surface-3)}
 
 /* --- Vignette de jeu ----------------------------------------------------- */
-.gcard{position:relative;display:flex;flex-direction:column;gap:9px;
+.gcard{position:relative;display:flex;flex-direction:column;gap:9px;text-align:left;
   transition:transform .24s var(--ease)}
 .gcard:hover{transform:translateY(-3px)}
 .gcard:hover .cover .fg{transform:scale(1.04)}
@@ -700,8 +724,14 @@ main{padding-bottom:72px;scroll-margin-top:calc(var(--head-h) + 20px)}
 .gcard a{text-decoration:none;color:inherit}
 .gcard a::after{content:"";position:absolute;inset:0;border-radius:var(--r)}
 .gcard a:hover .name{color:var(--brand)}
-.gcard .awards{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;
+.gcard .awards{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:4px;
   list-style:none;margin:0;padding:0;max-width:none}
+.placement-note{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
+  gap:6px;width:100%;text-align:center;font-size:.79rem;color:var(--ink-2);line-height:1.35}
+.placement-logos{display:inline-flex;align-items:center;justify-content:center;gap:4px}
+.placement-logos img{width:28px;height:28px;object-fit:contain;display:block}
+.gcard--secondary{filter:saturate(.72)}
+.gcard--secondary .cover{box-shadow:none}
 .gcard .count{position:absolute;top:9px;right:9px;z-index:2;min-width:28px;height:28px;
   padding:0 9px;border-radius:var(--r-pill);display:grid;place-items:center;
   background:var(--brand);color:var(--on-brand);font-size:.78rem;font-weight:750}
@@ -757,28 +787,41 @@ main{padding-bottom:72px;scroll-margin-top:calc(var(--head-h) + 20px)}
   justify-content:center;gap:10px;max-width:none}
 .podium > li{flex:1 1 290px;max-width:440px}
 .podium li{position:relative;display:flex;gap:13px;align-items:center;
-  justify-content:center;padding:10px;
+  justify-content:flex-start;padding:10px;text-align:left;
   border-radius:var(--r);background:var(--surface-2);border:1px solid transparent;
   transition:border-color .2s var(--ease),background .2s var(--ease)}
 .podium li:hover{border-color:var(--line);background:var(--surface-3)}
-/* La jaquette et le texte forment **un groupe centré** dans la cellule, au lieu
-   d'un texte poussé au bord droit : c'est ce qui fait tenir la ligne dans une
-   page centrée sans avoir à empiler l'image au-dessus du titre. */
-.podium li > a{display:flex;gap:13px;align-items:center;min-width:0;
+/* L'image occupe toujours la même colonne à gauche. Le titre et ses badges
+   peuvent grandir ou revenir à la ligne sans déplacer cette colonne. */
+.podium li > a{display:flex;gap:13px;align-items:center;width:100%;min-width:0;
   text-decoration:none;color:inherit;min-height:44px}
-.podium .shot{position:relative;flex:0 0 auto}
+.podium .shot{position:relative;display:grid;place-items:center;width:62px;
+  min-height:62px;flex:0 0 62px}
 .podium .rank{position:absolute;top:-5px;left:-5px;z-index:2;width:23px;height:23px;
   border-radius:50%;display:grid;place-items:center;font-size:.71rem;font-weight:800;
   background:var(--surface);color:var(--ink-2);border:1px solid var(--line)}
 .podium .rank[data-rank="1"]{background:var(--brand-container);
   color:var(--on-brand-container);border-color:transparent}
-.podium .body{min-width:0}
+.podium .body{min-width:0;flex:1}
 .podium .name{display:block;font-weight:650;line-height:1.3;letter-spacing:-.008em}
 .podium li:hover .name{color:var(--brand)}
-.podium .meta{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
+.podium .meta{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-start;
   gap:4px 9px;margin-top:4px;
   font-size:.78rem;color:var(--ink-2)}
 .podium .meta > span + span::before{content:"·";margin-right:9px;color:var(--outline)}
+.podium li.is-runner{background:transparent;border-color:var(--line)}
+.podium li.is-runner .name{font-weight:600;color:var(--ink-2)}
+.podium li.is-runner:hover .name{color:var(--brand)}
+.shot--placement{border:1px solid var(--line);border-radius:11px;background:var(--surface-2)}
+.placement-logo{width:100%;height:100%;object-fit:contain;padding:8px;opacity:.78}
+.podium .meta.placement-note{justify-content:center;text-align:center}
+
+.secondary-results{max-width:920px;margin:18px auto 0;text-align:center}
+.secondary-results > summary,.search-browse > summary{cursor:pointer;color:var(--ink-2);
+  font-weight:650;line-height:1.4;list-style-position:inside}
+.secondary-results[open] > summary,.search-browse[open] > summary{color:var(--ink)}
+.secondary-results .podium,.secondary-results .grid{margin-top:14px}
+.secondary-results--catalog{margin-top:28px}
 
 /* --- Bloc à la une ------------------------------------------------------- */
 .feature{position:relative;display:grid;justify-items:center;gap:20px;padding:20px;
@@ -899,6 +942,9 @@ main{padding-bottom:72px;scroll-margin-top:calc(var(--head-h) + 20px)}
 .gamehero .meta > span + span::before{content:"·";margin-right:12px;color:var(--outline)}
 .gamehero .meta > span:first-child{font-weight:700;color:var(--ink)}
 .gamehero .specs{margin-bottom:16px}
+.archive-note{max-width:72ch !important;margin:18px auto 4px;padding:16px 18px;
+  border:1px solid var(--line);border-radius:var(--r);background:var(--surface-2);
+  color:var(--ink-2);font-size:.9rem;line-height:1.55;text-align:left}
 
 /* --- Caractéristiques d'un jeu -------------------------------------------
    La note n'est plus un gros chiffre posé à côté de petites lignes écrasées :
@@ -1027,6 +1073,8 @@ td a:hover{text-decoration:underline}
 .search-box input:focus{outline:none;border-color:var(--brand);box-shadow:var(--shadow-2)}
 .search-box input::placeholder{color:var(--ink-2)}
 .search-status{font-size:.86rem;color:var(--ink-2);margin:14px 0 0;min-height:1.3em}
+.search-browse{margin:30px auto 0;text-align:center}
+.search-browse-body{margin-top:24px}
 
 /* --- Tuile Dicea : marque en tête, structure claire ---------------------- */
 .dicea{position:relative;overflow:hidden;margin-top:clamp(48px,6vw,80px);
@@ -1135,41 +1183,9 @@ td a:hover{text-decoration:underline}
   transition-delay:var(--d,0ms)}
 
 /* --- Transitions entre pages ----------------------------------------------
-   Le site est fait de **documents séparés** : chaque lien est une vraie
-   navigation, et le navigateur la marquait comme telle (page vidée, blanc de
-   la toile, onglet qui recharge) avant de peindre la suivante. La transition
-   de vue inter-documents supprime ce blanc : le navigateur garde à l'écran
-   l'image de la page quittée et lui substitue la suivante en un fondu.
-
-   Rien n'en dépend. Un navigateur qui ignore `@view-transition` navigue
-   exactement comme avant, au pixel près : c'est un embellissement, jamais un
-   mécanisme. Et il ne s'applique qu'entre deux pages **de ce site** qui
-   portent toutes deux la règle, donc jamais en quittant le site.
-
-   L'en-tête est **nommé**, donc sorti de l'instantané de la page : la marque,
-   le sélecteur de langue et la bascule de thème ne participent pas au fondu,
-   ils restent immobiles pendant que le contenu se remplace. C'est toute la
-   différence entre une transition et un fondu au blanc de l'écran entier. */
-@view-transition{navigation:auto}
-.site-head{view-transition-name:site-head}
-
-/* La page quittée reste **opaque** dessous, la nouvelle se fond par-dessus.
-   Le fondu croisé par défaut, lui, rend les deux images translucides en même
-   temps : au milieu de l'échange, on voit à travers les deux, ce qui est
-   précisément le clignotement qu'on cherche à supprimer. */
-::view-transition-old(root){animation:none;mix-blend-mode:normal}
-::view-transition-new(root){mix-blend-mode:normal;
-  animation:vt-in .28s cubic-bezier(.22,.61,.36,1) both}
-/* Huit pixels, pas davantage : de quoi donner un sens de lecture à l'arrivée
-   sans que la page ait l'air de glisser. */
-@keyframes vt-in{from{opacity:0;transform:translateY(8px)}}
-/* L'en-tête se contente de suivre son propre changement de hauteur, à la même
-   durée que le contenu : deux durées différentes se voient. */
-::view-transition-group(site-head){animation-duration:.28s}
-/* Pendant la transition, un bloc que l'observateur vient de révéler doit
-   apparaître **d'un coup** : sa propre animation d'entrée ferait doublon avec
-   celle de la page. La classe est posée à l'arrivée et retirée à la fin, donc
-   les blocs révélés plus tard, au défilement, gardent leur cascade. */
+   Le loader masque le remplacement du document puis se fond pour révéler la
+   page déjà peinte. Une transition de vue native figerait son image pendant
+   l'échange et créerait précisément l'à-coup que ce mécanisme évite. */
 .anim.vt .reveal.is-in{transition:none}
 
 @media (prefers-reduced-motion:reduce){
@@ -1177,16 +1193,10 @@ td a:hover{text-decoration:underline}
   *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;
     transition-duration:.01ms !important}
   .anim .reveal{opacity:1 !important;transform:none !important}
-  /* Les pseudo-éléments de transition ne sont pas atteints par la règle
-     universelle ci-dessus : le glissement est donc retiré ici, nommément. Le
-     fondu, lui, reste : ce n'est pas un mouvement, et c'est lui qui supprime
-     le blanc entre deux pages. */
-  ::view-transition-new(root){animation-name:vt-fade}
 }
-@keyframes vt-fade{from{opacity:0}}
 @media print{
   .site-nav,.head-actions,.get-app,.dicea,.yearpick,.search-box,.pager,.rail,
-  .fz-nav,.to-top{display:none}
+  .fz-nav,.to-top,.page-loader{display:none}
   body{background:#fff;color:#000}
   /* Rien ne colle sur du papier : une barre figée y laisserait un blanc. */
   .site-head{position:static}
@@ -1204,6 +1214,16 @@ td a:hover{text-decoration:underline}
 }
 </style>
 <script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t}catch(e){}
+try{if(!matchMedia("(prefers-reduced-motion: reduce)").matches){
+var loaderEpoch=Number(sessionStorage.getItem("dicea-loader-epoch"));
+if(!(loaderEpoch>0)){loaderEpoch=Date.now();sessionStorage.setItem("dicea-loader-epoch",String(loaderEpoch))}
+var loaderT=((Date.now()-loaderEpoch)%1400)/1400;
+var loaderEased=loaderT-(.65/(2*Math.PI))*Math.sin(2*Math.PI*loaderT);
+document.documentElement.style.setProperty("--dicea-loader-angle",360*loaderEased+"deg")}}
+catch(e){}
+try{var n=sessionStorage.getItem("dicea-nav-target");
+if(n===location.pathname+location.search)document.documentElement.classList.add("nav-arriving")}
+catch(e){}
 try{if(!matchMedia("(prefers-reduced-motion: reduce)").matches)
 document.documentElement.classList.add("anim")}catch(e){}
 </script>
@@ -1213,6 +1233,7 @@ document.documentElement.classList.add("anim")}catch(e){}
 </head>
 <body>
 <a class="skip" href="#main">Aller au contenu</a>
+<div class="page-loader" id="page-loader" aria-hidden="true"><img src="/assets/dicea-loader.png" alt="" aria-hidden="true" width="56" height="56" decoding="async"><span class="visually-hidden">Ouverture de la page…</span></div>
 <header class="site-head">
 <div class="wrap">
 <div class="brand-block">
@@ -1239,11 +1260,12 @@ document.documentElement.classList.add("anim")}catch(e){}
 <div class="wrap">
 <ul>
 <li><a href="/fr/">Accueil</a></li>
-<li><a href="/fr/prix/as-dor/">As d&#39;Or</a></li>
-<li><a href="/fr/prix/spiel-des-jahres/">Spiel des Jahres</a></li>
-<li><a href="/fr/prix/deutscher-spiele-preis/">Deutscher Spiele Preis</a></li>
-<li><a href="/fr/prix/golden-geek/">Golden Geek Awards</a></li>
-<li><a href="/fr/meilleurs-jeux/">Meilleurs jeux</a></li>
+<li class="nav-awards-mobile"><a href="/fr/#awards">Prix</a></li>
+<li class="nav-award"><a href="/fr/prix/as-dor/">As d&#39;Or</a></li>
+<li class="nav-award"><a href="/fr/prix/spiel-des-jahres/">Spiel des Jahres</a></li>
+<li class="nav-award"><a href="/fr/prix/deutscher-spiele-preis/">Deutscher Spiele Preis</a></li>
+<li class="nav-award"><a href="/fr/prix/golden-geek/">Golden Geek Awards</a></li>
+<li><a href="/fr/meilleurs-jeux/"><span class="nav-label-full">Meilleurs jeux</span><span class="nav-label-compact">Meilleurs</span></a></li>
 <li><a href="/fr/recherche/">Rechercher</a></li>
 </ul>
 </div>
@@ -1282,7 +1304,7 @@ document.documentElement.classList.add("anim")}catch(e){}
 <section class="section">
 <div class="head reveal">
 <p class="eyebrow">1 récompense</p>
-<h2>Toutes ses récompenses</h2>
+<h2>Son palmarès</h2>
 </div>
 <ul class="podium">
 <li style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)"><a href="/fr/prix/spiel-des-jahres/2007/"><span class="shot"><img class="cover cover--sm" src="/assets/spiel_des_jahres.png" alt="" aria-hidden="true" width="62" height="62" loading="lazy" decoding="async" style="object-fit:contain;padding:8px;background:var(--surface)"></span><span class="body"><span class="name">Spiel des Jahres 2007</span><span class="meta"><span>Jeu enfant</span><span>Vainqueur</span></span></span></a></li>
@@ -1348,6 +1370,78 @@ document.documentElement.classList.add("anim")}catch(e){}
   var i18n={};
   try{i18n=JSON.parse(document.getElementById("ui-i18n").textContent)}catch(e){}
 
+  // --- Navigation entre documents -----------------------------------------
+  // Les liens restent natifs et fonctionnent sans JavaScript. Quand le script
+  // est présent, le dé Dicea couvre seulement le court intervalle pendant
+  // lequel le navigateur remplace le document, sur le fond du thème courant.
+  var loader=document.getElementById("page-loader");
+  var loaderIcon=loader?loader.querySelector("img"):null;
+  var reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var loaderAnimation=0,loaderStopTimer=0,loaderEpoch=Date.now();
+  try{
+    var storedLoaderEpoch=Number(sessionStorage.getItem("dicea-loader-epoch"));
+    if(storedLoaderEpoch>0)loaderEpoch=storedLoaderEpoch;
+    else sessionStorage.setItem("dicea-loader-epoch",String(loaderEpoch));
+  }catch(e){}
+
+  // Même mouvement que `LudIQLoader` dans l'app. L'angle est calculé depuis
+  // une origine conservée pour tout l'onglet : le nouveau document reprend
+  // donc exactement la phase où l'ancien s'est arrêté, sans retour à zéro.
+  function paintLoader(){
+    var t=((Date.now()-loaderEpoch)%1400)/1400;
+    var eased=t-(.65/(2*Math.PI))*Math.sin(2*Math.PI*t);
+    loaderIcon.style.transform="rotate("+(360*eased)+"deg)";
+    loaderAnimation=requestAnimationFrame(paintLoader);
+  }
+  function startLoaderAnimation(){
+    clearTimeout(loaderStopTimer);
+    if(!reduced&&loaderIcon&&!loaderAnimation)paintLoader();
+  }
+  function stopLoaderAnimation(){
+    clearTimeout(loaderStopTimer);
+    loaderStopTimer=window.setTimeout(function(){
+      if(loaderAnimation)cancelAnimationFrame(loaderAnimation);
+      loaderAnimation=0;
+    },180);
+  }
+  function startNavigation(href){
+    if(root.classList.contains("nav-leaving"))return;
+    var url=new URL(href,location.href);
+    try{sessionStorage.setItem("dicea-nav-target",url.pathname+url.search)}catch(e){}
+    startLoaderAnimation();
+    root.classList.add("nav-leaving");
+    if(loader)loader.setAttribute("aria-hidden","false");
+    window.setTimeout(function(){location.assign(url.href)},reduced?0:160);
+  }
+
+  document.addEventListener("click",function(e){
+    if(e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
+    var link=e.target.closest("a[href]");
+    if(!link||link.target||link.hasAttribute("download"))return;
+    var url;
+    try{url=new URL(link.href,location.href)}catch(err){return}
+    if(url.origin!==location.origin||url.pathname.indexOf("/assets/")===0)return;
+    if(url.pathname===location.pathname&&url.search===location.search&&
+      (url.hash||url.href===location.href))return;
+    e.preventDefault();
+    startNavigation(url.href);
+  });
+
+  function finishArrival(){
+    root.classList.remove("nav-arriving","nav-leaving");
+    if(loader)loader.setAttribute("aria-hidden","true");
+    stopLoaderAnimation();
+    try{sessionStorage.removeItem("dicea-nav-target")}catch(e){}
+  }
+  if(root.classList.contains("nav-arriving")){
+    startLoaderAnimation();
+    if(loader)loader.setAttribute("aria-hidden","false");
+    window.setTimeout(finishArrival,reduced?0:280);
+  }
+  window.addEventListener("pageshow",function(e){
+    if(e.persisted)finishArrival();
+  });
+
   // --- Années au clavier ---------------------------------------------------
   var prev=document.querySelector('link[rel="prev"],a[rel="prev"]');
   var next=document.querySelector('link[rel="next"],a[rel="next"]');
@@ -1355,8 +1449,8 @@ document.documentElement.classList.add("anim")}catch(e){}
     if(e.defaultPrevented||e.metaKey||e.ctrlKey||e.altKey)return;
     var el=document.activeElement;
     if(el&&/^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName))return;
-    if(e.key==="ArrowLeft"&&prev){location.href=prev.href}
-    else if(e.key==="ArrowRight"&&next){location.href=next.href}
+    if(e.key==="ArrowLeft"&&prev){e.preventDefault();startNavigation(prev.href)}
+    else if(e.key==="ArrowRight"&&next){e.preventDefault();startNavigation(next.href)}
   });
 
   // --- Apparition au défilement -------------------------------------------
