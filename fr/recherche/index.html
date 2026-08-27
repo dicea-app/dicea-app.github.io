@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Rechercher dans les palmarès</title>
 <meta name="description" content="Cherchez parmi les 313 jeux présents dans les palmarès de l&#39;As d&#39;Or, du Spiel des Jahres, du Deutscher Spiele Preis ou des Golden Geek Awards, puis consultez leurs…">
+<meta name="robots" content="index,follow,max-image-preview:large">
 <link rel="canonical" href="https://dicea-app.com/fr/recherche/">
 <link rel="alternate" hreflang="fr" href="https://dicea-app.com/fr/recherche/">
 <link rel="alternate" hreflang="en" href="https://dicea-app.com/en/search/">
@@ -3332,12 +3333,27 @@ document.documentElement.classList.add("anim")}catch(e){}
       run(input.value);
       var q=new URLSearchParams();
       if(input.value.trim())q.set("q",input.value.trim());
-      history.replaceState(null,"",location.pathname+(q.toString()?"?"+q:""));
+      // L'état partageable vit dans le fragment : il reste lisible par le
+      // navigateur, mais n'est jamais envoyé au serveur ni exploré comme une
+      // URL distincte. La canonique ne se retrouve donc plus à consolider une
+      // infinité de variantes `?q=` de cette page.
+      history.replaceState(null,"",location.pathname+
+        (q.toString()?"#"+q.toString():""));
     },120);
   });
   input.addEventListener("focus",load,{once:true});
 
-  var initial=new URLSearchParams(location.search).get("q");
+  var initial=new URLSearchParams(location.hash.slice(1)).get("q");
+  // Compatibilité avec les anciens liens publiés en `?q=` : ils continuent de
+  // fonctionner, puis sont aussitôt nettoyés vers la forme non crawlable.
+  if(!initial){
+    initial=new URLSearchParams(location.search).get("q");
+    if(initial){
+      var legacy=new URLSearchParams();
+      legacy.set("q",initial);
+      history.replaceState(null,"",location.pathname+"#"+legacy.toString());
+    }
+  }
   if(initial){input.value=initial;run(initial)}
 })();
 </script>
