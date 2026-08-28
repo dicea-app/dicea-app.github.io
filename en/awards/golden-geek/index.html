@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Golden Geek Awards: every winner from 2006 to 2025</title>
-<meta name="description" content="The complete Golden Geek Awards results, year by year: 76 awarded games. Categories: Light Game, Medium Game, Heavy Game and Game of the Year. Award history, jury…">
+<meta name="description" content="The complete Golden Geek Awards results, year by year: 32 awarded games. Categories: Light Game, Medium Game, Heavy Game and Game of the Year. Award history, jury…">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <link rel="canonical" href="https://dicea-app.com/en/awards/golden-geek/">
 <link rel="alternate" hreflang="fr" href="https://dicea-app.com/fr/prix/golden-geek/">
@@ -14,13 +14,13 @@
 <meta property="og:site_name" content="Dicea">
 <meta property="og:locale" content="en_GB">
 <meta property="og:title" content="Golden Geek Awards: every winner from 2006 to 2025">
-<meta property="og:description" content="The complete Golden Geek Awards results, year by year: 76 awarded games. Categories: Light Game, Medium Game, Heavy Game and Game of the Year. Award history, jury…">
+<meta property="og:description" content="The complete Golden Geek Awards results, year by year: 32 awarded games. Categories: Light Game, Medium Game, Heavy Game and Game of the Year. Award history, jury…">
 <meta property="og:url" content="https://dicea-app.com/en/awards/golden-geek/">
 <meta property="og:image" content="https://cf.geekdo-images.com/co36SqyPYlM1QwVW6XSwyQ__original/img/ErbrDNguZzKtnCCAUiQCh1xwldc=/0x0/filters:format(jpeg)/pic8933083.jpg">
 <meta property="og:image:alt" content="Golden Geek Awards: every winner from 2006 to 2025">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Golden Geek Awards: every winner from 2006 to 2025">
-<meta name="twitter:description" content="The complete Golden Geek Awards results, year by year: 76 awarded games. Categories: Light Game, Medium Game, Heavy Game and Game of the Year. Award history, jury…">
+<meta name="twitter:description" content="The complete Golden Geek Awards results, year by year: 32 awarded games. Categories: Light Game, Medium Game, Heavy Game and Game of the Year. Award history, jury…">
 <meta name="twitter:image" content="https://cf.geekdo-images.com/co36SqyPYlM1QwVW6XSwyQ__original/img/ErbrDNguZzKtnCCAUiQCh1xwldc=/0x0/filters:format(jpeg)/pic8933083.jpg">
 <meta name="theme-color" content="#087c95" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0e1416" media="(prefers-color-scheme: dark)">
@@ -1286,7 +1286,7 @@ document.documentElement.classList.add("anim")}catch(e){}
 <ul class="stats">
 <li><b>2006</b><span>Founded</span></li>
 <li><b>20</b><span>editions</span></li>
-<li><b>76</b><span>awarded games</span></li>
+<li><b>32</b><span>awarded games</span></li>
 <li><b>4</b><span>categories</span></li>
 </ul>
 <section class="section">
@@ -1344,14 +1344,14 @@ document.documentElement.classList.add("anim")}catch(e){}
 <ul class="grid grid--decades"><li class="decade reveal">
 <span class="art">
 <img src="https://cf.geekdo-images.com/bLL3P-G25nIUkFjHxfJfnw__original/img/HBEhgjfb0QcF9pFrdJ8VYhBapoU=/0x0/filters:format(jpeg)/pic7632081.jpg" alt="The 2020s, illustrated by the box art of MicroMacro: Crime City" width="560" height="420" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade">
-<span class="label"><b>2020s</b><span>54 awarded games</span></span>
+<span class="label"><b>2020s</b><span>18 awarded games</span></span>
 </span>
 <a href="/en/awards/golden-geek/decade/2020/"><span class="visually-hidden">2020s</span></a>
 </li>
 <li class="decade reveal">
 <span class="art">
 <img src="https://cf.geekdo-images.com/aPSHJO0d0XOpQR5X-wJonw__original/img/AkbtYVc6xXJF3c9EUrakklcclKw=/0x0/filters:format(png)/pic6973671.png" alt="The 2010s, illustrated by the box art of Azul" width="560" height="420" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade">
-<span class="label"><b>2010s</b><span>18 awarded games</span></span>
+<span class="label"><b>2010s</b><span>10 awarded games</span></span>
 </span>
 <a href="/en/awards/golden-geek/decade/2010/"><span class="visually-hidden">2010s</span></a>
 </li>
@@ -1372,7 +1372,7 @@ document.documentElement.classList.add("anim")}catch(e){}
 </div>
 <dl class="facts reveal">
 <div><dt>Founded</dt><dd>2006</dd></div>
-<div><dt>Coverage</dt><dd>2006–2025 · 76 games</dd></div>
+<div><dt>Coverage</dt><dd>2006–2025 · 32 games</dd></div>
 <div><dt>Country</dt><dd>United States (international reach)</dd></div>
 <div><dt>Organiser</dt><dd>BoardGameGeek</dd></div>
 <div><dt>How winners are chosen</dt><dd>Open community vote</dd></div>
@@ -1713,63 +1713,6 @@ document.documentElement.classList.add("anim")}catch(e){}
     });
   }
 
-  // --- Recentrage de la frise ---------------------------------------------
-  var strip=document.querySelector(".yearbar .row");
-  if(strip){
-    var current=strip.querySelector('[aria-current="page"]');
-    if(current){
-      // `scrollLeft` direct plutôt que `scrollIntoView` : ce dernier fait aussi
-      // défiler la page verticalement, ce qui déplacerait le titre hors écran
-      // à l'arrivée sur la page.
-      strip.scrollLeft=current.offsetLeft-(strip.clientWidth-current.clientWidth)/2;
-    }
-  }
-
-  // --- Filtres reflétés dans l'URL ----------------------------------------
-  var filters=document.querySelector("[data-filters]");
-  if(filters){
-    var rows=Array.prototype.slice.call(document.querySelectorAll("[data-filterable]"));
-    var empty=document.querySelector("[data-filter-empty]");
-    var state={cat:"",dec:""};
-
-    function apply(push){
-      var shown=0;
-      rows.forEach(function(row){
-        var okCat=!state.cat||(" "+row.dataset.cat+" ").indexOf(" "+state.cat+" ")>=0;
-        var okDec=!state.dec||row.dataset.dec===state.dec;
-        var visible=okCat&&okDec;
-        row.hidden=!visible;
-        if(visible)shown++;
-      });
-      if(empty)empty.hidden=shown>0;
-      filters.querySelectorAll("[data-filter]").forEach(function(btn){
-        var on=state[btn.dataset.filter]===btn.dataset.value;
-        btn.classList.toggle("is-on",on);
-        btn.setAttribute("aria-pressed",String(on));
-      });
-      if(push){
-        var q=new URLSearchParams();
-        if(state.cat)q.set("cat",state.cat);
-        if(state.dec)q.set("dec",state.dec);
-        var url=location.pathname+(q.toString()?"?"+q:"")+location.hash;
-        history.replaceState(null,"",url);
-      }
-    }
-
-    filters.addEventListener("click",function(e){
-      var btn=e.target.closest("[data-filter]");
-      if(!btn)return;
-      var key=btn.dataset.filter;
-      state[key]=state[key]===btn.dataset.value?"":btn.dataset.value;
-      apply(true);
-    });
-
-    var params=new URLSearchParams(location.search);
-    state.cat=params.get("cat")||"";
-    state.dec=params.get("dec")||"";
-    filters.hidden=false;
-    apply(false);
-  }
 })();
 </script>
 </body>

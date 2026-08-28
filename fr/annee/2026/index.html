@@ -17,12 +17,12 @@
 <meta property="og:title" content="Jeux de société de l’année 2026 : les gagnants par prix | Dicea">
 <meta property="og:description" content="As d&#39;Or, Spiel des Jahres, Deutscher Spiele Preis et Golden Geek 2026 côte à côte. As d&#39;Or : Toy Battle. Spiel des Jahres : JinxO">
 <meta property="og:url" content="https://dicea-app.com/fr/annee/2026/">
-<meta property="og:image" content="https://cf.geekdo-images.com/ZW3tDJsRWJK5ONSDOWm34g__original/img/H76qdNea6KnSO2wpZHT9NMThlJw=/0x0/filters:format(jpeg)/pic8679533.jpg">
+<meta property="og:image" content="https://cf.geekdo-images.com/GuhpuTKFteZEIhPTFvEpJw__original/img/g4qgGJr7qvkSCTArazRXhkDVYQA=/0x0/filters:format(jpeg)/pic8589750.jpg">
 <meta property="og:image:alt" content="Jeux de société de l’année 2026 : les gagnants par prix | Dicea">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Jeux de société de l’année 2026 : les gagnants par prix | Dicea">
 <meta name="twitter:description" content="As d&#39;Or, Spiel des Jahres, Deutscher Spiele Preis et Golden Geek 2026 côte à côte. As d&#39;Or : Toy Battle. Spiel des Jahres : JinxO">
-<meta name="twitter:image" content="https://cf.geekdo-images.com/ZW3tDJsRWJK5ONSDOWm34g__original/img/H76qdNea6KnSO2wpZHT9NMThlJw=/0x0/filters:format(jpeg)/pic8679533.jpg">
+<meta name="twitter:image" content="https://cf.geekdo-images.com/GuhpuTKFteZEIhPTFvEpJw__original/img/g4qgGJr7qvkSCTArazRXhkDVYQA=/0x0/filters:format(jpeg)/pic8589750.jpg">
 <meta name="theme-color" content="#087c95" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0e1416" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/png" sizes="72x72" href="/assets/dicea-favicon.png"><link rel="apple-touch-icon" href="/assets/dicea-icon.png">
@@ -1281,23 +1281,6 @@ document.documentElement.classList.add("anim")}catch(e){}
 <main id="main">
 <h1>Jeux de société de l’année 2026 : les gagnants par prix</h1>
 <p class="lede">Les quatre grands prix internationaux, année par année.</p>
-<section class="section">
-<div class="head reveal">
-<p class="eyebrow">Dicea</p>
-<h2>Jeu de l&#39;année 2026</h2>
-</div>
-<div class="feature reveal">
-<div class="art">
-<span class="count"><span class="visually-hidden">Récompenses</span><span aria-hidden="true">2</span></span>
-<span class="cover"><img class="bg" src="https://cf.geekdo-images.com/ZW3tDJsRWJK5ONSDOWm34g__small/img/wwyKTZU3xZiUYSCns-RdzNVoqPg=/fit-in/200x150/filters:strip_icc()/pic8679533.jpg" alt="" aria-hidden="true" width="220" height="220" fetchpriority="high" decoding="async" referrerpolicy="no-referrer-when-downgrade"><img class="fg" src="https://cf.geekdo-images.com/ZW3tDJsRWJK5ONSDOWm34g__small/img/wwyKTZU3xZiUYSCns-RdzNVoqPg=/fit-in/200x150/filters:strip_icc()/pic8679533.jpg" alt="Jaquette du jeu L&#39;île des Mookies" width="220" height="220" fetchpriority="high" decoding="async" referrerpolicy="no-referrer-when-downgrade"></span>
-</div>
-<div class="body">
-<h3><a href="/fr/jeu/mooki-island/">L&#39;île des Mookies</a></h3>
-<ul class="badges"><li><span class="badge badge--award" style="--accent:var(--as-dor);--accent-bg:var(--as-dor-bg);--accent-ink:var(--as-dor-ink)">As d&#39;Or</span></li><li><span class="badge badge--award" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">Spiel des Jahres</span></li></ul>
-<p class="why">Chaque année, notre algorithme désigne le vainqueur absolu affiché en tête de la frise. Le jeu ayant remporté le plus de catégories l&#39;emporte. À égalité de victoires, les autres places du palmarès départagent les jeux, puis le mythique Spiel des Jahres fait office de juge de paix.</p>
-</div>
-</div>
-</section>
 <section class="section" style="--accent:var(--as-dor);--accent-bg:var(--as-dor-bg);--accent-ink:var(--as-dor-ink)">
 <div class="head reveal"><p class="eyebrow">Fin février</p><h2 id="as-dor"><a href="/fr/prix/as-dor/2026/">As d&#39;Or 2026</a></h2></div>
 <div class="cats" data-n="4">
@@ -1771,63 +1754,6 @@ document.documentElement.classList.add("anim")}catch(e){}
     });
   }
 
-  // --- Recentrage de la frise ---------------------------------------------
-  var strip=document.querySelector(".yearbar .row");
-  if(strip){
-    var current=strip.querySelector('[aria-current="page"]');
-    if(current){
-      // `scrollLeft` direct plutôt que `scrollIntoView` : ce dernier fait aussi
-      // défiler la page verticalement, ce qui déplacerait le titre hors écran
-      // à l'arrivée sur la page.
-      strip.scrollLeft=current.offsetLeft-(strip.clientWidth-current.clientWidth)/2;
-    }
-  }
-
-  // --- Filtres reflétés dans l'URL ----------------------------------------
-  var filters=document.querySelector("[data-filters]");
-  if(filters){
-    var rows=Array.prototype.slice.call(document.querySelectorAll("[data-filterable]"));
-    var empty=document.querySelector("[data-filter-empty]");
-    var state={cat:"",dec:""};
-
-    function apply(push){
-      var shown=0;
-      rows.forEach(function(row){
-        var okCat=!state.cat||(" "+row.dataset.cat+" ").indexOf(" "+state.cat+" ")>=0;
-        var okDec=!state.dec||row.dataset.dec===state.dec;
-        var visible=okCat&&okDec;
-        row.hidden=!visible;
-        if(visible)shown++;
-      });
-      if(empty)empty.hidden=shown>0;
-      filters.querySelectorAll("[data-filter]").forEach(function(btn){
-        var on=state[btn.dataset.filter]===btn.dataset.value;
-        btn.classList.toggle("is-on",on);
-        btn.setAttribute("aria-pressed",String(on));
-      });
-      if(push){
-        var q=new URLSearchParams();
-        if(state.cat)q.set("cat",state.cat);
-        if(state.dec)q.set("dec",state.dec);
-        var url=location.pathname+(q.toString()?"?"+q:"")+location.hash;
-        history.replaceState(null,"",url);
-      }
-    }
-
-    filters.addEventListener("click",function(e){
-      var btn=e.target.closest("[data-filter]");
-      if(!btn)return;
-      var key=btn.dataset.filter;
-      state[key]=state[key]===btn.dataset.value?"":btn.dataset.value;
-      apply(true);
-    });
-
-    var params=new URLSearchParams(location.search);
-    state.cat=params.get("cat")||"";
-    state.dec=params.get("dec")||"";
-    filters.hidden=false;
-    apply(false);
-  }
 })();
 </script>
 </body>

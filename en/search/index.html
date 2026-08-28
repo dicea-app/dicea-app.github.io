@@ -1225,7 +1225,7 @@ document.documentElement.classList.add("anim")}catch(e){}
 </script>
 <script type="application/json" id="ui-i18n">{"close":"Close the image"}</script>
 <script type="speculationrules">{"prefetch":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/assets/*"}}]},"eagerness":"moderate"}]}</script>
-<script type="application/json" id="search-i18n">{"indexUrl":"/assets/search-en.json","loading":"Loading…","none":"No game in the records matches.","one":"{n} result","many":"{n} results","placed":"Other award placement","error":"No game in the records matches."}</script>
+<script type="application/json" id="search-i18n">{"indexUrl":"/assets/search-en.json","loading":"Loading…","none":"No game in the records matches.","one":"{n} result","many":"{n} results","placed":"Other award placement","error":"The game list could not be loaded. Change your search to try again."}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://dicea-app.com/en/"},{"@type":"ListItem","position":2,"name":"Search the award records","item":"https://dicea-app.com/en/search/"}]}</script>
 </head>
 <body>
@@ -3152,63 +3152,6 @@ document.documentElement.classList.add("anim")}catch(e){}
     });
   }
 
-  // --- Recentrage de la frise ---------------------------------------------
-  var strip=document.querySelector(".yearbar .row");
-  if(strip){
-    var current=strip.querySelector('[aria-current="page"]');
-    if(current){
-      // `scrollLeft` direct plutôt que `scrollIntoView` : ce dernier fait aussi
-      // défiler la page verticalement, ce qui déplacerait le titre hors écran
-      // à l'arrivée sur la page.
-      strip.scrollLeft=current.offsetLeft-(strip.clientWidth-current.clientWidth)/2;
-    }
-  }
-
-  // --- Filtres reflétés dans l'URL ----------------------------------------
-  var filters=document.querySelector("[data-filters]");
-  if(filters){
-    var rows=Array.prototype.slice.call(document.querySelectorAll("[data-filterable]"));
-    var empty=document.querySelector("[data-filter-empty]");
-    var state={cat:"",dec:""};
-
-    function apply(push){
-      var shown=0;
-      rows.forEach(function(row){
-        var okCat=!state.cat||(" "+row.dataset.cat+" ").indexOf(" "+state.cat+" ")>=0;
-        var okDec=!state.dec||row.dataset.dec===state.dec;
-        var visible=okCat&&okDec;
-        row.hidden=!visible;
-        if(visible)shown++;
-      });
-      if(empty)empty.hidden=shown>0;
-      filters.querySelectorAll("[data-filter]").forEach(function(btn){
-        var on=state[btn.dataset.filter]===btn.dataset.value;
-        btn.classList.toggle("is-on",on);
-        btn.setAttribute("aria-pressed",String(on));
-      });
-      if(push){
-        var q=new URLSearchParams();
-        if(state.cat)q.set("cat",state.cat);
-        if(state.dec)q.set("dec",state.dec);
-        var url=location.pathname+(q.toString()?"?"+q:"")+location.hash;
-        history.replaceState(null,"",url);
-      }
-    }
-
-    filters.addEventListener("click",function(e){
-      var btn=e.target.closest("[data-filter]");
-      if(!btn)return;
-      var key=btn.dataset.filter;
-      state[key]=state[key]===btn.dataset.value?"":btn.dataset.value;
-      apply(true);
-    });
-
-    var params=new URLSearchParams(location.search);
-    state.cat=params.get("cat")||"";
-    state.dec=params.get("dec")||"";
-    filters.hidden=false;
-    apply(false);
-  }
 })();
 </script>
 <script>(function(){
@@ -3245,8 +3188,9 @@ document.documentElement.classList.add("anim")}catch(e){}
       return r.json();
     }).then(function(data){
       // Deux clés repliées une fois pour toutes : `f` le titre affiché
-      // (champ `n`) et `g` le titre original quand il diffère (champ `o`),
-      // qui n'est jamais montré mais reste trouvable.
+      // (champ `n`) et `g` les autres titres du jeu réunis (champ `o` :
+      // nom BoardGameGeek et titres de récompense), jamais montrés mais
+      // toujours trouvables.
       index=data.map(function(g){
         g.f=fold(g.n);
         g.g=g.o?fold(g.o):"";
