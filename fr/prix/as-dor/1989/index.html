@@ -1164,6 +1164,69 @@ td a:hover{text-decoration:underline}
 .zoom:popover-open::backdrop{opacity:1}
 @starting-style{.zoom:popover-open::backdrop{opacity:0}}
 
+/* --- Silhouettes Dicea ---------------------------------------------------
+   Les formes sont regroupées ici pour que le site généré suive exactement la
+   même grammaire que l'app : quatre coupes pour les cas spéciaux, deux coupes
+   opposées pour les surfaces générales, hexagone vertical pour les ronds. */
+:is(.hero,.award-hero,.cover,.gamehero .art img,.zoom img,.search-box input,
+  .btn,.pager a){
+  --shape-cut:clamp(8px,1.25vw,18px);border-radius:0;
+  -webkit-clip-path:polygon(var(--shape-cut) 0,calc(100% - var(--shape-cut)) 0,
+    100% var(--shape-cut),100% calc(100% - var(--shape-cut)),
+    calc(100% - var(--shape-cut)) 100%,var(--shape-cut) 100%,
+    0 calc(100% - var(--shape-cut)),0 var(--shape-cut));
+  clip-path:polygon(var(--shape-cut) 0,calc(100% - var(--shape-cut)) 0,
+    100% var(--shape-cut),100% calc(100% - var(--shape-cut)),
+    calc(100% - var(--shape-cut)) 100%,var(--shape-cut) 100%,
+    0 calc(100% - var(--shape-cut)),0 var(--shape-cut))
+}
+
+:is(.skip,.get-app > summary,.get-app-menu,.get-app-menu a,.chip,
+  .crumbs [aria-current="page"],.stats li,.fz-card,.fz-idle,.tile,.tile .logo,
+  .awardblock,.awardblock-head img,.award-hero-logo,.shot--placement,
+  .decade,.tl-year,.tl-note,.gcard .count,.badge,.cat,
+  .podium li,.feature,.feature .art .count,.pick,.crits > li,.archive-note,
+  .specs,.specs dl > div,.facts,.yearpick,.table-scroll,.dicea,
+  .dicea .shot,.site-foot .powered a){
+  --shape-cut:clamp(6px,.75vw,12px);
+  border-radius:var(--r-lg) 0 var(--r-lg) 0;
+  -webkit-clip-path:polygon(0 0,calc(100% - var(--shape-cut)) 0,
+    100% var(--shape-cut),100% 100%,var(--shape-cut) 100%,
+    0 calc(100% - var(--shape-cut)));
+  clip-path:polygon(0 0,calc(100% - var(--shape-cut)) 0,
+    100% var(--shape-cut),100% 100%,var(--shape-cut) 100%,
+    0 calc(100% - var(--shape-cut)))
+}
+
+:is(.fz-mark,.podium .rank,.pick .n,.specs .dial,
+  .specs .dial::before,.to-top,.zoom-close,.site-foot .powered a::before){
+  border-radius:0;
+  -webkit-clip-path:polygon(50% 0,94% 24%,94% 76%,50% 100%,6% 76%,6% 24%);
+  clip-path:polygon(50% 0,94% 24%,94% 76%,50% 100%,6% 76%,6% 24%)
+}
+
+:is(.chip--lang .flag,.eyebrow::before,.eyebrow::after,.fz-legend .k,.fz-bar,
+  .fz-rule,.tl-cat-name::after,.cat > h2::before,.cat > h3::before,
+  .site-nav a::after){
+  --shape-cut:2px;border-radius:3px 0 3px 0;
+  -webkit-clip-path:polygon(0 0,calc(100% - var(--shape-cut)) 0,
+    100% var(--shape-cut),100% 100%,var(--shape-cut) 100%,
+    0 calc(100% - var(--shape-cut)));
+  clip-path:polygon(0 0,calc(100% - var(--shape-cut)) 0,
+    100% var(--shape-cut),100% 100%,var(--shape-cut) 100%,
+    0 calc(100% - var(--shape-cut)))
+}
+
+:is(.gcard a::after,.pick h3 a::after,:focus-visible){
+  border-radius:6px 0 6px 0
+}
+
+@media (min-width:900px){
+  .fz-p{border-radius:0;
+    -webkit-clip-path:polygon(50% 0,94% 24%,94% 76%,50% 100%,6% 76%,6% 24%);
+    clip-path:polygon(50% 0,94% 24%,94% 76%,50% 100%,6% 76%,6% 24%)}
+}
+
 .visually-hidden{position:absolute;width:1px;height:1px;margin:-1px;padding:0;
   overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 [hidden]{display:none !important}
