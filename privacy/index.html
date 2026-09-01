@@ -89,6 +89,8 @@ Les données suivantes sont d'abord enregistrées dans l'espace de stockage priv
 * **Profils de joueurs :** Les noms ou pseudonymes que vous saisissez manuellement et les photos ou avatars locaux que vous choisissez pour vos profils.
 * **Vos préférences :** Langue de l'interface, réglages d'affichage, filtres et mémoire de l'onglet Explorer.
 
+🔒 **Sauvegarde automatique du système désactivée :** Android propose aux applications une sauvegarde automatique de leurs données vers le compte cloud de l'utilisateur. Dicea la **refuse explicitement** : ni la base de données, ni vos photos, ni vos préférences ne sont remises à ce mécanisme. Seul le **transfert direct** d'un ancien téléphone vers un nouveau, opéré localement par le système lors du changement d'appareil, reste autorisé : il ne transite par aucun serveur.
+
 ✏️ **Contrôle utilisateur :** Vous conservez le contrôle de ces données. Vous pouvez les modifier ou les supprimer à tout moment directement dans l'application, ou les exporter vous-même au format **JSON**. La désinstallation efface les données privées de l'application sur l'appareil, mais ne supprime pas les fichiers que vous avez placés dans un stockage externe.
 
 ### 3.2. Sauvegardes manuelles et automatiques
@@ -172,7 +174,7 @@ Conformément au RGPD, vous disposez d'un droit d'accès, de rectification, d'ef
 En raison de l'architecture décentralisée ("local-first") de Dicea, **vous pouvez exercer l'immense majorité de ces droits de manière totalement autonome**, sans notre intervention :
 * **Accès & Portabilité :** Vous pouvez consulter toutes vos données directement dans les écrans de l'application et les exporter au format JSON à tout moment.
 * **Rectification :** Vous pouvez modifier manuellement vos jeux, vos sessions de parties, vos scores et vos profils de joueurs directement dans les réglages.
-* **Effacement :** Vous pouvez supprimer un élément un par un, réinitialiser la mémoire locale de l'onglet Explorer, ou désinstaller l'application pour purger les enregistrements locaux. Une sauvegarde externe doit être supprimée séparément depuis le gestionnaire de fichiers ou le fournisseur choisi.
+* **Effacement :** Vous pouvez supprimer un élément un par un, réinitialiser la mémoire locale de l'onglet Explorer, utiliser « Réinitialiser toute l'app » (Paramètres → Données → Suppression → Supprimer mes données), qui efface la base, l'intégralité des préférences, vos photos et les copies de sauvegarde conservées dans le stockage privé de l'application, ou désinstaller l'application pour purger les enregistrements locaux. Une sauvegarde externe doit être supprimée séparément depuis le gestionnaire de fichiers ou le fournisseur choisi.
 
 Vous pouvez à tout moment **retirer un consentement** que vous avez précédemment accordé, par exemple en révoquant une permission dans les réglages système de votre appareil, ce qui rendra simplement les fonctionnalités associées indisponibles. Pour toute demande d'exercice de droit nécessitant une action de notre part, vous pouvez nous contacter à l'adresse **Ludiq.support@gmail.com**. Nous vous répondrons dans le délai légal d'un mois.
 
@@ -208,7 +210,7 @@ Pour toute question relative à la présente politique ou à vos données :
 
 * **Adresse e-mail :** Ludiq.support@gmail.com
 * **Éditeur :** GODINEAU Savinien
-* **URL du document :** https://dicea-app.github.io/privacy/
+* **URL du document :** https://dicea-app.com/privacy/
 `,
             en: `
 # Privacy Policy — Dicea
@@ -256,6 +258,8 @@ The following data is first stored in the application's private, sandboxed stora
 * **Your scores and statistics:** Detailed results per player, history, and graphic summaries.
 * **Player profiles:** The names or pseudonyms you enter manually and the local photos or avatars you choose for your profiles.
 * **Your preferences:** Interface language, display settings, filters, and Explore tab memory.
+
+🔒 **System automatic backup disabled:** Android offers applications an automatic backup of their data to the user's cloud account. Dicea **explicitly opts out** of it: neither the database, nor your photos, nor your preferences are handed to that mechanism. Only the **direct transfer** from an old phone to a new one, performed locally by the system when you change device, remains allowed: it goes through no server.
 
 ✏️ **User control:** You retain control over this data. You can modify or delete it at any time directly in the application, or export it yourself in **JSON** format. Uninstalling erases the application's private data from the device, but does not delete files you placed in external storage.
 
@@ -340,7 +344,7 @@ In accordance with the GDPR, you have a right of access, rectification, erasure,
 Due to the decentralized ("local-first") architecture of Dicea, **you can exercise the vast majority of these rights completely autonomously**, without our intervention:
 * **Access & Portability:** You can view all your data directly in the app screens and export them in JSON format at any time.
 * **Rectification:** You can manually modify your games, your play sessions, your scores, and your player profiles directly in the settings.
-* **Erasure:** You can delete items individually, reset the Explore tab's local memory, or uninstall the app to purge local records. An external backup must be deleted separately through the file manager or selected provider.
+* **Erasure:** You can delete items individually, reset the Explore tab's local memory, use “Reset the whole app” (Settings → Data → Delete → Delete my data), which erases the database, every preference, your photos and the backup copies kept in the app's private storage, or uninstall the app to purge local records. An external backup must be deleted separately through the file manager or selected provider.
 
 You can at any time **withdraw consent** that you have previously granted, for example by revoking a permission in your device's system settings, which will simply make the associated features unavailable. For any request to exercise a right requiring action on our part, you can contact us at the address **Ludiq.support@gmail.com**. We will respond to you within the legal period of one month.
 
@@ -376,7 +380,7 @@ For any questions regarding this policy or your data:
 
 * **Email address:** Ludiq.support@gmail.com
 * **Publisher:** GODINEAU Savinien
-* **Document URL:** https://dicea-app.github.io/privacy/
+* **Document URL:** https://dicea-app.com/privacy/
 `
         };
 
