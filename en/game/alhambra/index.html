@@ -22,20 +22,42 @@
 <meta name="twitter:title" content="Alhambra: every award it has won">
 <meta name="twitter:description" content="Alhambra and its awards: As d&#39;Or 2003 and Spiel des Jahres 2003. Year, category and podium for every prize won.">
 <meta name="twitter:image" content="https://cf.geekdo-images.com/OiqKsYDh7pqeRYKG__kMSw__original/img/Oe2ZTGE2hUnyZQIEoIjM_zwYfcY=/0x0/filters:format(jpeg)/pic4893652.jpg">
-<meta name="theme-color" content="#087c95" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0e1416" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#087c95" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#151617" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/png" sizes="72x72" href="/assets/dicea-favicon.png"><link rel="apple-touch-icon" href="/assets/dicea-icon.png">
-<style>:root{
+<link rel="preload" href="/assets/fonts/figtree-latin.woff2" as="font" type="font/woff2" crossorigin>
+<style>/* Figtree, la police de l'app, en police variable : un sous-ensemble latin
+   (toute page) et un latin étendu (lettres polonaises, tchèques…) que le
+   navigateur ne télécharge que sur une page qui en contient un caractère. */
+@font-face{font-family:Figtree;font-style:normal;font-weight:300 900;
+  font-display:swap;src:url(/assets/fonts/figtree-latin.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,
+    U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,
+    U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:Figtree;font-style:normal;font-weight:300 900;
+  font-display:swap;src:url(/assets/fonts/figtree-latin-ext.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,
+    U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,
+    U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+
+:root{
   color-scheme:light dark;
 
-  /* Rôles Material 3 de l'app, thème clair */
+  /* Rôles Material 3 de l'app, thème clair. Les neutres sont les tons chauds
+     de la marque (crème, terre) et non les gris bleutés du seed. */
   --brand:#01677d;--on-brand:#ffffff;
   --brand-container:#b3ebff;--on-brand-container:#001f27;
-  --bg:#f5fafd;
-  --surface:#ffffff;--surface-2:#eff4f7;--surface-3:#eaeff1;--surface-4:#e4e9eb;
-  --ink:#171c1e;--ink-2:#40484b;--ink-3:#40484b;
-  --line:#bfc8cc;--line-strong:#70787c;--outline:#70787c;
+  --bg:#fffaf6;
+  --surface:#fcf4ee;--surface-2:#f6eee8;--surface-3:#f0e7e0;--surface-4:#e9ded6;
+  --ink:#241f1c;--ink-2:#574c46;--ink-3:#574c46;
+  --line:#d8c8be;--line-strong:#897972;--outline:#897972;
   --danger:#ba1a1a;
+
+  /* Héros de marque (`brandHeroColors` de l'app) : fond `primary` et son
+     dégradé à 88 % de luminosité, encre `onPrimary`, et `inversePrimary` pour
+     ce qui doit ressortir sur ce fond (l'équerre, le mot en accent, le
+     bouton) ; `primary` s'y effacerait. */
+  --hero-bg:#01677d;--hero-bg-end:#015b6e;--hero-ink:#ffffff;
+  --hero-accent:#86d1ea;--on-hero-accent:#003642;
 
   /* Couleur du contour des angles coupés (cf. « Silhouettes Dicea »).
      Héritée : un composant qui change son `border-color` change aussi la
@@ -71,9 +93,13 @@
      largeurs conservées sont celles des grilles, où c'est la colonne qui
      décide. */
   --page:1520px;--measure:none;
-  --shadow-1:0 1px 2px rgba(23,28,30,.06),0 2px 6px rgba(23,28,30,.05);
-  --shadow-2:0 2px 6px rgba(23,28,30,.08),0 12px 28px rgba(23,28,30,.08);
-  --font:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  /* Ombres teintées de l'encre de l'app (`onSurface`), chaude elle aussi. */
+  --shadow-1:0 1px 2px rgba(36,31,28,.06),0 2px 6px rgba(36,31,28,.05);
+  --shadow-2:0 2px 6px rgba(36,31,28,.08),0 12px 28px rgba(36,31,28,.08);
+  /* Arial d'abord parmi les polices de secours : c'est celle dont les chasses
+     sont les plus proches de Figtree (1 % d'écart sur un paragraphe), donc
+     celle qui recompose le moins le texte quand Figtree arrive. */
+  --font:Figtree,Arial,"Helvetica Neue",Helvetica,system-ui,sans-serif;
   --ease:cubic-bezier(.22,.61,.36,1);
 }
 
@@ -81,11 +107,13 @@
   :root:not([data-theme="light"]){
     --brand:#86d1ea;--on-brand:#003642;
     --brand-container:#004e5f;--on-brand-container:#b3ebff;
-    --bg:#0f1416;
-    --surface:#171c1e;--surface-2:#1b2023;--surface-3:#252b2d;--surface-4:#303638;
-    --ink:#dee3e6;--ink-2:#bfc8cc;--ink-3:#bfc8cc;
-    --line:#40484b;--line-strong:#899296;--outline:#899296;
+    --bg:#151617;
+    --surface:#1b1c1d;--surface-2:#202123;--surface-3:#28292b;--surface-4:#313335;
+    --ink:#eceae8;--ink-2:#c9c6c3;--ink-3:#c9c6c3;
+    --line:#454749;--line-strong:#938f8c;--outline:#938f8c;
     --danger:#ffb4ab;
+    --hero-bg:#004e5f;--hero-bg-end:#004554;--hero-ink:#b3ebff;
+    --hero-accent:#86d1ea;--on-hero-accent:#003642;
     --as-dor:#86d1ea;--as-dor-bg:#004e5f;--as-dor-ink:#b3ebff;
     --spiel-des-jahres:#b3cad3;--spiel-des-jahres-bg:#344a52;--spiel-des-jahres-ink:#cee6f0;
     --deutscher-spiele-preis:#d9c0af;--deutscher-spiele-preis-bg:#543f29;
@@ -107,11 +135,13 @@
   color-scheme:dark;
   --brand:#86d1ea;--on-brand:#003642;
   --brand-container:#004e5f;--on-brand-container:#b3ebff;
-  --bg:#0f1416;
-  --surface:#171c1e;--surface-2:#1b2023;--surface-3:#252b2d;--surface-4:#303638;
-  --ink:#dee3e6;--ink-2:#bfc8cc;--ink-3:#bfc8cc;
-  --line:#40484b;--line-strong:#899296;--outline:#899296;
+  --bg:#151617;
+  --surface:#1b1c1d;--surface-2:#202123;--surface-3:#28292b;--surface-4:#313335;
+  --ink:#eceae8;--ink-2:#c9c6c3;--ink-3:#c9c6c3;
+  --line:#454749;--line-strong:#938f8c;--outline:#938f8c;
   --danger:#ffb4ab;
+  --hero-bg:#004e5f;--hero-bg-end:#004554;--hero-ink:#b3ebff;
+  --hero-accent:#86d1ea;--on-hero-accent:#003642;
   --as-dor:#86d1ea;--as-dor-bg:#004e5f;--as-dor-ink:#b3ebff;
   --spiel-des-jahres:#b3cad3;--spiel-des-jahres-bg:#344a52;--spiel-des-jahres-ink:#cee6f0;
   --deutscher-spiele-preis:#d9c0af;--deutscher-spiele-preis-bg:#543f29;
@@ -375,12 +405,30 @@ main{padding-bottom:72px;scroll-margin-top:calc(var(--head-h) + 20px)}
 .lede{font-size:clamp(1rem,.97rem + .28vw,1.15rem);color:var(--ink-2);margin-bottom:1.3em;
   max-width:72ch}
 
-/* --- Bandeau d'ouverture : aplat, pas de dégradé ------------------------- */
-.hero{position:relative;overflow:hidden;border-radius:var(--r-lg);margin-top:20px;
-  padding:clamp(26px,4.4vw,56px);background:var(--surface);border:1px solid var(--line);
-  box-shadow:var(--shadow-1)}
-.hero::before{content:"";position:absolute;inset:0 0 auto;height:4px;background:var(--brand)}
+/* --- Bandeau d'ouverture : le héros de marque de l'app -------------------
+   La grammaire des tuiles héros de l'app (Générales, Découvrir) : fond bleu
+   canard en léger dégradé diagonal, encre claire, turquoise clair pour ce qui
+   doit ressortir, et l'équerre de marque sur l'angle haut gauche (cf.
+   « Équerre de marque »). Pas de contour : le fond suffit à détacher le
+   bandeau de la page.
+
+   Comme l'app réencre une fois pour toutes le contenu d'un héros, le bandeau
+   **redéclare les rôles** que lisent ses enfants (titres, boutons, puces,
+   anneau de focus) au lieu de corriger chaque composant : un bouton y prend
+   l'accent pour fond, une puce l'encre à 12 %, comme le badge-dé de l'app. */
+.hero{position:relative;margin-top:20px;padding:clamp(26px,4.4vw,56px);
+  --ink:var(--hero-ink);--ink-2:color-mix(in srgb,var(--hero-ink) 85%,transparent);
+  --brand:var(--hero-accent);--on-brand:var(--on-hero-accent);
+  --surface:transparent;--surface-3:color-mix(in srgb,var(--hero-ink) 12%,transparent);
+  --line-strong:color-mix(in srgb,var(--hero-ink) 50%,transparent);
+  --accent-mark:var(--hero-accent);--edge:transparent;
+  color:var(--ink);border:1px solid transparent;box-shadow:var(--shadow-1);
+  background:linear-gradient(to bottom right,var(--hero-bg),var(--hero-bg-end))}
 .hero h1{margin-bottom:.32em;max-width:20ch;margin-inline:auto}
+/* Le turquoise clair ne contraste qu'à 3,8:1 sur le bleu canard clair : assez
+   pour le mot en accent du titre, écrit en grand, pas pour un sur-titre ou
+   l'intitulé d'un bouton, qui gardent l'encre. */
+.hero .eyebrow,.hero .btn--ghost,.hero .badge{color:var(--ink)}
 .hero .accent{color:var(--brand)}
 .hero p{font-size:clamp(1rem,.96rem + .34vw,1.16rem);color:var(--ink-2);
   max-width:64ch;margin-inline:auto}
@@ -389,12 +437,16 @@ main{padding-bottom:72px;scroll-margin-top:calc(var(--head-h) + 20px)}
 /* --- En-tête d'une page de concours : le logo porte l'identité -----------
    Le lecteur qui arrive d'un moteur de recherche doit reconnaître le prix avant
    d'avoir lu le titre. Le logo occupe donc la place du sur-titre, sans prendre
-   de section à lui, et le liseré du haut porte l'accent du concours. */
-.award-hero{position:relative;overflow:hidden;border-radius:var(--r-lg);margin-top:20px;
-  padding:clamp(24px,3.6vw,44px);background:var(--surface);border:1px solid var(--line);
-  box-shadow:var(--shadow-1)}
-.award-hero::before{content:"";position:absolute;inset:0 0 auto;height:4px;
-  background:var(--accent,var(--brand))}
+   de section à lui.
+
+   Le bandeau reprend l'en-tête d'un prix dans l'app : fond teinté de l'accent
+   du concours à 10 %, contour à 30 %, et l'équerre de marque dans l'accent
+   lui-même (cf. « Équerre de marque »). */
+.award-hero{position:relative;margin-top:20px;padding:clamp(24px,3.6vw,44px);
+  --accent-mark:var(--accent,var(--brand));
+  --edge:color-mix(in srgb,var(--accent-mark) 30%,var(--bg));
+  background:color-mix(in srgb,var(--accent-mark) 10%,var(--bg));
+  border:1px solid var(--edge);box-shadow:var(--shadow-1)}
 .award-hero-logo{width:clamp(72px,9vw,96px);height:auto;object-fit:contain;
   margin:0 auto 16px;display:block;border-radius:16px;background:var(--surface-2);
   padding:8px;border:1px solid var(--line)}
@@ -542,10 +594,16 @@ main{padding-bottom:72px;scroll-margin-top:calc(var(--head-h) + 20px)}
 .grid{display:grid;gap:18px;padding:0;margin:0;list-style:none;max-width:none}
 /* Les prix sont **quatre** : une grille automatique les cassait en 3 + 1 aux
    largeurs intermédiaires, ce qui laissait une tuile orpheline. Deux paliers
-   explicites donnent toujours 1, 2 ou 4 colonnes. */
-.grid--bento{grid-template-columns:1fr}
-@media (min-width:560px){.grid--bento{grid-template-columns:repeat(2,1fr)}}
-@media (min-width:1120px){.grid--bento{grid-template-columns:repeat(4,1fr)}}
+   explicites donnent toujours 1, 2 ou 4 colonnes.
+
+   La page d'une édition n'en montre que **trois** (les autres prix de
+   l'année) : en grille, ils occupaient trois colonnes sur quatre, plaqués à
+   gauche. D'où le `flex`, comme pour les jeux ci-dessous : chaque tuile garde
+   la largeur d'une colonne, et une rangée incomplète se centre. */
+.grid--bento{display:flex;flex-wrap:wrap;justify-content:center}
+.grid--bento > li{flex:0 0 100%;min-width:0}
+@media (min-width:560px){.grid--bento > li{flex-basis:calc((100% - 18px) / 2)}}
+@media (min-width:1120px){.grid--bento > li{flex-basis:calc((100% - 3 * 18px) / 4)}}
 /* **Les jeux sont toujours centrés, y compris sur la dernière rangée.**
    Une grille ne sait pas le faire : `justify-content` centre les *colonnes*,
    pas les cellules d'une rangée incomplète, et quatre jaquettes sur trois
@@ -560,16 +618,20 @@ main{padding-bottom:72px;scroll-margin-top:calc(var(--head-h) + 20px)}
 .grid--games-lg > li{flex:1 1 186px;max-width:225px;min-width:0}
 /* Trois par rangée, jamais un remplissage automatique : six décennies tombent
    exactement en 3 × 2, et des tuiles deux fois plus larges laissent enfin la
-   place à une phrase sur ce qui s'est joué pendant ces dix ans. */
-.grid--decades{grid-template-columns:1fr;gap:20px}
-@media (min-width:560px){.grid--decades{grid-template-columns:repeat(2,1fr)}}
-@media (min-width:900px){.grid--decades{grid-template-columns:repeat(3,1fr)}}
+   place à une phrase sur ce qui s'est joué pendant ces dix ans. Un prix plus
+   jeune en a moins (trois à cinq) : la dernière rangée se centre, en `flex`
+   pour la même raison que les jeux. */
+.grid--decades{display:flex;flex-wrap:wrap;justify-content:center;gap:20px}
+.grid--decades > li{flex:0 0 100%;min-width:0}
+@media (min-width:560px){.grid--decades > li{flex-basis:calc((100% - 20px) / 2)}}
+@media (min-width:900px){.grid--decades > li{flex-basis:calc((100% - 2 * 20px) / 3)}}
 /* Le téléphone suit un étalon de deux jeux par rangée. La largeur est
    calculée après l'espacement : trois cartes font donc 2 + 1 centrée grâce au
    conteneur flex. Les décennies ne figurent volontairement pas ici, leurs
    grandes tuiles illustrées restent seules sur leur rangée. */
 @media (max-width:559px){
-  .grid--bento{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .grid--bento{gap:12px}
+  .grid--bento > li{flex-basis:calc((100% - 12px) / 2)}
   .grid--games,.grid--games-lg{gap:12px}
   .grid--games > li,.grid--games-lg > li{
     flex:0 1 calc(50% - 6px);max-width:calc(50% - 6px)}
@@ -651,7 +713,7 @@ main{padding-bottom:72px;scroll-margin-top:calc(var(--head-h) + 20px)}
   transition:transform .45s var(--ease)}
 .decade:hover .art img{transform:scale(1.05)}
 .decade .art::after{content:"";position:absolute;inset:0;
-  background:linear-gradient(transparent 38%,rgba(10,18,20,.86))}
+  background:linear-gradient(transparent 38%,rgba(16,17,18,.86))}
 .decade .label{position:absolute;inset:auto 0 0;z-index:2;padding:14px 16px;color:#fff}
 .decade .label b{display:block;font-size:1.5rem;font-weight:800;letter-spacing:-.03em;
   line-height:1.1;font-variant-numeric:tabular-nums}
@@ -716,8 +778,11 @@ main{padding-bottom:72px;scroll-margin-top:calc(var(--head-h) + 20px)}
 .cover--empty{display:grid;place-items:center;padding:8px;text-align:center;
   font-size:.68rem;line-height:1.3;color:var(--ink-2);background:var(--surface-3)}
 
-/* --- Vignette de jeu ----------------------------------------------------- */
-.gcard{position:relative;display:flex;flex-direction:column;gap:9px;text-align:left;
+/* --- Vignette de jeu -----------------------------------------------------
+   Titre, mentions et prix se centrent sous la jaquette, comme tout le site :
+   alignés à gauche, ils décrochaient de leur vignette dans une rangée centrée,
+   et la mention de classement, elle, était déjà centrée. */
+.gcard{position:relative;display:flex;flex-direction:column;gap:9px;text-align:center;
   transition:transform .24s var(--ease)}
 .gcard:hover{transform:translateY(-3px)}
 .gcard:hover .cover .fg{transform:scale(1.04)}
@@ -728,7 +793,7 @@ main{padding-bottom:72px;scroll-margin-top:calc(var(--head-h) + 20px)}
 .gcard a{text-decoration:none;color:inherit}
 .gcard a::after{content:"";position:absolute;inset:0;border-radius:var(--r)}
 .gcard a:hover .name{color:var(--brand)}
-.gcard .awards{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:4px;
+.gcard .awards{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;
   list-style:none;margin:0;padding:0;max-width:none}
 .placement-note{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
   gap:6px;width:100%;text-align:center;font-size:.79rem;color:var(--ink-2);line-height:1.35}
@@ -987,6 +1052,9 @@ main{padding-bottom:72px;scroll-margin-top:calc(var(--head-h) + 20px)}
    mieux que quatre colonnes de 65. */
 .specs dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
   gap:10px;margin:0;padding:0}
+/* Un jeu sans l'une des mesures en a trois : la dernière prend la rangée
+   entière plutôt que de rester seule dans la colonne de gauche. */
+.specs dl > div:nth-child(odd):last-child{grid-column:1 / -1}
 .specs dl > div{padding:12px 14px;min-width:0;border-radius:var(--r);
   background:var(--surface-2);border:1px solid var(--line)}
 .specs dt{font-size:.68rem;color:var(--ink-2);margin:0 0 4px;letter-spacing:.07em;
@@ -1005,8 +1073,22 @@ main{padding-bottom:72px;scroll-margin-top:calc(var(--head-h) + 20px)}
 .facts{position:relative;display:grid;gap:1px;margin:0;border-radius:var(--r-lg);overflow:hidden;
   border:1px solid var(--line);background:var(--line);box-shadow:var(--shadow-1);
   grid-template-columns:minmax(0,1fr)}
-@media (min-width:640px){.facts{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (min-width:1040px){.facts{grid-template-columns:repeat(3,minmax(0,1fr))}}
+/* Une rangée incomplète ne laisse ni cellule plaquée à gauche, ni trou couleur
+   liseré à côté d'elle : ses cellules s'élargissent jusqu'à la remplir. Sur
+   trois colonnes, la grille en compte six en réalité, chaque fait en couvrant
+   deux, pour que deux derniers faits puissent se partager la rangée à parts
+   égales. */
+@media (min-width:640px) and (max-width:1039px){
+  .facts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .facts > div:nth-child(odd):last-child{grid-column:1 / -1}
+}
+@media (min-width:1040px){
+  .facts{grid-template-columns:repeat(6,minmax(0,1fr))}
+  .facts > div{grid-column:span 2}
+  .facts > div:nth-child(3n+1):last-child{grid-column:1 / -1}
+  .facts > div:nth-child(3n+1):nth-last-child(2),
+  .facts > div:nth-child(3n+1):nth-last-child(2) + div{grid-column:span 3}
+}
 .facts > div{padding:16px 18px;background:var(--surface);font-size:.94rem}
 .facts dt{color:var(--ink-2);margin:0 0 5px;font-size:.7rem;font-weight:750;
   letter-spacing:.07em;text-transform:uppercase}
@@ -1152,7 +1234,7 @@ td a:hover{text-decoration:underline}
 .zoom img{display:block;width:auto;height:auto;max-width:min(94vw,1120px);
   max-height:82vh;object-fit:contain;
   border-radius:var(--r-lg);box-shadow:var(--shadow-2)}
-.zoom::backdrop{background:rgba(6,12,14,.84);
+.zoom::backdrop{background:rgba(16,17,18,.84);
   backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
 .zoom-close{position:relative;flex:0 0 auto;display:inline-grid;place-items:center;
   width:44px;height:44px;border-radius:50%;border:0;--ring-color:rgba(255,255,255,.35);
@@ -1188,7 +1270,11 @@ td a:hover{text-decoration:underline}
    Le contour est un calque placé au-dessus du contenu. Son évidement suit
    les huit côtés avec un retrait perpendiculaire constant, y compris sur les
    diagonales. Les images encadrées ont donc un conteneur, car une `<img>` ne
-   peut pas porter ce calque. `--edge` et `--edge-w` règlent couleur et épaisseur. */
+   peut pas porter ce calque. `--edge` et `--edge-w` règlent couleur et épaisseur.
+
+   Les deux bandeaux héros et la tuile d'un jeu ont leur propre découpe, qui
+   laisse passer l'équerre de marque (cf. « Équerre de marque ») : ils ne
+   figurent donc pas dans la liste des découpes ci-dessous. */
 :is(.hero,.award-hero,.cover,.gamehero .art img,.zoom img){
   --shape-cut:min(clamp(8px,1.25vw,18px),20%)}
 :is(.search-box input,.search-box,.btn,.pager a,.skip,.chip){
@@ -1204,14 +1290,14 @@ td a:hover{text-decoration:underline}
   .feature .art .count,.site-foot .powered a){
   --shape-cut:min(.3em,6px,20%)}
 
-:is(.hero,.award-hero,.cover,.gamehero .art img,.zoom img,.search-box input,
+:is(.cover,.gamehero .art img,.zoom img,.search-box input,
   .search-box,.btn,.pager a,
   .skip,.get-app-link,.chip,
   .crumbs [aria-current="page"],.stats li,.fz-card,.fz-idle,.tile,.tile .logo-frame,
   .awardblock,.award-logo-frame,.award-hero-logo,.shot--placement,
   .decade,.tl-year,.tl-note,.gcard .count,.badge,.cat,
   .podium li,.feature,.feature .art .count,.pick,.crits > li,.archive-note,
-  .specs,.specs dl > div,.facts,.yearpick,.table-scroll,.dicea,
+  .specs dl > div,.facts,.yearpick,.table-scroll,.dicea,
   .dicea .shot-frame,.site-foot .powered a,.app-row-screens li,
   .app-screens img){
   border-radius:0;
@@ -1311,6 +1397,99 @@ td a:hover{text-decoration:underline}
 /* Sur un aplat de la marque, l'anneau prend la couleur du texte. */
 .btn:not(.btn--ghost):focus-visible,.skip:focus-visible{
   outline-color:var(--on-brand);--edge:var(--on-brand)
+}
+
+/* --- Équerre de marque ---------------------------------------------------
+   Celle de l'app (`BrandCornerAccent`), et comme dans l'app réservée aux
+   blocs qui portent l'information principale d'un écran : les deux héros, et
+   la tuile des caractéristiques d'un jeu (note, joueurs, durée), qui la porte
+   aussi dans la fiche de l'app. Deux bras effilés séparés par une encoche en V
+   très ouverte, angle droit légèrement biseauté, bords tous droits ; le tracé
+   est celui de l'app, point pour point, dans un repère où `--acc-s` vaut le
+   côté de base.
+
+   - **Taille** : elle suit la largeur de la fenêtre, sans palier. L'app la
+     proportionne au petit côté de l'écran (36 px pour 360 px) et la plafonne
+     à 54 px sur tablette ; un bandeau d'ordinateur est quatre fois plus large
+     qu'un écran de téléphone, l'équerre continue donc de grandir jusqu'à
+     80 px pour garder sa place sur le coin.
+   - **Profil** : tous les bandeaux héros ont deux bras doublés, comme la
+     tuile Générales de l'app, pour que l'équerre ne change pas de taille d'une
+     page à l'autre. L'en-tête d'un prix n'a dans l'app que des bras simples,
+     mais c'est une rangée compacte ; sur le site, il est aussi large que le
+     bandeau de l'accueil, et des bras simples y paraissaient rabougris. La
+     tuile d'un jeu garde un bras horizontal doublé, comme dans l'app.
+   - **Couleur** : `--accent-mark`, le turquoise clair sur le bleu canard,
+     l'accent du concours sur l'en-tête d'un prix, la marque ailleurs.
+   - **Pose** : l'angle haut gauche reste droit (l'équerre ne se pose jamais
+     sur un biseau), et elle déborde de 7,5 % de son côté : les bords du
+     bloc coupent ses pointes en leur milieu, elle se lit posée en relief sur
+     le coin.
+
+   Le débord sort de la boîte. Plutôt qu'un conteneur de plus dans le HTML,
+   la découpe du bloc l'inclut : elle suit le contour de l'équerre là où
+   celle-ci dépasse, puis les biseaux des trois autres angles. */
+:is(.hero,.award-hero,.specs){border-radius:0;
+  --acc-s:clamp(32px,3vw + 24px,80px);
+  --acc-w:var(--acc-s);--acc-h:var(--acc-s);--acc-o:calc(var(--acc-s) * .075);
+  -webkit-clip-path:polygon(
+    calc(var(--acc-o) * -1) calc(var(--acc-s) * .08 - var(--acc-o)),
+    calc(var(--acc-s) * .08 - var(--acc-o)) calc(var(--acc-o) * -1),
+    calc(var(--acc-w) - var(--acc-o)) calc(var(--acc-o) * -1),
+    calc(var(--acc-w) - var(--acc-o) * 2) 0,
+    calc(100% - var(--shape-cut)) 0,100% var(--shape-cut),
+    100% calc(100% - var(--shape-cut)),calc(100% - var(--shape-cut)) 100%,
+    var(--shape-cut) 100%,0 calc(100% - var(--shape-cut)),
+    0 calc(var(--acc-h) - var(--acc-o) * 2),
+    calc(var(--acc-o) * -1) calc(var(--acc-h) - var(--acc-o)));
+  clip-path:polygon(
+    calc(var(--acc-o) * -1) calc(var(--acc-s) * .08 - var(--acc-o)),
+    calc(var(--acc-s) * .08 - var(--acc-o)) calc(var(--acc-o) * -1),
+    calc(var(--acc-w) - var(--acc-o)) calc(var(--acc-o) * -1),
+    calc(var(--acc-w) - var(--acc-o) * 2) 0,
+    calc(100% - var(--shape-cut)) 0,100% var(--shape-cut),
+    100% calc(100% - var(--shape-cut)),calc(100% - var(--shape-cut)) 100%,
+    var(--shape-cut) 100%,0 calc(100% - var(--shape-cut)),
+    0 calc(var(--acc-h) - var(--acc-o) * 2),
+    calc(var(--acc-o) * -1) calc(var(--acc-h) - var(--acc-o)))
+}
+:is(.hero,.award-hero){--acc-w:calc(var(--acc-s) * 2);
+  --acc-h:calc(var(--acc-s) * 2)}
+.specs{--acc-w:calc(var(--acc-s) * 2);--accent-mark:var(--brand)}
+/* L'équerre se pose sur le coin de la bordure, d'où le pixel de plus. */
+:is(.hero,.award-hero,.specs)::before{content:"";position:absolute;z-index:4;
+  top:calc(-1px - var(--acc-o));left:calc(-1px - var(--acc-o));
+  width:var(--acc-w);height:var(--acc-h);pointer-events:none;
+  background:var(--accent-mark);
+  -webkit-clip-path:polygon(0 calc(var(--acc-s) * .08),calc(var(--acc-s) * .08) 0,
+    100% 0,calc(100% - var(--acc-s) * .15) calc(var(--acc-s) * .15),
+    calc(var(--acc-s) * .27) calc(var(--acc-s) * .27),
+    calc(var(--acc-s) * .15) calc(100% - var(--acc-s) * .15),0 100%);
+  clip-path:polygon(0 calc(var(--acc-s) * .08),calc(var(--acc-s) * .08) 0,
+    100% 0,calc(100% - var(--acc-s) * .15) calc(var(--acc-s) * .15),
+    calc(var(--acc-s) * .27) calc(var(--acc-s) * .27),
+    calc(var(--acc-s) * .15) calc(100% - var(--acc-s) * .15),0 100%)
+}
+/* Le contour suit le même angle droit : son évidement part du coin. */
+:is(.hero,.award-hero,.specs)::after{
+  -webkit-clip-path:polygon(evenodd,0 0,100% 0,100% 100%,0 100%,0 0,
+    var(--edge-w,1px) var(--edge-w,1px),
+    var(--edge-w,1px) calc(100% - var(--inner-cut)),
+    var(--inner-cut) calc(100% - var(--edge-w,1px)),
+    calc(100% - var(--inner-cut)) calc(100% - var(--edge-w,1px)),
+    calc(100% - var(--edge-w,1px)) calc(100% - var(--inner-cut)),
+    calc(100% - var(--edge-w,1px)) var(--inner-cut),
+    calc(100% - var(--inner-cut)) var(--edge-w,1px),
+    var(--edge-w,1px) var(--edge-w,1px));
+  clip-path:polygon(evenodd,0 0,100% 0,100% 100%,0 100%,0 0,
+    var(--edge-w,1px) var(--edge-w,1px),
+    var(--edge-w,1px) calc(100% - var(--inner-cut)),
+    var(--inner-cut) calc(100% - var(--edge-w,1px)),
+    calc(100% - var(--inner-cut)) calc(100% - var(--edge-w,1px)),
+    calc(100% - var(--edge-w,1px)) calc(100% - var(--inner-cut)),
+    calc(100% - var(--edge-w,1px)) var(--inner-cut),
+    calc(100% - var(--inner-cut)) var(--edge-w,1px),
+    var(--edge-w,1px) var(--edge-w,1px))
 }
 
 :is(.fz-mark,.podium .rank,.pick .n,.to-top,.zoom-close),
@@ -1416,6 +1595,10 @@ td a:hover{text-decoration:underline}
   .hero,.tile,.cat,.specs,.facts,.table-scroll,.tl-year,.fz-card,.pick,
   .crits > li{box-shadow:none;
     border-color:#ccc;--edge:#ccc}
+  /* Le navigateur n'imprime pas les fonds : le héros repasse à l'encre noire,
+     sans quoi son texte clair disparaîtrait sur le papier. */
+  .hero{--hero-bg:transparent;--hero-bg-end:transparent;--hero-ink:#000;
+    --hero-accent:#01677d;--on-hero-accent:#fff}
 }
 </style>
 <script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t}catch(e){}
