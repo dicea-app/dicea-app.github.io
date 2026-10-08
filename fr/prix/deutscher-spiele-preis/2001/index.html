@@ -150,7 +150,7 @@ body{
 }
 img{max-width:100%;height:auto}
 a{color:var(--brand);text-underline-offset:.18em;text-decoration-thickness:1px}
-:focus-visible{outline:2px solid var(--brand);outline-offset:3px;border-radius:6px}
+:focus-visible{outline:2px solid var(--brand);outline-offset:3px;border-radius:0}
 
 h1,h2,h3,h4{line-height:1.16;text-wrap:balance;margin:0 0 .45em;letter-spacing:-.02em;
   color:var(--ink)}
@@ -241,7 +241,7 @@ p{margin:0 0 1em}
    les deux fonds, c'est pour ça que ce teal-là a été choisi, et il n'y a plus
    qu'un seul fichier à servir. */
 .brand .wordmark{height:26px;width:auto;flex:0 0 auto}
-.brand-block .rule{width:1px;align-self:stretch;border-radius:1px;
+.brand-block .rule{width:1px;align-self:stretch;
   background:var(--line);flex:0 0 auto}
 /* Où l'on est, puis ce que Dicea offre en plus : deux lignes alignées à gauche
    contre le filet. C'est une adresse, pas un titre, et centrer deux lignes de
@@ -265,36 +265,20 @@ p{margin:0 0 1em}
 }
 
 /* --- Le lien de téléchargement, sous la marque ---------------------------
-   Discret par construction : la taille d'une mention, pas d'un bouton, et les
-   deux stores restent repliés tant qu'on ne les demande pas. `<details>` natif,
-   donc aucun JavaScript, l'ouverture au clavier et la fermeture à l'`Échap`
-   sont celles du navigateur.
-
-   Aucun retrait : le lien est centré sous la marque par la colonne qui les
-   porte tous les deux. Le menu déroulant, lui, s'ouvre **par la gauche** de la
-   pastille et non par son milieu, pour ne pas dépasser du bord de l'écran sur
-   un téléphone. */
-.get-app{position:relative;font-size:.78rem;line-height:1.3}
-.get-app > summary{display:inline-flex;align-items:center;gap:6px;list-style:none;
+   Un lien discret, centré sous la marque, vers l'adresse commune `/download`.
+   Le survol souligne l'action et anime légèrement son icône. */
+.get-app{font-size:.78rem;line-height:1.3}
+.get-app-link{display:inline-flex;align-items:center;gap:6px;margin:0;
   padding:3px 10px 3px 8px;border-radius:var(--r-pill);border:1px solid transparent;
-  color:var(--ink-2);font-weight:600;cursor:pointer;
+  background:transparent;font:inherit;color:var(--ink-2);font-weight:600;
+  cursor:pointer;text-decoration:none;
   transition:color .16s var(--ease),border-color .16s var(--ease),
     background .16s var(--ease)}
-.get-app > summary::-webkit-details-marker{display:none}
-.get-app > summary:hover{color:var(--brand);border-color:var(--line);
-  background-color:var(--surface)}
-.get-app[open] > summary{color:var(--brand);border-color:var(--line);
-  background-color:var(--surface)}
+.get-app-link:hover,.get-app-link:focus-visible{
+  color:var(--brand);border-color:var(--line);background-color:var(--surface);
+  --edge:var(--line)}
 .get-app .i{flex:0 0 auto;transition:transform .2s var(--ease)}
-.get-app[open] .i{transform:translateY(2px)}
-.get-app-menu{position:absolute;left:0;top:calc(100% + 7px);z-index:5;
-  display:flex;flex-direction:column;min-width:212px;padding:6px;
-  border-radius:var(--r);background:var(--surface);border:1px solid var(--line);
-  box-shadow:var(--shadow-2)}
-.get-app-menu a{display:block;padding:9px 12px;border-radius:var(--r-sm);
-  color:var(--ink);text-decoration:none;font-size:.85rem;font-weight:600;
-  white-space:nowrap}
-.get-app-menu a:hover{background:var(--surface-2);color:var(--brand)}
+.get-app-link:hover .i,.get-app-link:focus-visible .i{transform:translateY(2px)}
 
 .head-actions{display:flex;align-items:center;gap:6px}
 
@@ -368,6 +352,13 @@ p{margin:0 0 1em}
   .site-nav a{width:100%;justify-content:center;padding-inline:7px;font-size:.82rem}
   .site-nav a::after{left:7px;right:7px}
 }
+/* Cinq onglets sur 320 px : à parts égales, « Rechercher » débordait sur ses
+   voisins. Sous 360 px, chaque onglet prend la largeur de son libellé. */
+@media (max-width:359px){
+  .site-nav li{flex:1 1 auto}
+  .site-nav a{padding-inline:5px}
+  .site-nav a::after{left:5px;right:5px}
+}
 
 /* --- Repère de position : fil d'Ariane sur toutes les pages, dernier
    maillon appuyé pour qu'on sache d'un coup d'œil où l'on est ------------- */
@@ -409,6 +400,7 @@ main{padding-bottom:72px;scroll-margin-top:calc(var(--head-h) + 20px)}
 .award-hero-logo{width:clamp(72px,9vw,96px);height:auto;object-fit:contain;
   margin:0 auto 16px;display:block;border-radius:16px;background:var(--surface-2);
   padding:8px;border:1px solid var(--line)}
+.award-hero-logo img{display:block;width:100%;height:auto;object-fit:contain}
 .award-hero .eyebrow{color:var(--accent,var(--brand))}
 .award-hero h1{max-width:22ch;margin-inline:auto}
 
@@ -466,8 +458,8 @@ main{padding-bottom:72px;scroll-margin-top:calc(var(--head-h) + 20px)}
 .fz-marks{position:relative}
 .fz-p{position:relative;display:flex;align-items:center;gap:13px;padding:6px 0;
   text-decoration:none;color:var(--ink-2);font-size:.82rem}
-.fz-mark{flex:0 0 auto;width:14px;height:14px;border-radius:50%;background:var(--bg);
-  border:2px solid var(--accent);
+.fz-mark{position:relative;flex:0 0 auto;width:14px;height:14px;border-radius:50%;
+  background:var(--bg);--ring:2px;--ring-color:var(--accent);
   /* Le halo de la couleur de fond détache deux points voisins là où l'échelle
      les serre, 1990 et 1991 ne sont séparés que d'un pouce de règle. */
   box-shadow:0 0 0 3px var(--bg);
@@ -476,7 +468,7 @@ main{padding-bottom:72px;scroll-margin-top:calc(var(--head-h) + 20px)}
    évolution, pointillée pour une année blanche, auréolée pour un palmarès
    remarquable. */
 .fz-p--birth .fz-mark{background:var(--accent)}
-.fz-p--gap .fz-mark{border-style:dashed}
+.fz-p--gap .fz-mark{--ring-color:color-mix(in srgb,var(--accent) 45%,transparent)}
 .fz-p--highlight .fz-mark{background:var(--accent);
   box-shadow:0 0 0 3px var(--bg),0 0 0 7px var(--accent-bg)}
 .fz-lab{display:flex;align-items:baseline;gap:9px;min-width:0}
@@ -532,7 +524,7 @@ main{padding-bottom:72px;scroll-margin-top:calc(var(--head-h) + 20px)}
   .fz-marks{padding-bottom:calc(var(--fz-band) + 16px);max-width:520px;
     margin-inline:auto;text-align:left}
   .fz-marks::before{content:"";position:absolute;left:6px;top:12px;
-    bottom:calc(var(--fz-band) + 28px);width:2px;border-radius:2px;background:var(--line)}
+    bottom:calc(var(--fz-band) + 28px);width:2px;background:var(--line)}
   .fz-card,.fz-idle{text-align:center}
 }
 @media (min-width:900px){
@@ -584,7 +576,7 @@ main{padding-bottom:72px;scroll-margin-top:calc(var(--head-h) + 20px)}
   .grid--games > li,.grid--games-lg > li{
     flex:0 1 calc(50% - 6px);max-width:calc(50% - 6px)}
   .tile{gap:8px;padding:16px 10px}
-  .tile .logo{width:44px;height:44px}
+  .tile .logo-frame{width:44px;height:44px}
   .awardblock{padding:16px 12px}
   #history{display:none}
 }
@@ -604,8 +596,9 @@ main{padding-bottom:72px;scroll-margin-top:calc(var(--head-h) + 20px)}
 .tile h3 a{color:inherit;text-decoration:none}
 .tile h3 a::after{content:"";position:absolute;inset:0}
 .tile p{margin:0;font-size:.9rem;color:var(--ink-2);max-width:none}
-.tile .logo{width:50px;height:50px;object-fit:contain;border-radius:12px;
+.tile .logo-frame{display:block;width:50px;height:50px;border-radius:12px;
   background:var(--surface-2);padding:5px;border:1px solid var(--line)}
+.tile .logo{display:block;width:100%;height:100%;object-fit:contain}
 .tile .foot{margin-top:auto;padding-top:12px;font-size:.8rem;color:var(--ink-2)}
 
 /* --- Bloc d'un prix (derniers lauréats) ----------------------------------
@@ -617,8 +610,9 @@ main{padding-bottom:72px;scroll-margin-top:calc(var(--head-h) + 20px)}
   border-top:4px solid var(--accent,var(--brand))}
 .awardblock-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
   gap:12px;margin-bottom:18px}
-.awardblock-head img{width:40px;height:40px;object-fit:contain;flex:0 0 auto;
+.awardblock-head .award-logo-frame{display:block;width:40px;height:40px;flex:0 0 auto;
   border-radius:10px;background:var(--surface-2);padding:4px;border:1px solid var(--line)}
+.award-logo-frame img{display:block;width:100%;height:100%;object-fit:contain}
 .awardblock-head h3{margin:0;font-size:1.12rem}
 .awardblock-head h3 a{color:inherit;text-decoration:none}
 .awardblock-head h3 a:hover{color:var(--brand)}
@@ -719,6 +713,8 @@ main{padding-bottom:72px;scroll-margin-top:calc(var(--head-h) + 20px)}
   padding:7px;transition:transform .4s var(--ease)}
 .cover--sm{width:62px;height:62px;flex:0 0 auto;aspect-ratio:auto;border-radius:11px}
 .cover--sm .fg{padding:4px}
+.award-logo{background-color:var(--surface)}
+.award-logo img{display:block;width:100%;height:100%;object-fit:contain;padding:8px}
 .cover--empty{display:grid;place-items:center;padding:8px;text-align:center;
   font-size:.68rem;line-height:1.3;color:var(--ink-2);background:var(--surface-3)}
 
@@ -809,9 +805,9 @@ main{padding-bottom:72px;scroll-margin-top:calc(var(--head-h) + 20px)}
   min-height:62px;flex:0 0 62px}
 .podium .rank{position:absolute;top:-5px;left:-5px;z-index:2;width:23px;height:23px;
   border-radius:50%;display:grid;place-items:center;font-size:.71rem;font-weight:800;
-  background:var(--surface);color:var(--ink-2);border:1px solid var(--line)}
+  background:var(--surface);color:var(--ink-2)}
 .podium .rank[data-rank="1"]{background:var(--brand-container);
-  color:var(--on-brand-container);border-color:transparent}
+  color:var(--on-brand-container);--ring-color:transparent}
 .podium .body{min-width:0;flex:1}
 .podium .name{display:block;font-weight:650;line-height:1.3;letter-spacing:-.008em}
 .podium li:hover .name{color:var(--brand)}
@@ -977,11 +973,11 @@ main{padding-bottom:72px;scroll-margin-top:calc(var(--head-h) + 20px)}
 }
 .specs > *{width:100%}
 .specs .rating{display:grid;justify-items:center;gap:7px;text-align:center}
-.specs .dial{position:relative;display:grid;place-items:center;width:112px;height:112px;
-  border-radius:50%;
-  background:conic-gradient(var(--brand) calc(var(--v,0) * 1%),var(--surface-3) 0)}
-.specs .dial::before{content:"";position:absolute;inset:9px;border-radius:50%;
-  background:var(--surface)}
+.specs .dial{position:relative;display:grid;place-items:center;width:112px;height:112px}
+.specs .dial svg{position:absolute;inset:0;width:100%;height:100%;fill:none;
+  stroke-width:9;stroke-linejoin:miter;stroke-linecap:butt}
+.specs .dial-track{stroke:var(--surface-3)}
+.specs .dial-progress{stroke:var(--brand)}
 .specs .dial b{position:relative;display:grid;justify-items:center;line-height:1;
   font-size:1.75rem;font-weight:800;letter-spacing:-.035em;
   font-variant-numeric:tabular-nums}
@@ -1008,7 +1004,7 @@ main{padding-bottom:72px;scroll-margin-top:calc(var(--head-h) + 20px)}
    deviennent donc des **cellules** dans une grille, chacune avec son intitulé
    au-dessus de sa valeur. Le fond couleur liseré et l'espacement d'un pixel
    dessinent les séparations sans une bordure à gérer par cellule. */
-.facts{display:grid;gap:1px;margin:0;border-radius:var(--r-lg);overflow:hidden;
+.facts{position:relative;display:grid;gap:1px;margin:0;border-radius:var(--r-lg);overflow:hidden;
   border:1px solid var(--line);background:var(--line);box-shadow:var(--shadow-1);
   grid-template-columns:minmax(0,1fr)}
 @media (min-width:640px){.facts{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -1041,13 +1037,13 @@ main{padding-bottom:72px;scroll-margin-top:calc(var(--head-h) + 20px)}
   /* Au-dessus de la barre de gestes iOS, et non dessous. */
   bottom:calc(clamp(14px,3vw,28px) + env(safe-area-inset-bottom,0px));
   display:grid;place-items:center;width:48px;height:48px;border-radius:50%;
-  border:1px solid var(--line);background:var(--surface);color:var(--ink-2);
+  background:var(--surface);color:var(--ink-2);
   box-shadow:var(--shadow-2);text-decoration:none;
   opacity:0;visibility:hidden;transform:translateY(10px) scale(.94);
   transition:opacity .22s var(--ease),transform .22s var(--ease),
     visibility .22s var(--ease),color .16s var(--ease),border-color .16s var(--ease)}
 .to-top.is-on,.to-top:focus-visible{opacity:1;visibility:visible;transform:none}
-.to-top:hover{color:var(--brand);border-color:var(--brand);transform:translateY(-2px)}
+.to-top:hover{color:var(--brand);--ring-color:var(--brand);transform:translateY(-2px)}
 
 /* --- Sélecteur d'année contextuel (décennie courante) -------------------- */
 .yearpick{margin-top:22px;padding:14px;border-radius:var(--r-lg);background:var(--surface);
@@ -1100,8 +1096,12 @@ td a:hover{text-decoration:underline}
 .dicea .mark img.wordmark{height:28px;width:auto}
 .dicea h2{margin:0 0 .35em;font-size:clamp(1.15rem,1.05rem + .6vw,1.45rem)}
 .dicea p{margin:0 0 16px;color:var(--ink-2);font-size:.96rem}
-.dicea .shot{max-width:200px;border-radius:var(--r);
+/* La capture est encadrée par un conteneur et non par sa propre bordure : une
+   image couvre ses angles, la diagonale du contour doit donc se dessiner sur un
+   calque posé par-dessus, ce qu'une `<img>` ne peut pas porter. */
+.dicea .shot-frame{position:relative;display:block;max-width:200px;overflow:hidden;
   border:1px solid var(--line);box-shadow:var(--shadow-2)}
+.dicea .shot{display:block;width:100%;height:auto}
 
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:50px;
   padding:0 24px;border-radius:var(--r-pill);text-decoration:none;font-weight:650;
@@ -1148,15 +1148,16 @@ td a:hover{text-decoration:underline}
    et il ne faut pas le retirer.
    Le bouton de fermeture, lui, fait partie du flux, au-dessus de l'image : posé
    en décalage négatif, il sortait de l'écran sur un écran bas. */
-.zoom{width:min(94vw,1120px);max-width:none;max-height:96vh;padding:0;border:0;
+.zoom{width:fit-content;max-width:94vw;max-height:96vh;padding:0;border:0;
   background:transparent;overflow:visible;color:#fff}
 .zoom:popover-open{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
-.zoom img{display:block;width:100%;height:auto;max-height:82vh;object-fit:contain;
+.zoom img{display:block;width:auto;height:auto;max-width:min(94vw,1120px);
+  max-height:82vh;object-fit:contain;
   border-radius:var(--r-lg);box-shadow:var(--shadow-2)}
 .zoom::backdrop{background:rgba(6,12,14,.84);
   backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
-.zoom-close{flex:0 0 auto;display:inline-grid;place-items:center;
-  width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.35);
+.zoom-close{position:relative;flex:0 0 auto;display:inline-grid;place-items:center;
+  width:44px;height:44px;border-radius:50%;border:0;--ring-color:rgba(255,255,255,.35);
   background:rgba(255,255,255,.12);color:#fff;font:inherit;font-size:1.1rem;
   cursor:pointer;transition:background .18s var(--ease),transform .18s var(--ease)}
 .zoom-close:hover{background:rgba(255,255,255,.24);transform:scale(1.06)}
@@ -1177,12 +1178,45 @@ td a:hover{text-decoration:underline}
 @starting-style{.zoom:popover-open::backdrop{opacity:0}}
 
 /* --- Silhouettes Dicea ---------------------------------------------------
-   Les formes sont regroupées ici pour que le site généré suive exactement la
-   même grammaire que l'app : quatre coupes pour les cas spéciaux, deux coupes
-   opposées pour les surfaces générales, hexagone vertical pour les ronds. */
+   Aucun angle arrondi : toute surface rectangulaire a ses **quatre** angles
+   biseautés. Les grandes surfaces suivent la largeur de l'écran ; les
+   contrôles et les pastilles suivent leur taille de texte. Chaque coupe est
+   aussi bornée à 20 % du côté concerné : les deux biseaux laissent toujours
+   au moins 60 % de côté droit entre eux, même sur les éléments très étroits.
+   Les ronds deviennent des hexagones verticaux. Les familles de tailles sont
+   disjointes pour que la spécificité d'un sélecteur composé ne fasse pas
+   perdre son petit biseau à un élément compact.
+
+   Le contour est un calque placé au-dessus du contenu. Son évidement suit
+   les huit côtés avec un retrait perpendiculaire constant, y compris sur les
+   diagonales. Les images encadrées ont donc un conteneur, car une `<img>` ne
+   peut pas porter ce calque. `--edge` et `--edge-w` règlent couleur et épaisseur. */
+:is(.hero,.award-hero,.cover,.gamehero .art img,.zoom img){
+  --shape-cut:min(clamp(8px,1.25vw,18px),20%)}
+:is(.search-box input,.search-box,.btn,.pager a,.skip,.chip){
+  --shape-cut:min(.5em,10px,20%)}
+:is(.stats li,.fz-card,.fz-idle,.tile,.tile .logo-frame,
+  .awardblock,.award-logo-frame,.award-hero-logo,.shot--placement,
+  .decade,.tl-year,.tl-note,.cat,
+  .podium li,.feature,.pick,.crits > li,.archive-note,
+  .specs,.specs dl > div,.facts,.yearpick,.table-scroll,.dicea,
+  .dicea .shot-frame,.app-row-screens li,.app-screens img){
+  --shape-cut:min(clamp(6px,.75vw,12px),20%)}
+:is(.get-app-link,.crumbs [aria-current="page"],.gcard .count,.badge,
+  .feature .art .count,.site-foot .powered a){
+  --shape-cut:min(.3em,6px,20%)}
+
 :is(.hero,.award-hero,.cover,.gamehero .art img,.zoom img,.search-box input,
-  .btn,.pager a){
-  --shape-cut:clamp(8px,1.25vw,18px);border-radius:0;
+  .search-box,.btn,.pager a,
+  .skip,.get-app-link,.chip,
+  .crumbs [aria-current="page"],.stats li,.fz-card,.fz-idle,.tile,.tile .logo-frame,
+  .awardblock,.award-logo-frame,.award-hero-logo,.shot--placement,
+  .decade,.tl-year,.tl-note,.gcard .count,.badge,.cat,
+  .podium li,.feature,.feature .art .count,.pick,.crits > li,.archive-note,
+  .specs,.specs dl > div,.facts,.yearpick,.table-scroll,.dicea,
+  .dicea .shot-frame,.site-foot .powered a,.app-row-screens li,
+  .app-screens img){
+  border-radius:0;
   -webkit-clip-path:polygon(var(--shape-cut) 0,calc(100% - var(--shape-cut)) 0,
     100% var(--shape-cut),100% calc(100% - var(--shape-cut)),
     calc(100% - var(--shape-cut)) 100%,var(--shape-cut) 100%,
@@ -1190,82 +1224,144 @@ td a:hover{text-decoration:underline}
   clip-path:polygon(var(--shape-cut) 0,calc(100% - var(--shape-cut)) 0,
     100% var(--shape-cut),100% calc(100% - var(--shape-cut)),
     calc(100% - var(--shape-cut)) 100%,var(--shape-cut) 100%,
-    0 calc(100% - var(--shape-cut)),0 var(--shape-cut));
-  --edge-tl:linear-gradient(to bottom right,transparent 50%,
-    var(--edge) 50%,var(--edge) calc(50% + 1px),transparent calc(50% + 1px));
-  --edge-tr:linear-gradient(to top right,transparent calc(50% - 1px),
-    var(--edge) calc(50% - 1px),var(--edge) 50%,transparent 50%);
-  --edge-br:linear-gradient(to bottom right,transparent calc(50% - 1px),
-    var(--edge) calc(50% - 1px),var(--edge) 50%,transparent 50%);
-  --edge-bl:linear-gradient(to top right,transparent 50%,
-    var(--edge) 50%,var(--edge) calc(50% + 1px),transparent calc(50% + 1px));
-  background-origin:border-box;background-repeat:no-repeat;
-  background-size:var(--shape-cut) var(--shape-cut);
-  background-position:top left,top right,bottom right,bottom left;
-  background-image:var(--edge-tl),var(--edge-tr),var(--edge-br),var(--edge-bl)
+    0 calc(100% - var(--shape-cut)),0 var(--shape-cut))
 }
 
-:is(.skip,.get-app > summary,.get-app-menu,.get-app-menu a,.chip,
-  .crumbs [aria-current="page"],.stats li,.fz-card,.fz-idle,.tile,.tile .logo,
-  .awardblock,.awardblock-head img,.award-hero-logo,.shot--placement,
-  .decade,.tl-year,.tl-note,.gcard .count,.badge,.cat,
-  .podium li,.feature,.feature .art .count,.pick,.crits > li,.archive-note,
-  .specs,.specs dl > div,.facts,.yearpick,.table-scroll,.dicea,
-  .dicea .shot,.site-foot .powered a){
-  --shape-cut:clamp(6px,.75vw,12px);
-  border-radius:var(--r-lg) 0 var(--r-lg) 0;
-  -webkit-clip-path:polygon(0 0,calc(100% - var(--shape-cut)) 0,
-    100% var(--shape-cut),100% 100%,var(--shape-cut) 100%,
-    0 calc(100% - var(--shape-cut)));
-  clip-path:polygon(0 0,calc(100% - var(--shape-cut)) 0,
-    100% var(--shape-cut),100% 100%,var(--shape-cut) 100%,
-    0 calc(100% - var(--shape-cut)));
-  --edge-tr:linear-gradient(to top right,transparent calc(50% - 1px),
-    var(--edge) calc(50% - 1px),var(--edge) 50%,transparent 50%);
-  --edge-bl:linear-gradient(to top right,transparent 50%,
-    var(--edge) 50%,var(--edge) calc(50% + 1px),transparent calc(50% + 1px));
-  background-origin:border-box;background-repeat:no-repeat;
-  background-size:var(--shape-cut) var(--shape-cut);
-  background-position:top right,bottom left;
-  background-image:var(--edge-tr),var(--edge-bl)
+/* Les couleurs appartiennent à chaque surface, sans hériter du survol de sa
+   carte parente. `:where` laisse les états de survol et de focus prioritaires. */
+:where(.hero,.award-hero,.cover,.search-box,.btn,.pager a,.skip,.get-app-link,
+  .chip,.stats li,.fz-card,.fz-idle,.tile,.tile .logo-frame,.awardblock,
+  .award-logo-frame,.award-hero-logo,.shot--placement,.decade,.tl-year,.tl-note,
+  .cat,.podium li,.feature,.pick,.crits > li,.archive-note,.specs,.specs dl > div,
+  .facts,.yearpick,.table-scroll,.dicea,.dicea .shot-frame,.site-foot .powered a,
+  .app-row-screens li){--edge:var(--line);--edge-w:1px;
+  --frame-top:1px;--frame-left:1px}
+:where(.btn,.pager a,.get-app-link,.chip,.stats li,.fz-idle,.awardblock,
+  .award-logo-frame,.award-hero-logo,.tile .logo-frame,.shot--placement,
+  .tl-note,.cat,.crits > li,.archive-note,.specs,.specs dl > div,.yearpick,
+  .table-scroll,.site-foot .powered a,.search-box){position:relative}
+.awardblock{--frame-top:4px}
+.fz-card{--frame-left:4px}
+.tl-note{--frame-top:3px}
+.search-box{--edge:var(--line-strong)}
+.search-box:focus-within{--edge:var(--brand)}
+
+:where(.hero,.award-hero,.cover,.search-box,.btn,.pager a,.skip,.get-app-link,
+  .chip,.stats li,.fz-card,.fz-idle,.tile,.tile .logo-frame,.awardblock,
+  .award-logo-frame,.award-hero-logo,.shot--placement,.decade,.tl-year,.tl-note,
+  .cat,.podium li,.feature,.pick,.crits > li,.archive-note,.specs,.specs dl > div,
+  .facts,.yearpick,.table-scroll,.dicea,.dicea .shot-frame,.site-foot .powered a,
+  .app-row-screens li)::after{content:"";position:absolute;
+  inset:calc(-1 * var(--frame-top,1px)) -1px -1px calc(-1 * var(--frame-left,1px));
+  z-index:3;pointer-events:none;background:var(--edge);
+  --inner-cut:calc(var(--shape-cut) + var(--edge-w,1px) * .41421356);
+  -webkit-clip-path:polygon(evenodd,0 0,100% 0,100% 100%,0 100%,0 0,
+    var(--inner-cut) var(--edge-w,1px),
+    var(--edge-w,1px) var(--inner-cut),
+    var(--edge-w,1px) calc(100% - var(--inner-cut)),
+    var(--inner-cut) calc(100% - var(--edge-w,1px)),
+    calc(100% - var(--inner-cut)) calc(100% - var(--edge-w,1px)),
+    calc(100% - var(--edge-w,1px)) calc(100% - var(--inner-cut)),
+    calc(100% - var(--edge-w,1px)) var(--inner-cut),
+    calc(100% - var(--inner-cut)) var(--edge-w,1px),
+    var(--inner-cut) var(--edge-w,1px));
+  clip-path:polygon(evenodd,0 0,100% 0,100% 100%,0 100%,0 0,
+    var(--inner-cut) var(--edge-w,1px),
+    var(--edge-w,1px) var(--inner-cut),
+    var(--edge-w,1px) calc(100% - var(--inner-cut)),
+    var(--inner-cut) calc(100% - var(--edge-w,1px)),
+    calc(100% - var(--inner-cut)) calc(100% - var(--edge-w,1px)),
+    calc(100% - var(--edge-w,1px)) calc(100% - var(--inner-cut)),
+    calc(100% - var(--edge-w,1px)) var(--inner-cut),
+    calc(100% - var(--inner-cut)) var(--edge-w,1px),
+    var(--inner-cut) var(--edge-w,1px))
 }
+.search-box::after{inset:0}
 
 /* Surfaces coupées **sans** contour visible : pas de diagonale non plus, sans
    quoi on inventerait une bordure là où il n'y en a jamais eu. Liste simple
    et non `:is()` : ce dernier applique à tous la spécificité de son argument
    le plus fort, et les nuances qui suivent ne passeraient plus. */
-.skip,.get-app > summary,.get-app-menu a,.crumbs [aria-current="page"],
+.skip,.get-app-link,.crumbs [aria-current="page"],
 .tl-note,.gcard .count,.badge,.feature .art .count,.podium li,
-.gamehero .art img,.zoom img,.btn,
+.gamehero .art img,.zoom img,.btn,.app-screens img,
 .chip.is-on,.chip[aria-pressed="true"],.chip[aria-current="page"]{
   --edge:transparent
 }
 /* … et les états qui, eux, en portent un. */
-.get-app > summary:hover,.get-app[open] > summary,
 .podium li:hover,.podium li.is-runner{--edge:var(--line)}
 .btn--ghost{--edge:var(--line-strong)}
 
-:is(.fz-mark,.podium .rank,.pick .n,.specs .dial,
-  .specs .dial::before,.to-top,.zoom-close,.site-foot .powered a::before){
+/* Le focus clavier d'une surface biseautée. Un `outline` déborde de la boîte et
+   la découpe l'effaçait : il est tracé **à l'intérieur**, et la diagonale prend
+   la même couleur et la même épaisseur pour que l'anneau suive les biseaux.
+   Une ligne de palmarès ou une décennie, entièrement cliquables, le portent
+   pour leur lien, que leur propre découpe rognait. */
+:is(.btn,.pager a,.chip,.get-app-link,.skip):focus-visible,
+.podium li:has(> a:focus-visible){
+  outline:2px solid var(--brand);outline-offset:-2px;--edge:var(--brand);
+  --edge-w:2px
+}
+/* L'image d'une décennie recouvrirait un `outline` : l'anneau passe par le
+   calque des diagonales, déjà posé au-dessus d'elle. */
+.decade:has(a:focus-visible){border-color:var(--brand);--edge:var(--brand);
+  --edge-w:2px}
+.podium li > a:focus-visible,.decade a:focus-visible{outline:none}
+/* Au survol, le lien de téléchargement porte le liseré de la pastille ; au
+   clavier, c'est la couleur du focus qui l'emporte. */
+.get-app .get-app-link:focus-visible{--edge:var(--brand)}
+/* Sur un aplat de la marque, l'anneau prend la couleur du texte. */
+.btn:not(.btn--ghost):focus-visible,.skip:focus-visible{
+  outline-color:var(--on-brand);--edge:var(--on-brand)
+}
+
+:is(.fz-mark,.podium .rank,.pick .n,.to-top,.zoom-close),
+.site-foot .powered a::before{
   border-radius:0;
   -webkit-clip-path:polygon(50% 0,94% 24%,94% 76%,50% 100%,6% 76%,6% 24%);
   clip-path:polygon(50% 0,94% 24%,94% 76%,50% 100%,6% 76%,6% 24%)
 }
+/* Le contour d'un hexagone : une bordure serait tranchée aux six sommets. Un
+   calque en anneau épouse les six côtés, d'épaisseur `--ring` et de couleur
+   `--ring-color`. */
+:is(.fz-mark,.podium .rank,.to-top,.zoom-close)::before{content:"";position:absolute;
+  inset:0;pointer-events:none;background:var(--ring-color,var(--line));
+  -webkit-clip-path:polygon(evenodd,50% 0,94% 24%,94% 76%,50% 100%,6% 76%,6% 24%,50% 0,
+    50% calc(var(--ring,1px) * 1.14),
+    calc(6% + var(--ring,1px)) calc(24% + var(--ring,1px) * .6),
+    calc(6% + var(--ring,1px)) calc(76% - var(--ring,1px) * .6),
+    50% calc(100% - var(--ring,1px) * 1.14),
+    calc(94% - var(--ring,1px)) calc(76% - var(--ring,1px) * .6),
+    calc(94% - var(--ring,1px)) calc(24% + var(--ring,1px) * .6),
+    50% calc(var(--ring,1px) * 1.14));
+  clip-path:polygon(evenodd,50% 0,94% 24%,94% 76%,50% 100%,6% 76%,6% 24%,50% 0,
+    50% calc(var(--ring,1px) * 1.14),
+    calc(6% + var(--ring,1px)) calc(24% + var(--ring,1px) * .6),
+    calc(6% + var(--ring,1px)) calc(76% - var(--ring,1px) * .6),
+    50% calc(100% - var(--ring,1px) * 1.14),
+    calc(94% - var(--ring,1px)) calc(76% - var(--ring,1px) * .6),
+    calc(94% - var(--ring,1px)) calc(24% + var(--ring,1px) * .6),
+    50% calc(var(--ring,1px) * 1.14))
+}
+:is(.to-top,.zoom-close):focus-visible{outline:none;--ring:2px;
+  --ring-color:var(--brand)}
 
 :is(.chip--lang .flag,.eyebrow::before,.eyebrow::after,.fz-legend .k,.fz-bar,
   .fz-rule,.tl-cat-name::after,.cat > h2::before,.cat > h3::before,
   .site-nav a::after){
-  --shape-cut:2px;border-radius:3px 0 3px 0;
-  -webkit-clip-path:polygon(0 0,calc(100% - var(--shape-cut)) 0,
-    100% var(--shape-cut),100% 100%,var(--shape-cut) 100%,
-    0 calc(100% - var(--shape-cut)));
-  clip-path:polygon(0 0,calc(100% - var(--shape-cut)) 0,
-    100% var(--shape-cut),100% 100%,var(--shape-cut) 100%,
-    0 calc(100% - var(--shape-cut)))
+  --shape-cut:min(2px,20%);border-radius:0;
+  -webkit-clip-path:polygon(var(--shape-cut) 0,calc(100% - var(--shape-cut)) 0,
+    100% var(--shape-cut),100% calc(100% - var(--shape-cut)),
+    calc(100% - var(--shape-cut)) 100%,var(--shape-cut) 100%,
+    0 calc(100% - var(--shape-cut)),0 var(--shape-cut));
+  clip-path:polygon(var(--shape-cut) 0,calc(100% - var(--shape-cut)) 0,
+    100% var(--shape-cut),100% calc(100% - var(--shape-cut)),
+    calc(100% - var(--shape-cut)) 100%,var(--shape-cut) 100%,
+    0 calc(100% - var(--shape-cut)),0 var(--shape-cut))
 }
 
 :is(.gcard a::after,.pick h3 a::after,:focus-visible){
-  border-radius:6px 0 6px 0
+  border-radius:0
 }
 
 @media (min-width:900px){
@@ -1350,16 +1446,12 @@ document.documentElement.classList.add("anim")}catch(e){}
 <div class="brand-block">
 <div class="brand-stack">
 <a class="brand" href="/fr/"><img class="dice" src="/assets/dicea-logo.png" alt="" aria-hidden="true" width="38" height="40" decoding="async"><img class="wordmark" src="/assets/dicea-wordmark.png" alt="Dicea" width="170" height="44" decoding="async"></a>
-<details class="get-app">
-<summary><svg class="i" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" focusable="false"><path d="M12 3v11m0 0 4-4m-4 4-4-4" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 19h16" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/></svg>Télécharger l&#39;application</summary>
-<div class="get-app-menu">
-<a href="https://play.google.com/store/apps/details?id=com.dicea.app&amp;referrer=utm_source%3Dpalmares%26utm_medium%3Den-tete%26utm_campaign%3Dsite-palmares" rel="noopener">Télécharger sur Google Play</a>
-<a href="https://apps.apple.com/app/id6784171421?ct=palmares-en-tete&amp;mt=8" rel="noopener">Télécharger sur l&#39;App Store</a>
+<div class="get-app">
+<a class="get-app-link" href="/download/?from=en-tete"><svg class="i" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" focusable="false"><path d="M12 3v11m0 0 4-4m-4 4-4-4" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 19h16" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/></svg>Télécharger l&#39;application</a>
 </div>
-</details>
 </div>
 <span class="rule" aria-hidden="true"></span>
-<a class="site" href="/fr/a-propos/#dicea" title="Découvrir Dicea"><b>Palmarès</b><span>Découvrez bien plus dans l&#39;application</span></a>
+<a class="site" href="/fr/application/" title="Découvrir Dicea"><b>Palmarès</b><span>Découvre bien plus dans l&#39;application</span></a>
 </div>
 <div class="head-actions">
 <a class="chip chip--lang" href="/en/awards/deutscher-spiele-preis/2001/" hreflang="en" lang="en" rel="alternate" title="Langue"><svg class="flag" viewBox="0 0 60 36" width="21" height="14" aria-hidden="true" focusable="false"><clipPath id="uk-d"><path d="M30 18h30v18zv18h-30zh-30v-18zv-18h30z"/></clipPath><path d="M0 0h60v36H0z" fill="#012169"/><path d="M0 0 60 36M60 0 0 36" stroke="#fff" stroke-width="7.2"/><path d="M0 0 60 36M60 0 0 36" clip-path="url(#uk-d)" stroke="#C8102E" stroke-width="4.8"/><path d="M30 0v36M0 18h60" stroke="#fff" stroke-width="12"/><path d="M30 0v36M0 18h60" stroke="#C8102E" stroke-width="7.2"/></svg><span>English</span></a>
@@ -1370,6 +1462,7 @@ document.documentElement.classList.add("anim")}catch(e){}
 <nav class="site-nav" aria-label="Navigation principale">
 <div class="wrap">
 <ul>
+<li><a href="/fr/application/">Appli</a></li>
 <li><a href="/fr/">Accueil</a></li>
 <li class="nav-awards-mobile"><a href="/fr/#awards" aria-current="page">Prix</a></li>
 <li class="nav-award"><a href="/fr/prix/as-dor/">As d&#39;Or</a></li>
@@ -1392,7 +1485,7 @@ document.documentElement.classList.add("anim")}catch(e){}
 </nav>
 <main id="main">
 <section class="award-hero" style="--accent:var(--deutscher-spiele-preis);--accent-bg:var(--deutscher-spiele-preis-bg);--accent-ink:var(--deutscher-spiele-preis-ink)">
-<img class="award-hero-logo" src="/assets/deutscher_spiele_preis.png" alt="Logo du prix Deutscher Spiele Preis" width="96" height="96" fetchpriority="high" decoding="async">
+<span class="award-hero-logo"><img src="/assets/deutscher_spiele_preis.png" alt="Logo du prix Deutscher Spiele Preis" width="96" height="96" fetchpriority="high" decoding="async"></span>
 <p class="eyebrow">Deutscher Spiele Preis</p>
 <h1>Deutscher Spiele Preis 2001 : les jeux primés</h1>
 <p class="lede">Le prix de référence pour les jeux experts et stratégiques.</p>
@@ -1465,19 +1558,19 @@ document.documentElement.classList.add("anim")}catch(e){}
 </div>
 <ul class="grid grid--bento">
 <li class="tile reveal" style="--accent:var(--as-dor);--accent-bg:var(--as-dor-bg);--accent-ink:var(--as-dor-ink)">
-<img class="logo" src="/assets/as_dor.png" alt="Logo du prix As d&#39;Or" width="52" height="52" loading="lazy" decoding="async">
+<span class="logo-frame"><img class="logo" src="/assets/as_dor.png" alt="Logo du prix As d&#39;Or" width="52" height="52" loading="lazy" decoding="async"></span>
 <h3><a href="/fr/prix/as-dor/2001/">As d&#39;Or</a></h3>
 <p>La grande récompense francophone du festival de Cannes.</p>
 <p class="foot"><span class="dot"></span>Blokus</p>
 </li>
 <li class="tile reveal" style="--accent:var(--spiel-des-jahres);--accent-bg:var(--spiel-des-jahres-bg);--accent-ink:var(--spiel-des-jahres-ink)">
-<img class="logo" src="/assets/spiel_des_jahres.png" alt="Logo du prix Spiel des Jahres" width="52" height="52" loading="lazy" decoding="async">
+<span class="logo-frame"><img class="logo" src="/assets/spiel_des_jahres.png" alt="Logo du prix Spiel des Jahres" width="52" height="52" loading="lazy" decoding="async"></span>
 <h3><a href="/fr/prix/spiel-des-jahres/2001/">Spiel des Jahres</a></h3>
 <p>Le prix mondial absolu récompensant les meilleurs jeux.</p>
 <p class="foot"><span class="dot"></span>Carcassonne et Klondike</p>
 </li>
 <li class="tile reveal" style="--accent:var(--golden-geek);--accent-bg:var(--golden-geek-bg);--accent-ink:var(--golden-geek-ink)">
-<img class="logo" src="/assets/golden_geek.png" alt="Logo du prix Golden Geek Awards" width="52" height="52" loading="lazy" decoding="async">
+<span class="logo-frame"><img class="logo" src="/assets/golden_geek.png" alt="Logo du prix Golden Geek Awards" width="52" height="52" loading="lazy" decoding="async"></span>
 <h3><a href="/fr/prix/golden-geek/">Golden Geek Awards</a></h3>
 <p>Le prix directement élu par la communauté mondiale des joueurs.</p>
 <p class="foot"><span class="dot"></span>Ce prix n&#39;existait pas encore, il est né en 2006.</p>
@@ -1517,18 +1610,15 @@ document.documentElement.classList.add("anim")}catch(e){}
 <aside class="dicea reveal" aria-labelledby="dicea-hook">
 <div>
 <span class="mark"><img class="dice" src="/assets/dicea-logo.png" alt="" aria-hidden="true" width="44" height="46" loading="lazy" decoding="async"><img class="wordmark" src="/assets/dicea-wordmark.png" alt="Dicea" width="170" height="44" loading="lazy" decoding="async"></span>
-<h2 id="dicea-hook">Tous vos jeux et vos parties dans votre poche.</h2>
-<p>Dicea retrouve les jeux primés que vous possédez déjà dans votre ludothèque, et garde la trace de vos parties.</p>
+<h2 id="dicea-hook">Tous tes jeux et tes parties dans ta poche.</h2>
+<p>Avec Dicea, retrouve les jeux primés de ta ludothèque et garde une trace de tes parties.</p>
 <ul class="badges" style="margin-bottom:18px">
 <li><span class="badge">Gratuit</span></li>
 <li><span class="badge">Fonctionne hors-ligne</span></li>
 <li><span class="badge">Sans compte</span></li>
 <li><span class="badge">Le projet d&#39;un passionné</span></li>
 </ul>
-<div class="store-links">
-<a class="btn" href="https://play.google.com/store/apps/details?id=com.dicea.app&amp;referrer=utm_source%3Dpalmares%26utm_medium%3Dencart-palmares%26utm_campaign%3Dsite-palmares" rel="noopener">Télécharger sur Google Play</a>
-<a class="btn btn--ghost" href="https://apps.apple.com/app/id6784171421?ct=palmares-encart-palmares&amp;mt=8" rel="noopener">Télécharger sur l&#39;App Store</a>
-</div>
+<div class="store-links"><a class="btn" href="/download/?from=encart-palmares">Télécharger l&#39;application</a></div>
 </div>
 </aside>
 </main>
@@ -1538,7 +1628,7 @@ document.documentElement.classList.add("anim")}catch(e){}
 <div class="wrap">
 <a class="foot-mark" href="/fr/"><span class="mark"><img class="dice" src="/assets/dicea-logo.png" alt="" aria-hidden="true" width="44" height="46" loading="lazy" decoding="async"><img class="wordmark" src="/assets/dicea-wordmark.png" alt="Dicea" width="170" height="44" loading="lazy" decoding="async"></span></a>
 <p class="powered"><a href="https://boardgamegeek.com" rel="noopener">Powered by BGG</a></p>
-<p class="legal"><a href="/fr/a-propos/">À propos</a><span aria-hidden="true"> · </span><a href="/fr/mentions-legales/">Mentions légales</a></p>
+<p class="legal"><a href="/fr/application/">L&#39;application</a><span aria-hidden="true"> · </span><a href="/fr/a-propos/">À propos</a><span aria-hidden="true"> · </span><a href="/fr/mentions-legales/">Mentions légales</a></p>
 </div>
 </footer>
 <script>(function(){
@@ -1776,7 +1866,7 @@ document.documentElement.classList.add("anim")}catch(e){}
     });
   }
 
-  // --- Jaquette en grand ---------------------------------------------------
+  // --- Image en grand ------------------------------------------------------
   // Sur l'API `popover` : c'est le navigateur qui gère la couche supérieure,
   // le clic à côté et la touche Échap. Les navigateurs qui ne la connaissent
   // pas n'héritent d'aucun demi-comportement, l'image reste une image.
@@ -1794,6 +1884,9 @@ document.documentElement.classList.add("anim")}catch(e){}
     closeBtn.setAttribute("aria-label",i18n.close||"Close");
     closeBtn.innerHTML='<span aria-hidden="true">✕</span>';
     closeBtn.addEventListener("click",function(){pop.hidePopover()});
+    pop.addEventListener("click",function(e){
+      if(e.target===pop)pop.hidePopover();
+    });
     pop.appendChild(closeBtn);
     pop.appendChild(big);
     document.body.appendChild(pop);
@@ -1806,7 +1899,7 @@ document.documentElement.classList.add("anim")}catch(e){}
       img.setAttribute("aria-label",img.dataset.zoom);
       img.tabIndex=0;
       function open(){
-        big.src=img.currentSrc||img.src;
+        big.src=img.dataset.zoomSrc||img.currentSrc||img.src;
         big.alt=img.alt;
         pop.showPopover();
       }
