@@ -922,6 +922,14 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://dicea-app.com/en/awards/deutscher-spiele-preis/decade/1990/"/>
   </url>
   <url>
+    <loc>https://dicea-app.com/fr/prix/deutscher-spiele-preis/2026/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://dicea-app.com/fr/prix/deutscher-spiele-preis/2026/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dicea-app.com/en/awards/deutscher-spiele-preis/2026/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dicea-app.com/en/awards/deutscher-spiele-preis/2026/"/>
+  </url>
+  <url>
     <loc>https://dicea-app.com/fr/prix/deutscher-spiele-preis/2025/</loc>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
@@ -1992,6 +2000,14 @@
     <xhtml:link rel="alternate" hreflang="fr" href="https://dicea-app.com/fr/jeu/bomb-busters/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://dicea-app.com/en/game/bomb-busters/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://dicea-app.com/en/game/bomb-busters/"/>
+  </url>
+  <url>
+    <loc>https://dicea-app.com/fr/jeu/boss-fighters-qr/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://dicea-app.com/fr/jeu/boss-fighters-qr/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dicea-app.com/en/game/boss-fighters-qr/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dicea-app.com/en/game/boss-fighters-qr/"/>
   </url>
   <url>
     <loc>https://dicea-app.com/fr/jeu/brass-birmingham/</loc>
@@ -3546,6 +3562,14 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://dicea-app.com/en/game/san-juan/"/>
   </url>
   <url>
+    <loc>https://dicea-app.com/fr/jeu/sanctuary/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://dicea-app.com/fr/jeu/sanctuary/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dicea-app.com/en/game/sanctuary/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dicea-app.com/en/game/sanctuary/"/>
+  </url>
+  <url>
     <loc>https://dicea-app.com/fr/jeu/santa-monica/</loc>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
@@ -4024,6 +4048,14 @@
     <xhtml:link rel="alternate" hreflang="fr" href="https://dicea-app.com/fr/jeu/cherry-on-the-cake/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://dicea-app.com/en/game/cherry-on-the-cake/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://dicea-app.com/en/game/cherry-on-the-cake/"/>
+  </url>
+  <url>
+    <loc>https://dicea-app.com/fr/jeu/toriki-the-castaway-island/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://dicea-app.com/fr/jeu/toriki-the-castaway-island/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dicea-app.com/en/game/toriki-the-castaway-island/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dicea-app.com/en/game/toriki-the-castaway-island/"/>
   </url>
   <url>
     <loc>https://dicea-app.com/fr/jeu/torres/</loc>
@@ -5210,6 +5242,14 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://dicea-app.com/en/awards/deutscher-spiele-preis/decade/1990/"/>
   </url>
   <url>
+    <loc>https://dicea-app.com/en/awards/deutscher-spiele-preis/2026/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://dicea-app.com/fr/prix/deutscher-spiele-preis/2026/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dicea-app.com/en/awards/deutscher-spiele-preis/2026/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dicea-app.com/en/awards/deutscher-spiele-preis/2026/"/>
+  </url>
+  <url>
     <loc>https://dicea-app.com/en/awards/deutscher-spiele-preis/2025/</loc>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
@@ -6280,6 +6320,14 @@
     <xhtml:link rel="alternate" hreflang="fr" href="https://dicea-app.com/fr/jeu/bomb-busters/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://dicea-app.com/en/game/bomb-busters/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://dicea-app.com/en/game/bomb-busters/"/>
+  </url>
+  <url>
+    <loc>https://dicea-app.com/en/game/boss-fighters-qr/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://dicea-app.com/fr/jeu/boss-fighters-qr/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dicea-app.com/en/game/boss-fighters-qr/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dicea-app.com/en/game/boss-fighters-qr/"/>
   </url>
   <url>
     <loc>https://dicea-app.com/en/game/brass-birmingham/</loc>
@@ -7834,6 +7882,14 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://dicea-app.com/en/game/san-juan/"/>
   </url>
   <url>
+    <loc>https://dicea-app.com/en/game/sanctuary/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://dicea-app.com/fr/jeu/sanctuary/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dicea-app.com/en/game/sanctuary/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dicea-app.com/en/game/sanctuary/"/>
+  </url>
+  <url>
     <loc>https://dicea-app.com/en/game/santa-monica/</loc>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
@@ -8312,6 +8368,14 @@
     <xhtml:link rel="alternate" hreflang="fr" href="https://dicea-app.com/fr/jeu/cherry-on-the-cake/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://dicea-app.com/en/game/cherry-on-the-cake/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://dicea-app.com/en/game/cherry-on-the-cake/"/>
+  </url>
+  <url>
+    <loc>https://dicea-app.com/en/game/toriki-the-castaway-island/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://dicea-app.com/fr/jeu/toriki-the-castaway-island/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dicea-app.com/en/game/toriki-the-castaway-island/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dicea-app.com/en/game/toriki-the-castaway-island/"/>
   </url>
   <url>
     <loc>https://dicea-app.com/en/game/torres/</loc>
