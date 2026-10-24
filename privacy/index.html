@@ -47,7 +47,7 @@
 | Métadonnées | Valeur |
 | :--- | :--- |
 | **Application** | Dicea |
-| **Dernière mise à jour** | 13 août 2026 |
+| **Dernière mise à jour** | 23 octobre 2026 |
 
 ---
 
@@ -57,7 +57,7 @@
 
 * **Stockage local par défaut :** Votre collection de jeux, vos parties et vos scores, vos profils de joueurs (noms et photos) ainsi que vos préférences sont enregistrés dans la mémoire de votre téléphone. Aucun serveur Dicea ne reçoit ni ne conserve ces informations. Si vous activez volontairement les sauvegardes automatiques vers un espace externe, une copie est également écrite dans le seul fichier que vous choisissez.
 * **Sans compte ni publicité :** L'utilisation de l'application ne nécessite ni création de compte, ni adresse e-mail. L'application ne contient aucune publicité, aucun traceur publicitaire et ne procède à aucune revente de données.
-* **Flux réseau minimaux :** Les informations qui quittent votre appareil sont les requêtes techniques adressées à BoardGameGeek pour afficher les fiches de jeux, le téléchargement des images de jeux depuis le réseau de diffusion d'images de BoardGameGeek, et le texte des descriptions de jeux transmis à un service de traduction lorsque vous utilisez l'application en français. Si vous choisissez un fournisseur de stockage externe, le système d'exploitation lui remet également votre fichier de sauvegarde afin qu'il puisse le conserver et, le cas échéant, le synchroniser.
+* **Flux réseau minimaux :** Les informations qui quittent votre appareil sont les requêtes techniques adressées à BoardGameGeek pour afficher les fiches de jeux, le téléchargement des images de jeux depuis le réseau de diffusion d'images de BoardGameGeek, les identifiants BoardGameGeek des jeux transmis à un comparateur de prix pour en estimer le prix, et le texte des descriptions de jeux transmis à un service de traduction lorsque vous utilisez l'application en français. Si vous choisissez un fournisseur de stockage externe, le système d'exploitation lui remet également votre fichier de sauvegarde afin qu'il puisse le conserver et, le cas échéant, le synchroniser.
 
 🔒 **Nuance importante (Contenu vs Métadonnées) :** Les requêtes techniques relatives aux jeux ne comportent aucune des données que vous avez saisies dans l'application : ni votre nom, ni vos profils de joueurs, ni vos statistiques. Comme toute connexion à Internet, elles transmettent néanmoins des données techniques de connexion, telles que votre **adresse IP**. À l'inverse, une sauvegarde externe contient vos données Dicea : elle n'est transmise qu'au fournisseur de stockage que vous avez vous-même choisi, jamais à l'éditeur de Dicea.
 
@@ -83,7 +83,7 @@ Dicea agit comme un compagnon de jeu de table. Pour fonctionner, l'application t
 
 ### 3.1. Données stockées localement sur votre appareil
 Les données suivantes sont d'abord enregistrées dans l'espace de stockage privé et cloisonné de l'application. Elles ne sont jamais transmises à l'éditeur. En l'absence de sauvegarde externe configurée, elles ne sont pas remises à un fournisseur de stockage tiers :
-* **Votre collection de jeux :** Jeux possédés, autres jeux, liste d'envies, extensions et favoris.
+* **Votre collection de jeux :** Jeux possédés, autres jeux, liste d'envies, extensions et favoris, ainsi que les prix d'achat que vous saisissez et les prix estimés de vos jeux.
 * **Vos parties :** Sessions de jeu enregistrées, dates, durées, formats et joueurs présents.
 * **Vos scores et statistiques :** Résultats détaillés par joueur, historique et bilans graphiques.
 * **Profils de joueurs :** Les noms ou pseudonymes que vous saisissez manuellement et les photos ou avatars locaux que vous choisissez pour vos profils.
@@ -127,10 +127,13 @@ L'application s'appuie sur un nombre limité d'infrastructures pour fonctionner.
 | :--- | :--- | :--- | :--- |
 | **BoardGameGeek (API)** | Termes de recherche et identifiants des jeux consultés. *(Zéro donnée utilisateur)*. Requête via proxy Cloudflare. | Récupérer en temps réel les fiches techniques des jeux (nom, note, description, classements). | BoardGameGeek<br>🔗 [Politique de confidentialité](https://boardgamegeek.com/privacy) |
 | **Réseau d'images BGG** | Requête HTTP directe vers le domaine \`geekdo-images.com\`. Expose votre **adresse IP** et les visuels consultés. | Télécharger en direct sur votre écran les couvertures et vignettes des jeux de société. | Geekdo, LLC (États-Unis)<br>*(Flux direct sans passer par le proxy de l'éditeur)* |
-| **Catalogue de jeux** | Requêtes de lecture seule sur les classements publics (top 10000 BGG). *(Zéro donnée utilisateur)*. | Alimenter la fonctionnalité de découverte et de suggestions au sein de l'onglet **Explorer**. | Opéré par l'éditeur<br>*(Base hébergée chez Supabase, requêtes via Cloudflare)* |
+| **Catalogue de jeux** | Requêtes de lecture seule sur notre index de jeux de société, constitué à partir d'informations publiques. *(Zéro donnée utilisateur)*. | Alimenter la fonctionnalité de découverte et de suggestions au sein de l'onglet **Explorer**. | Opéré par l'éditeur<br>*(Index hébergé chez Supabase, requêtes via Cloudflare)* |
 | **Service de traduction** | Texte brut de la description du jeu (en anglais). *(Zéro donnée utilisateur. Flux inactif si l'app est en anglais)*. | Traduction automatique instantanée des descriptions de fiches de jeux en français. | DeepL API<br>🔗 [Politique de confidentialité](https://www.deepl.com/privacy) |
+| **Comparateur de prix** | Identifiants BoardGameGeek des jeux et extensions, et marché de prix (France, Royaume-Uni ou États-Unis, déduit de la langue de l'application et du pays de l'appareil). *(Zéro donnée utilisateur : ni prix d'achat, ni nom)*. Requête via proxy Cloudflare. | Estimer le prix de vos jeux à partir des offres des boutiques en ligne et proposer le lien vers leur page de prix. | Ludiprix.fr / BoardGamePrices, KP Software Consult ApS (Danemark)<br>*(Le site ne reçoit que les requêtes du proxy de l'éditeur)* |
 | **Hébergement technique** | Métadonnées de connexion standard (adresse IP notamment) nécessaires à l'acheminement du trafic. | Routage sécurisé (HTTPS) des requêtes de l'application et mise en cache de performance des données publiques. | Cloudflare Workers<br>🔗 [Politique de confidentialité](https://www.cloudflare.com/privacypolicy/) |
 | **Fournisseur de stockage choisi (facultatif)** | Fichier JSON complet de sauvegarde et métadonnées techniques traitées par le système ou le fournisseur. | Conserver et éventuellement synchroniser la sauvegarde à l'emplacement que vous avez choisi. Aucun transit par un serveur Dicea. | Fournisseur sélectionné dans Android/iOS, notamment [Google](https://policies.google.com/privacy) ou [Apple](https://www.apple.com/legal/privacy/), selon votre choix. |
+
+Les liens vers BoardGameGeek et vers la page de prix d'un jeu s'ouvrent dans votre navigateur : la consultation de ces sites relève alors de leur propre politique de confidentialité.
 
 ### 🔒 Garantie d'absence de pistage
 Pour être parfaitement complet, l'application Dicea n'utilise aucun outil de mesure d'audience, aucun outil de pistage comportemental, aucun outil tiers de rapport de plantage (comme Firebase Crashlytics), aucun service de la suite Google Firebase, et aucune publicité.
@@ -144,7 +147,7 @@ Les prestataires techniques intégrés par Dicea sont sélectionnés en tenant c
 
 Conformément à l'**Article 6 du RGPD**, les traitements mis en œuvre reposent sur les bases légales suivantes :
 1. **Exécution du service / Contrat :** Le stockage local de votre collection, de vos parties, de vos profils de joueurs et de vos préférences, ainsi que la création ou la mise à jour d'une sauvegarde lorsque vous activez cette option, sont nécessaires pour vous fournir les fonctionnalités demandées.
-2. **Intérêt légitime :** L'affichage des informations de jeux (incluant le téléchargement direct des images), l'interrogation du catalogue Explorer et la traduction automatisée répondent à notre intérêt légitime à vous offrir un confort de lecture et une expérience fluide, enrichie et localisée.
+2. **Intérêt légitime :** L'affichage des informations de jeux (incluant le téléchargement direct des images), l'interrogation du catalogue Explorer, l'estimation du prix des jeux et la traduction automatisée répondent à notre intérêt légitime à vous offrir un confort de lecture et une expérience fluide, enrichie et localisée.
 3. **Consentement :** L'accès aux fonctionnalités matérielles de l'appareil (photos, appareil photo, galerie) repose exclusivement sur votre consentement, donné via la demande de permission native du système lors de l'action que vous initiez.
 
 ---
@@ -163,7 +166,7 @@ Si vous choisissez un stockage cloud, le fichier complet peut être conservé ou
 
 * **Données locales :** Les données décrites à l'Article 3.1 restent stockées sur votre appareil tant que vous ne les supprimez pas manuellement et que l'application reste installée. Elles sont définitivement effacées lors de la désinstallation de Dicea.
 * **Fichiers de sauvegarde externes :** Ils restent dans l'emplacement choisi jusqu'à ce que vous les supprimiez vous-même. Désactiver la sauvegarde automatique, réinitialiser ou désinstaller Dicea ne supprime pas ces fichiers. Leur éventuelle conservation côté cloud dépend du fournisseur sélectionné.
-* **Requêtes réseau :** Les requêtes techniques adressées à BoardGameGeek, au réseau d'images, au catalogue, au service de traduction et aux proxies intermédiaires sont éphémères et ne sont rattachées à aucun profil utilisateur. Les caches de données publiques relatives aux jeux sont temporaires.
+* **Requêtes réseau :** Les requêtes techniques adressées à BoardGameGeek, au réseau d'images, au catalogue, au comparateur de prix, au service de traduction et aux proxies intermédiaires sont éphémères et ne sont rattachées à aucun profil utilisateur. Les caches de données publiques relatives aux jeux sont temporaires.
 
 ---
 
@@ -218,7 +221,7 @@ Pour toute question relative à la présente politique ou à vos données :
 | Metadata | Value |
 | :--- | :--- |
 | **Application** | Dicea |
-| **Last update** | August 13, 2026 |
+| **Last update** | October 23, 2026 |
 
 ---
 
@@ -228,7 +231,7 @@ Pour toute question relative à la présente politique ou à vos données :
 
 * **Local storage by default:** Your game collection, plays and scores, player profiles (names and photos), and preferences are stored in your phone's memory. No Dicea server receives or stores this information. If you voluntarily enable automatic backups to external storage, a copy is also written to the single file you choose.
 * **No account, no ads:** Using the application does not require an account creation or an email address. The app contains no advertising, no ad trackers, and does not sell any data.
-* **Minimal network flows:** The information that leaves your device consists of technical requests sent to BoardGameGeek to display game details, downloading game images from BoardGameGeek's image delivery network, and the text of game descriptions sent to a translation service when you use the application in French. If you choose an external storage provider, the operating system also hands your backup file to that provider so it can store and, where applicable, synchronize it.
+* **Minimal network flows:** The information that leaves your device consists of technical requests sent to BoardGameGeek to display game details, downloading game images from BoardGameGeek's image delivery network, the BoardGameGeek IDs of games sent to a price comparison service to estimate their price, and the text of game descriptions sent to a translation service when you use the application in French. If you choose an external storage provider, the operating system also hands your backup file to that provider so it can store and, where applicable, synchronize it.
 
 🔒 **Important nuance (Content vs Metadata):** Technical game-related requests do not include any data you entered in the application: neither your name, player profiles, nor statistics. Like any Internet connection, they nevertheless transmit technical connection data such as your **IP address**. By contrast, an external backup contains your Dicea data: it is transmitted only to the storage provider you selected, never to Dicea's publisher.
 
@@ -253,7 +256,7 @@ Dicea acts as a tabletop companion. To operate, the app processes specific categ
 
 ### 3.1. Data stored locally on your device
 The following data is first stored in the application's private, sandboxed storage. It is never transmitted to the publisher. If no external backup is configured, it is not handed to a third-party storage provider:
-* **Your game collection:** Owned games, other games, wishlist, expansions, and favorites.
+* **Your game collection:** Owned games, other games, wishlist, expansions, and favorites, as well as the purchase prices you enter and the estimated prices of your games.
 * **Your plays:** Logged game sessions, dates, durations, formats, and present players.
 * **Your scores and statistics:** Detailed results per player, history, and graphic summaries.
 * **Player profiles:** The names or pseudonyms you enter manually and the local photos or avatars you choose for your profiles.
@@ -297,10 +300,13 @@ The application relies on a limited number of infrastructures to function. It ma
 | :--- | :--- | :--- | :--- |
 | **BoardGameGeek (API)** | Search terms and IDs of viewed games. *(Zero user data)*. Request via Cloudflare proxy. | Retrieve technical game sheets in real-time (name, rating, description, rankings). | BoardGameGeek<br>🔗 [Privacy Policy](https://boardgamegeek.com/privacy) |
 | **BGG Image Network** | Direct HTTP request to the domain \`geekdo-images.com\`. Exposes your **IP address** and viewed visuals. | Download board game covers and thumbnails directly to your screen. | Geekdo, LLC (USA)<br>*(Direct flow without going through the publisher's proxy)* |
-| **Game Catalog** | Read-only requests on public rankings (BGG top 10000). *(Zero user data)*. | Power the discovery and suggestions feature within the **Explore** tab. | Operated by the publisher<br>*(Database hosted at Supabase, requests via Cloudflare)* |
+| **Game Catalog** | Read-only requests on our board game index, built from publicly available information. *(Zero user data)*. | Power the discovery and suggestions feature within the **Explore** tab. | Operated by the publisher<br>*(Index hosted at Supabase, requests via Cloudflare)* |
 | **Translation Service** | Raw text of the game description (in English). *(Zero user data. Flow inactive if app is in English)*. | Instant automatic translation of game sheet descriptions into French. | DeepL API<br>🔗 [Privacy Policy](https://www.deepl.com/privacy) |
+| **Price Comparison** | BoardGameGeek IDs of games and expansions, and the price market (France, United Kingdom or United States, derived from the app language and the device country). *(Zero user data: no purchase price, no name)*. Request via Cloudflare proxy. | Estimate the price of your games from online shop offers and link to their price page. | Ludiprix.fr / BoardGamePrices, KP Software Consult ApS (Denmark)<br>*(The site only receives requests from the publisher's proxy)* |
 | **Technical Hosting** | Standard connection metadata (IP address in particular) required for traffic routing. | Secure routing (HTTPS) of app requests and performance caching of public data. | Cloudflare Workers<br>🔗 [Privacy Policy](https://www.cloudflare.com/privacypolicy/) |
 | **Selected storage provider (optional)** | Complete JSON backup file and technical metadata processed by the system or provider. | Store and potentially synchronize the backup in the location you selected. No transit through a Dicea server. | Provider selected in Android/iOS, including [Google](https://policies.google.com/privacy) or [Apple](https://www.apple.com/legal/privacy/), depending on your choice. |
+
+Links to BoardGameGeek and to a game's price page open in your browser: browsing those sites is then governed by their own privacy policy.
 
 ### 🔒 Guarantee of no tracking
 To be perfectly complete, the Dicea application does not use any audience measurement tools, any behavioral tracking tools, any third-party crash reporting tools (like Firebase Crashlytics), any services from the Google Firebase suite, and no advertising.
@@ -314,7 +320,7 @@ Technical providers integrated by Dicea are selected with appropriate data-prote
 
 In accordance with **Article 6 of the GDPR**, the processing implemented is based on the following legal bases:
 1. **Performance of the service / Contract:** Local storage of your collection, plays, player profiles, and preferences, as well as creating or updating a backup when you enable that option, is necessary to provide the features you request.
-2. **Legitimate interest:** Displaying game information (including direct download of images), querying the Explore catalog, and automated translation respond to our legitimate interest in offering you reading comfort and a smooth, enriched, and localized experience.
+2. **Legitimate interest:** Displaying game information (including direct download of images), querying the Explore catalog, estimating game prices, and automated translation respond to our legitimate interest in offering you reading comfort and a smooth, enriched, and localized experience.
 3. **Consent:** Access to device hardware features (photos, camera, gallery) relies exclusively on your consent, given via the native system permission request during the action you initiate.
 
 ---
@@ -333,7 +339,7 @@ If you select cloud storage, the complete backup file may be stored or processed
 
 * **Local data:** The data described in Article 3.1 remains stored on your device as long as you do not delete it manually and the app remains installed. It is permanently erased when uninstalling Dicea.
 * **External backup files:** They remain in the selected location until you delete them yourself. Turning off automatic backup, resetting, or uninstalling Dicea does not delete those files. Any cloud retention depends on the selected provider.
-* **Network requests:** Technical requests sent to BoardGameGeek, the image network, the catalog, the translation service, and intermediate proxies are ephemeral and are not attached to any user profile. Caches of public data related to games are temporary.
+* **Network requests:** Technical requests sent to BoardGameGeek, the image network, the catalog, the price comparison service, the translation service, and intermediate proxies are ephemeral and are not attached to any user profile. Caches of public data related to games are temporary.
 
 ---
 
