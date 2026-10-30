@@ -47,7 +47,7 @@
 | Métadonnées | Valeur |
 | :--- | :--- |
 | **Application** | Dicea |
-| **Dernière mise à jour** | 27 octobre 2026 |
+| **Dernière mise à jour** | 30 octobre 2026 |
 
 ---
 
@@ -83,7 +83,7 @@ Dicea agit comme un compagnon de jeu de table. Pour fonctionner, l'application t
 
 ### 3.1. Données stockées localement sur votre appareil
 Les données suivantes sont d'abord enregistrées dans l'espace de stockage privé et cloisonné de l'application. Elles ne sont jamais transmises à l'éditeur. En l'absence de sauvegarde externe configurée, elles ne sont pas remises à un fournisseur de stockage tiers :
-* **Votre collection de jeux :** Jeux possédés, autres jeux, liste d'envies, extensions et favoris, ainsi que les prix d'achat que vous saisissez et les prix estimés de vos jeux.
+* **Votre collection de jeux :** Jeux possédés, autres jeux, liste d'envies, extensions et favoris, ainsi que les prix d'achat que vous saisissez, les prix estimés de vos jeux et les notes que vous écrivez sur leur fiche.
 * **Vos parties :** Sessions de jeu enregistrées, dates, durées, formats et joueurs présents, ainsi que la note et la photo que vous pouvez y associer.
 * **Vos scores et statistiques :** Résultats détaillés par joueur, historique et bilans graphiques.
 * **Profils de joueurs :** Les noms ou pseudonymes que vous saisissez manuellement et les photos ou avatars locaux que vous choisissez pour vos profils.
@@ -127,7 +127,7 @@ L'application s'appuie sur un nombre limité d'infrastructures pour fonctionner.
 | :--- | :--- | :--- | :--- |
 | **BoardGameGeek (API)** | Termes de recherche et identifiants des jeux consultés. *(Zéro donnée utilisateur)*. Requête via proxy Cloudflare. | Récupérer en temps réel les fiches techniques des jeux (nom, note, description, classements). | BoardGameGeek<br>🔗 [Politique de confidentialité](https://boardgamegeek.com/privacy) |
 | **Réseau d'images BGG** | Requête HTTP directe vers le domaine \`geekdo-images.com\`. Expose votre **adresse IP** et les visuels consultés. | Télécharger en direct sur votre écran les couvertures et vignettes des jeux de société. | Geekdo, LLC (États-Unis)<br>*(Flux direct sans passer par le proxy de l'éditeur)* |
-| **Catalogue de jeux** | Requêtes de lecture seule sur notre index de jeux de société, constitué à partir d'informations publiques. *(Zéro donnée utilisateur)*. | Alimenter la fonctionnalité de découverte et de suggestions au sein de l'onglet **Explorer**. | Opéré par l'éditeur<br>*(Index hébergé chez Supabase, requêtes via Cloudflare)* |
+| **Catalogue de jeux** | Requêtes de lecture seule sur notre index de jeux de société, constitué à partir d'informations publiques. *(Zéro donnée utilisateur)*. | Alimenter la fonctionnalité de découverte et de suggestions au sein de l'onglet **Explorer**, et classer par popularité les résultats d'une recherche de jeu (seuls les identifiants des jeux trouvés sont transmis). | Opéré par l'éditeur<br>*(Index hébergé chez Supabase, requêtes via Cloudflare)* |
 | **Service de traduction** | Texte brut de la description du jeu (en anglais), issue de BoardGameGeek. *(Zéro donnée utilisateur. Flux inactif si l'app est en anglais)*. Requête via proxy Cloudflare. | Traduction automatique des descriptions de fiches de jeux en français, par un modèle d'intelligence artificielle. | Google (API Gemini)<br>*(Le service ne reçoit que les requêtes du proxy de l'éditeur)*<br>🔗 [Politique de confidentialité](https://policies.google.com/privacy) |
 | **Comparateur de prix** | Identifiants BoardGameGeek des jeux et extensions, et marché de prix (France, Royaume-Uni ou États-Unis, déduit de la langue de l'application et du pays de l'appareil). *(Zéro donnée utilisateur : ni prix d'achat, ni nom)*. Requête via proxy Cloudflare. | Estimer le prix de vos jeux à partir des offres des boutiques en ligne et proposer le lien vers leur page de prix. | Ludiprix.fr / BoardGamePrices, KP Software Consult ApS (Danemark)<br>*(Le site ne reçoit que les requêtes du proxy de l'éditeur)* |
 | **Hébergement technique** | Métadonnées de connexion standard (adresse IP notamment) nécessaires à l'acheminement du trafic. | Routage sécurisé (HTTPS) des requêtes de l'application et mise en cache de performance des données publiques. | Cloudflare Workers<br>🔗 [Politique de confidentialité](https://www.cloudflare.com/privacypolicy/) |
@@ -223,7 +223,7 @@ Pour toute question relative à la présente politique ou à vos données :
 | Metadata | Value |
 | :--- | :--- |
 | **Application** | Dicea |
-| **Last update** | October 27, 2026 |
+| **Last update** | October 30, 2026 |
 
 ---
 
@@ -258,7 +258,7 @@ Dicea acts as a tabletop companion. To operate, the app processes specific categ
 
 ### 3.1. Data stored locally on your device
 The following data is first stored in the application's private, sandboxed storage. It is never transmitted to the publisher. If no external backup is configured, it is not handed to a third-party storage provider:
-* **Your game collection:** Owned games, other games, wishlist, expansions, and favorites, as well as the purchase prices you enter and the estimated prices of your games.
+* **Your game collection:** Owned games, other games, wishlist, expansions, and favorites, as well as the purchase prices you enter, the estimated prices of your games, and the notes you write on their page.
 * **Your plays:** Logged game sessions, dates, durations, formats, and present players, as well as the note and photo you can attach to them.
 * **Your scores and statistics:** Detailed results per player, history, and graphic summaries.
 * **Player profiles:** The names or pseudonyms you enter manually and the local photos or avatars you choose for your profiles.
@@ -302,7 +302,7 @@ The application relies on a limited number of infrastructures to function. It ma
 | :--- | :--- | :--- | :--- |
 | **BoardGameGeek (API)** | Search terms and IDs of viewed games. *(Zero user data)*. Request via Cloudflare proxy. | Retrieve technical game sheets in real-time (name, rating, description, rankings). | BoardGameGeek<br>🔗 [Privacy Policy](https://boardgamegeek.com/privacy) |
 | **BGG Image Network** | Direct HTTP request to the domain \`geekdo-images.com\`. Exposes your **IP address** and viewed visuals. | Download board game covers and thumbnails directly to your screen. | Geekdo, LLC (USA)<br>*(Direct flow without going through the publisher's proxy)* |
-| **Game Catalog** | Read-only requests on our board game index, built from publicly available information. *(Zero user data)*. | Power the discovery and suggestions feature within the **Explore** tab. | Operated by the publisher<br>*(Index hosted at Supabase, requests via Cloudflare)* |
+| **Game Catalog** | Read-only requests on our board game index, built from publicly available information. *(Zero user data)*. | Power the discovery and suggestions feature within the **Explore** tab, and rank game search results by popularity (only the IDs of the games found are sent). | Operated by the publisher<br>*(Index hosted at Supabase, requests via Cloudflare)* |
 | **Translation Service** | Raw text of the game description (in English), from BoardGameGeek. *(Zero user data. Flow inactive if app is in English)*. Request via Cloudflare proxy. | Automatic translation of game sheet descriptions into French, by an artificial intelligence model. | Google (Gemini API)<br>*(The service only receives requests from the publisher's proxy)*<br>🔗 [Privacy Policy](https://policies.google.com/privacy) |
 | **Price Comparison** | BoardGameGeek IDs of games and expansions, and the price market (France, United Kingdom or United States, derived from the app language and the device country). *(Zero user data: no purchase price, no name)*. Request via Cloudflare proxy. | Estimate the price of your games from online shop offers and link to their price page. | Ludiprix.fr / BoardGamePrices, KP Software Consult ApS (Denmark)<br>*(The site only receives requests from the publisher's proxy)* |
 | **Technical Hosting** | Standard connection metadata (IP address in particular) required for traffic routing. | Secure routing (HTTPS) of app requests and performance caching of public data. | Cloudflare Workers<br>🔗 [Privacy Policy](https://www.cloudflare.com/privacypolicy/) |
