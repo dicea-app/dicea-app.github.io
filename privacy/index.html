@@ -47,7 +47,7 @@
 | Métadonnées | Valeur |
 | :--- | :--- |
 | **Application** | Dicea |
-| **Dernière mise à jour** | 30 octobre 2026 |
+| **Dernière mise à jour** | 3 novembre 2026 |
 
 ---
 
@@ -125,7 +125,7 @@ L'application s'appuie sur un nombre limité d'infrastructures pour fonctionner.
 
 | Service / Prestataire | Données transmises | Finalité des flux | Prestataire & Politique |
 | :--- | :--- | :--- | :--- |
-| **BoardGameGeek (API)** | Termes de recherche et identifiants des jeux consultés. *(Zéro donnée utilisateur)*. Requête via proxy Cloudflare. | Récupérer en temps réel les fiches techniques des jeux (nom, note, description, classements). | BoardGameGeek<br>🔗 [Politique de confidentialité](https://boardgamegeek.com/privacy) |
+| **BoardGameGeek (API)** | Termes de recherche et identifiants des jeux consultés. Si l'application est en français, identifiants des jeux et extensions de votre collection. *(Zéro donnée utilisateur)*. Requête via proxy Cloudflare. | Récupérer en temps réel les fiches techniques des jeux (nom, note, description, classements), et leur titre et leur jaquette en français. | BoardGameGeek<br>🔗 [Politique de confidentialité](https://boardgamegeek.com/privacy) |
 | **Réseau d'images BGG** | Requête HTTP directe vers le domaine \`geekdo-images.com\`. Expose votre **adresse IP** et les visuels consultés. | Télécharger en direct sur votre écran les couvertures et vignettes des jeux de société. | Geekdo, LLC (États-Unis)<br>*(Flux direct sans passer par le proxy de l'éditeur)* |
 | **Catalogue de jeux** | Requêtes de lecture seule sur notre index de jeux de société, constitué à partir d'informations publiques. *(Zéro donnée utilisateur)*. | Alimenter la fonctionnalité de découverte et de suggestions au sein de l'onglet **Explorer**, et classer par popularité les résultats d'une recherche de jeu (seuls les identifiants des jeux trouvés sont transmis). | Opéré par l'éditeur<br>*(Index hébergé chez Supabase, requêtes via Cloudflare)* |
 | **Service de traduction** | Texte brut de la description du jeu (en anglais), issue de BoardGameGeek. *(Zéro donnée utilisateur. Flux inactif si l'app est en anglais)*. Requête via proxy Cloudflare. | Traduction automatique des descriptions de fiches de jeux en français, par un modèle d'intelligence artificielle. | Google (API Gemini)<br>*(Le service ne reçoit que les requêtes du proxy de l'éditeur)*<br>🔗 [Politique de confidentialité](https://policies.google.com/privacy) |
@@ -223,7 +223,7 @@ Pour toute question relative à la présente politique ou à vos données :
 | Metadata | Value |
 | :--- | :--- |
 | **Application** | Dicea |
-| **Last update** | October 30, 2026 |
+| **Last update** | November 3, 2026 |
 
 ---
 
@@ -300,7 +300,7 @@ The application relies on a limited number of infrastructures to function. It ma
 
 | Service / Provider | Transmitted Data | Purpose of flows | Provider & Policy |
 | :--- | :--- | :--- | :--- |
-| **BoardGameGeek (API)** | Search terms and IDs of viewed games. *(Zero user data)*. Request via Cloudflare proxy. | Retrieve technical game sheets in real-time (name, rating, description, rankings). | BoardGameGeek<br>🔗 [Privacy Policy](https://boardgamegeek.com/privacy) |
+| **BoardGameGeek (API)** | Search terms and IDs of viewed games. If the app is in French, IDs of the games and expansions in your collection. *(Zero user data)*. Request via Cloudflare proxy. | Retrieve technical game sheets in real-time (name, rating, description, rankings), and their French title and cover. | BoardGameGeek<br>🔗 [Privacy Policy](https://boardgamegeek.com/privacy) |
 | **BGG Image Network** | Direct HTTP request to the domain \`geekdo-images.com\`. Exposes your **IP address** and viewed visuals. | Download board game covers and thumbnails directly to your screen. | Geekdo, LLC (USA)<br>*(Direct flow without going through the publisher's proxy)* |
 | **Game Catalog** | Read-only requests on our board game index, built from publicly available information. *(Zero user data)*. | Power the discovery and suggestions feature within the **Explore** tab, and rank game search results by popularity (only the IDs of the games found are sent). | Operated by the publisher<br>*(Index hosted at Supabase, requests via Cloudflare)* |
 | **Translation Service** | Raw text of the game description (in English), from BoardGameGeek. *(Zero user data. Flow inactive if app is in English)*. Request via Cloudflare proxy. | Automatic translation of game sheet descriptions into French, by an artificial intelligence model. | Google (Gemini API)<br>*(The service only receives requests from the publisher's proxy)*<br>🔗 [Privacy Policy](https://policies.google.com/privacy) |
